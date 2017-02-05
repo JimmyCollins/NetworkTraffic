@@ -1,8 +1,5 @@
-
 package networktraffic;
 
-
-import java.util.Date;
 import java.net.InetAddress;
 
 /**
@@ -13,7 +10,7 @@ public class NetworkPacket {
     
     // Instance Variables
     
-    private Date Date;
+    private String Date;  // FIXME: Make Data as opposed to string?
     
     private float Duration;
     
@@ -45,32 +42,14 @@ public class NetworkPacket {
     
     // Constructor
     
-    public NetworkPacket(Date theDate, float theDuration, String theProtocol,
-            InetAddress theSourceIP, int theSourcePort, String theDirection,
-            InetAddress theDestinationIP, int theDestinationPort,
-            String theState, int theSourceTypeOfService,
-            int theDestinationTypeOfService, int theTotalPackets,
-            int theTotalBytes, int theSourceBytes, String theLabel) {
-        this.Date = theDate;
-        this.Duration = theDuration;
-        this.Protocol = theProtocol;
-        this.SourceIP = theSourceIP;
-        this.SourcePort = theSourcePort;
-        this.Direction = theDirection;
-        this.DestinationIP = theDestinationIP;
-        this.DestinationPort = theDestinationPort;
-        this.State = theState;
-        this.SourceTypeOfService = theSourceTypeOfService;
-        this.DestinationTypeOfService = theDestinationTypeOfService;
-        this.TotalPackets = theTotalPackets;
-        this.TotalBytes = theTotalBytes;
-        this.SourceBytes = theSourceBytes;
-        this.Label = theLabel;
-    }  
+    public NetworkPacket()
+    {
+        
+    }
     
     // Getters
     
-    public Date getDate() {
+    public String getDate() {
         return Date;
     }
     
@@ -132,7 +111,7 @@ public class NetworkPacket {
     
     // Setters
     
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.Date = date;
     }
     
