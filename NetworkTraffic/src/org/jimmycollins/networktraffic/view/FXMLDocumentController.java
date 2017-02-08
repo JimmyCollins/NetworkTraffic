@@ -1,5 +1,5 @@
 
-package networktraffic;
+package org.jimmycollins.networktraffic.view;
 
 import java.io.File;
 import java.net.URL;
@@ -12,6 +12,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.jimmycollins.networktraffic.model.NetworkPacket;
+import org.jimmycollins.networktraffic.util.TrafficFileParser;
 
 public class FXMLDocumentController implements Initializable {
     

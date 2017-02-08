@@ -1,5 +1,5 @@
 
-package util;
+package org.jimmycollins.networktraffic.util;
 
 // TODO - Will be use for logging
 

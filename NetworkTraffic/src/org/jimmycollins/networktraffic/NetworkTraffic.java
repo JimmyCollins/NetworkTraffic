@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package networktraffic;
+package org.jimmycollins.networktraffic;
 
 import java.awt.Insets;
 import java.io.File;

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600" prefWidth="1000" xmlns:fx="http://javafx.com/fxml/1" fx:controller="networktraffic.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="600" prefWidth="1000" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jimmycollins.networktraffic.view.FXMLDocumentController">
     <children>
         <Button layoutX="126" layoutY="90" text="Select Traffic File..." onAction="#handleSelectTrafficFile" fx:id="button" />
     </children>

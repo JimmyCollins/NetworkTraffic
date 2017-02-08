@@ -1,5 +1,6 @@
-package networktraffic;
+package org.jimmycollins.networktraffic.util;
 
+import org.jimmycollins.networktraffic.model.NetworkPacket;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

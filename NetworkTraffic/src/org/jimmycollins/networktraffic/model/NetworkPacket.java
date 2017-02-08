@@ -1,4 +1,4 @@
-package networktraffic;
+package org.jimmycollins.networktraffic.model;
 
 import java.net.InetAddress;
 
