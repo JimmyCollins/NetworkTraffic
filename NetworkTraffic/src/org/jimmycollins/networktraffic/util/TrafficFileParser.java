@@ -24,10 +24,11 @@ public class TrafficFileParser {
         
         try
         {    
-            BufferedReader br = new BufferedReader(new FileReader(TrafficFile));
-            String line;
-            while ((line = br.readLine()) != null) 
-            {
+            BufferedReader reader = new BufferedReader(new FileReader(TrafficFile));
+            reader.readLine(); 
+            String line = null;
+            while ((line = reader.readLine()) != null)
+            { 
                // FIXME: Ignore first line of the file
                // FIXME: Handle errors
                 
@@ -50,8 +51,15 @@ public class TrafficFileParser {
                np.setSourceBytes(Integer.parseInt(fields[13]));
                np.setLabel(fields[14]);
                
-               list.add(np);          
+               list.add(np);     
             }
+            
+            /*BufferedReader br = new BufferedReader(new FileReader(TrafficFile));
+            String line;
+            while ((line = br.readLine()) != null) 
+            {
+     
+            }*/
         }
         catch(FileNotFoundException ex)
         {
