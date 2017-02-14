@@ -10,33 +10,33 @@ public class NetworkPacket {
     
     // Instance Variables
     
-    private String Date;  // FIXME: Make Data as opposed to string?
+    private String Date;
     
-    private float Duration;
+    private String Duration;
     
     private String Protocol;
     
-    private InetAddress SourceIP;
+    private String SourceIP;
     
-    private int SourcePort;
+    private String SourcePort;
     
     private String Direction;
     
-    private InetAddress DestinationIP;
+    private String DestinationIP;
     
-    private int DestinationPort;
+    private String DestinationPort;
     
     private String State;
     
-    private int SourceTypeOfService;
+    private String SourceTypeOfService;
     
-    private int DestinationTypeOfService;
+    private String DestinationTypeOfService;
     
-    private int TotalPackets;
+    private String TotalPackets;
     
-    private int TotalBytes;
+    private String TotalBytes;
     
-    private int SourceBytes;
+    private String SourceBytes;
     
     private String Label;
     
@@ -53,7 +53,7 @@ public class NetworkPacket {
         return Date;
     }
     
-    public float getDuration() {
+    public String getDuration() {
         return Duration;
     }
     
@@ -61,11 +61,11 @@ public class NetworkPacket {
         return Protocol;
     }
     
-    public InetAddress getSourceIP() {
+    public String getSourceIP() {
         return SourceIP;
     }
     
-    public int getSourcePort() {
+    public String getSourcePort() {
         return SourcePort;
     }
     
@@ -73,11 +73,11 @@ public class NetworkPacket {
         return Direction;
     }
     
-    public InetAddress getDestinationIP() {
+    public String getDestinationIP() {
         return DestinationIP;
     }
     
-    public int getDestinationPort() {
+    public String getDestinationPort() {
         return DestinationPort;
     }
     
@@ -85,23 +85,23 @@ public class NetworkPacket {
         return State;
     }
     
-    public int getSourceTypeOfService() {
+    public String getSourceTypeOfService() {
         return SourceTypeOfService;
     }
     
-    public int getDestinationTypeOfService() {
+    public String getDestinationTypeOfService() {
         return DestinationTypeOfService;
     }
     
-    public int getTotalPackets() {
+    public String getTotalPackets() {
         return TotalPackets;
     }
     
-    public int getTotalBytes() {
+    public String getTotalBytes() {
         return TotalBytes;
     }
     
-    public int getSourceBytes() {
+    public String getSourceBytes() {
         return SourceBytes;
     }
     
@@ -115,7 +115,7 @@ public class NetworkPacket {
         this.Date = date;
     }
     
-    public void setDuration(float duration) {
+    public void setDuration(String duration) {
         this.Duration = duration;
     }
     
@@ -123,11 +123,11 @@ public class NetworkPacket {
         this.Protocol = protocol;
     }
     
-    public void setSourceIP(InetAddress sourceIP) {
+    public void setSourceIP(String sourceIP) {
         this.SourceIP = sourceIP;
     }
     
-    public void setSourcePort(int sourcePort) {
+    public void setSourcePort(String sourcePort) {
         this.SourcePort = sourcePort;
     }
     
@@ -135,11 +135,11 @@ public class NetworkPacket {
         this.Direction = direction;
     }
     
-    public void setDestinationIP(InetAddress destinationIP) {
+    public void setDestinationIP(String destinationIP) {
         this.DestinationIP = destinationIP;
     }
     
-    public void setDestinationPort(int destinationPort) {
+    public void setDestinationPort(String destinationPort) {
         this.DestinationPort = destinationPort;
     }
     
@@ -147,23 +147,23 @@ public class NetworkPacket {
         this.State = state;
     }
     
-    public void setSourceTypeOfService(int sourceTypeOfService) {
+    public void setSourceTypeOfService(String sourceTypeOfService) {
         this.SourceTypeOfService = sourceTypeOfService;
     }
     
-    public void setDestinationTypeOfService(int destinationTypeOfService) {
+    public void setDestinationTypeOfService(String destinationTypeOfService) {
         this.DestinationTypeOfService = destinationTypeOfService;
     }
     
-    public void setTotalPackets(int totalPackets) {
+    public void setTotalPackets(String totalPackets) {
         this.TotalPackets = totalPackets;
     }
     
-    public void setTotalBytes(int totalBytes) {
+    public void setTotalBytes(String totalBytes) {
         this.TotalBytes = totalBytes;
     }
     
-    public void setSourceBytes(int sourceBytes) {
+    public void setSourceBytes(String sourceBytes) {
         this.SourceBytes = sourceBytes;
     }
     

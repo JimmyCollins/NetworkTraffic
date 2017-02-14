@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jimmycollins.networktraffic.model.NetworkPacket;
 import org.jimmycollins.networktraffic.util.TrafficFileParser;
+import org.jimmycollins.networktraffic.util.Utility;
 
 public class FXMLDocumentController implements Initializable {
     
@@ -26,15 +27,20 @@ public class FXMLDocumentController implements Initializable {
         File file = fileChooser.showOpenDialog(new Stage());
         
         TrafficFileParser tfp = new TrafficFileParser(file);
-            
-        ArrayList<NetworkPacket> trafficInfo =  tfp.ParseFile();
         
-        // FIXME: Remove this
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Network Traffic");
-        alert.setHeaderText("Parsed File Successfully");
-        alert.setContentText("Parsed " + trafficInfo.size() + " packets from file.");
-        alert.show();
+        try
+        {
+            ArrayList<NetworkPacket> trafficInfo =  tfp.ParseFile2();
+            
+            Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Parsed " + trafficInfo.size() + " packets from file.");
+            
+        }
+        catch(Exception ex)
+        {
+            
+        }
+        
+
     }
     
     @Override
