@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jimmycollins.networktraffic.model.NetworkPacket;
+import org.jimmycollins.networktraffic.model.PacketFileStats;
 import org.jimmycollins.networktraffic.util.TrafficFileParser;
 import org.jimmycollins.networktraffic.util.Utility;
 
@@ -30,9 +31,18 @@ public class FXMLDocumentController implements Initializable {
         
         try
         {
-            ArrayList<NetworkPacket> trafficInfo =  tfp.ParseFile2();
+            //ArrayList<NetworkPacket> trafficInfo =  tfp.ParseFile();
             
-            Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Parsed " + trafficInfo.size() + " packets from file.");
+            //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Parsed " + trafficInfo.size() + " packets from file.");
+            
+            PacketFileStats stats = tfp.ParseFile();
+            
+            Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Good Packet Count: " + stats.GetNumberOfPackets());
+            Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Rubbish Packet Count: " + stats.GetNumberOfRubbishPackets());
+            //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Total src IP Count: " + stats());
+            //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Rubbish dest IP Count: " + stats.GetNumberOfRubbishPackets());
+            
+            
             
         }
         catch(Exception ex)

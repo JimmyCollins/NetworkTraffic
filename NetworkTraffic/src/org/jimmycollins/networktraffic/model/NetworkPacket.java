@@ -12,31 +12,31 @@ public class NetworkPacket {
     
     private String Date;
     
-    private String Duration;
+    private Float Duration;
     
     private String Protocol;
     
     private String SourceIP;
     
-    private String SourcePort;
+    private int SourcePort;
     
     private String Direction;
     
     private String DestinationIP;
     
-    private String DestinationPort;
+    private int DestinationPort;
     
     private String State;
     
-    private String SourceTypeOfService;
+    private int SourceTypeOfService;
     
-    private String DestinationTypeOfService;
+    private int DestinationTypeOfService;
     
-    private String TotalPackets;
+    private int TotalPackets;
     
-    private String TotalBytes;
+    private int TotalBytes;
     
-    private String SourceBytes;
+    private int SourceBytes;
     
     private String Label;
     
@@ -53,7 +53,7 @@ public class NetworkPacket {
         return Date;
     }
     
-    public String getDuration() {
+    public Float getDuration() {
         return Duration;
     }
     
@@ -65,7 +65,7 @@ public class NetworkPacket {
         return SourceIP;
     }
     
-    public String getSourcePort() {
+    public int getSourcePort() {
         return SourcePort;
     }
     
@@ -77,7 +77,7 @@ public class NetworkPacket {
         return DestinationIP;
     }
     
-    public String getDestinationPort() {
+    public int getDestinationPort() {
         return DestinationPort;
     }
     
@@ -85,23 +85,23 @@ public class NetworkPacket {
         return State;
     }
     
-    public String getSourceTypeOfService() {
+    public int getSourceTypeOfService() {
         return SourceTypeOfService;
     }
     
-    public String getDestinationTypeOfService() {
+    public int getDestinationTypeOfService() {
         return DestinationTypeOfService;
     }
     
-    public String getTotalPackets() {
+    public int getTotalPackets() {
         return TotalPackets;
     }
     
-    public String getTotalBytes() {
+    public int getTotalBytes() {
         return TotalBytes;
     }
     
-    public String getSourceBytes() {
+    public int getSourceBytes() {
         return SourceBytes;
     }
     
@@ -115,7 +115,7 @@ public class NetworkPacket {
         this.Date = date;
     }
     
-    public void setDuration(String duration) {
+    public void setDuration(Float duration) {
         this.Duration = duration;
     }
     
@@ -127,7 +127,7 @@ public class NetworkPacket {
         this.SourceIP = sourceIP;
     }
     
-    public void setSourcePort(String sourcePort) {
+    public void setSourcePort(int sourcePort) {
         this.SourcePort = sourcePort;
     }
     
@@ -139,7 +139,7 @@ public class NetworkPacket {
         this.DestinationIP = destinationIP;
     }
     
-    public void setDestinationPort(String destinationPort) {
+    public void setDestinationPort(int destinationPort) {
         this.DestinationPort = destinationPort;
     }
     
@@ -147,23 +147,23 @@ public class NetworkPacket {
         this.State = state;
     }
     
-    public void setSourceTypeOfService(String sourceTypeOfService) {
+    public void setSourceTypeOfService(int sourceTypeOfService) {
         this.SourceTypeOfService = sourceTypeOfService;
     }
     
-    public void setDestinationTypeOfService(String destinationTypeOfService) {
+    public void setDestinationTypeOfService(int destinationTypeOfService) {
         this.DestinationTypeOfService = destinationTypeOfService;
     }
     
-    public void setTotalPackets(String totalPackets) {
+    public void setTotalPackets(int totalPackets) {
         this.TotalPackets = totalPackets;
     }
     
-    public void setTotalBytes(String totalBytes) {
+    public void setTotalBytes(int totalBytes) {
         this.TotalBytes = totalBytes;
     }
     
-    public void setSourceBytes(String sourceBytes) {
+    public void setSourceBytes(int sourceBytes) {
         this.SourceBytes = sourceBytes;
     }
     
