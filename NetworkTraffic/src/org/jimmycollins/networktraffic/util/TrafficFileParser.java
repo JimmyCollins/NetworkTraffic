@@ -135,7 +135,7 @@ public class TrafficFileParser {
                     np.setLabel(fields[14]);*/           
                     
                     stats.AddToNumberOfPackets();
-                    stats.AddNewSourceHost(InetAddress.getByName(fields[3]));
+                    stats.AddNewSourceHost(fields[3]);
                     stats.AddNewDestinationHost(InetAddress.getByName(fields[6]));
 
                     // TODO - Do we need the np object here?

@@ -42,6 +42,8 @@ public class FXMLDocumentController implements Initializable {
             //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Total src IP Count: " + stats());
             //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Rubbish dest IP Count: " + stats.GetNumberOfRubbishPackets());
             
+            Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Most Common Source IP: " + Utility.getMostUsedIpAddress(stats.GetSourceHosts()));
+            
             
             
         }
