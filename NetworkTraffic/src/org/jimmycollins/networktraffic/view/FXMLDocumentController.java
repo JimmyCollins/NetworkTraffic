@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jimmycollins.networktraffic.model.NetworkPacket;
@@ -17,7 +18,16 @@ import org.jimmycollins.networktraffic.model.PacketFileStats;
 import org.jimmycollins.networktraffic.util.TrafficFileParser;
 import org.jimmycollins.networktraffic.util.Utility;
 
-public class FXMLDocumentController implements Initializable {
+public class FXMLDocumentController implements Initializable 
+{
+    @FXML
+    private Label goodPackets;
+    
+    @FXML
+    private Label badPackets;
+    
+    @FXML
+    private Label mostCommonSourceIP;
     
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
@@ -37,12 +47,15 @@ public class FXMLDocumentController implements Initializable {
             
             PacketFileStats stats = tfp.ParseFile();
             
-            Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Good Packet Count: " + stats.GetNumberOfPackets());
-            Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Rubbish Packet Count: " + stats.GetNumberOfRubbishPackets());
+            //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Good Packet Count: " + stats.GetNumberOfPackets());
+            goodPackets.setText(""+stats.GetNumberOfPackets());
+            //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Rubbish Packet Count: " + stats.GetNumberOfRubbishPackets());
+            badPackets.setText(""+stats.GetNumberOfRubbishPackets());
             //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Total src IP Count: " + stats());
             //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Rubbish dest IP Count: " + stats.GetNumberOfRubbishPackets());
             
-            Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Most Common Source IP: " + Utility.getMostUsedIpAddress(stats.GetSourceHosts()));
+            //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Most Common Source IP: " + Utility.getMostUsedIpAddress(stats.GetSourceHosts()));
+            mostCommonSourceIP.setText(""+Utility.getMostUsedIpAddress(stats.GetSourceHosts()));
             
             
             

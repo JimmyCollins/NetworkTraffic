@@ -6,8 +6,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600" prefWidth="1000" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jimmycollins.networktraffic.view.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jimmycollins.networktraffic.view.FXMLDocumentController">
     <children>
-        <Button layoutX="126" layoutY="90" text="Select Traffic File..." onAction="#handleSelectTrafficFile" fx:id="button" />
+      <SplitPane dividerPositions="0.15430861723446893" layoutX="128.0" layoutY="147.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                    <Button fx:id="button" layoutX="23.0" layoutY="20.0" onAction="#handleSelectTrafficFile" text="Select Traffic File..." />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label layoutX="40.0" layoutY="26.0" text="Good Packets:" />
+                  <Label layoutX="40.0" layoutY="52.0" text="Bad Packets:" />
+                  <Label layoutX="40.0" layoutY="79.0" text="Most Common Source IP:" />
+                  <Label fx:id="goodPackets" layoutX="211.0" layoutY="26.0" />
+                  <Label fx:id="badPackets" layoutX="211.0" layoutY="52.0" />
+                  <Label fx:id="mostCommonSourceIP" layoutX="211.0" layoutY="79.0" />
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
     </children>
 </AnchorPane>
