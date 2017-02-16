@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -28,6 +29,9 @@ public class FXMLDocumentController implements Initializable
     
     @FXML
     private Label mostCommonSourceIP;
+    
+    @FXML
+    private PieChart packetOverviewChart;
     
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
@@ -57,7 +61,11 @@ public class FXMLDocumentController implements Initializable
             //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Most Common Source IP: " + Utility.getMostUsedIpAddress(stats.GetSourceHosts()));
             mostCommonSourceIP.setText(""+Utility.getMostUsedIpAddress(stats.GetSourceHosts()));
             
+            PieChart.Data good = new PieChart.Data("Parsed", stats.GetNumberOfPackets());
+            PieChart.Data bad = new PieChart.Data("Unparsable", stats.GetNumberOfRubbishPackets());
             
+            packetOverviewChart.getData().add(good);
+            packetOverviewChart.getData().add(bad);
             
         }
         catch(Exception ex)

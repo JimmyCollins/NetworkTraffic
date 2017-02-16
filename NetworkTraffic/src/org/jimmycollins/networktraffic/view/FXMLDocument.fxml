@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -23,6 +24,7 @@
                   <Label fx:id="goodPackets" layoutX="211.0" layoutY="26.0" />
                   <Label fx:id="badPackets" layoutX="211.0" layoutY="52.0" />
                   <Label fx:id="mostCommonSourceIP" layoutX="211.0" layoutY="79.0" />
+                  <PieChart fx:id="packetOverviewChart" layoutX="477.0" layoutY="26.0" prefHeight="252.0" prefWidth="307.0" title="Packet Parsing" />
                </children></AnchorPane>
         </items>
       </SplitPane>
