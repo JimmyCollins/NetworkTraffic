@@ -134,9 +134,11 @@ public class TrafficFileParser {
                     np.setSourceBytes(Integer.parseInt(fields[13]));
                     np.setLabel(fields[14]);*/           
                     
-                    stats.AddToNumberOfPackets();
-                    stats.AddNewSourceHost(fields[3]);
-                    stats.AddNewDestinationHost(InetAddress.getByName(fields[6]));
+                    stats.AddPacket();
+                    stats.AddSourceHost(fields[3]);
+                    stats.AddDestinationHost(InetAddress.getByName(fields[6]));
+                    stats.AddSourcePort(Integer.parseInt(fields[4]));
+                    stats.AddDestinationPort(Integer.parseInt(fields[7]));
 
                     // TODO - Do we need the np object here?
                     // TODO: Add other stats - e.g. IP's etc.?

@@ -13,9 +13,13 @@ public class PacketFileStats
     
     private static int NumberOfRubbishPackets = 0;
     
-    private static List<String> SourceHosts = new ArrayList<>();
+    private static ArrayList<String> SourceHosts = new ArrayList<>();
     
-    private static List<InetAddress> DestinationHosts = new ArrayList<>();
+    private static ArrayList<InetAddress> DestinationHosts = new ArrayList<>();
+    
+    private static ArrayList<Integer> SourcePorts = new ArrayList<>();
+    
+    private static ArrayList<Integer> DestinationPorts = new ArrayList<>();
     
     
     public PacketFileStats()
@@ -26,7 +30,7 @@ public class PacketFileStats
         //this.DestinationIP = new ArrayList<>();
     }
     
-    public void AddToNumberOfPackets()
+    public void AddPacket()
     {
         NumberOfPackets++;
     }
@@ -37,14 +41,24 @@ public class PacketFileStats
         NumberOfRubbishPackets++;
     }
     
-    public void AddNewSourceHost(String host)
+    public void AddSourceHost(String host)
     {
         SourceHosts.add(host);
     }
     
-    public void AddNewDestinationHost(InetAddress host)
+    public void AddDestinationHost(InetAddress host)
     {
         DestinationHosts.add(host);
+    }
+    
+    public void AddSourcePort(int port)
+    {
+        SourcePorts.add(port);
+    }
+    
+    public void AddDestinationPort(int port)
+    {
+        DestinationPorts.add(port);
     }
     
     public int GetNumberOfPackets()
@@ -57,7 +71,7 @@ public class PacketFileStats
         return NumberOfRubbishPackets;
     }
     
-    public List<String> GetSourceHosts()
+    public ArrayList<String> GetSourceHosts()
     {
         return SourceHosts;
     }
