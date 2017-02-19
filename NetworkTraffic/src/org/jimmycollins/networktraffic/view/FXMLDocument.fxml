@@ -16,10 +16,10 @@
                     <Button fx:id="button" layoutX="23.0" layoutY="20.0" onAction="#handleSelectTrafficFile" text="Select Traffic File..." />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="626.0" prefWidth="877.0">
                <children>
-                  <PieChart fx:id="packetOverviewChart" layoutX="504.0" layoutY="299.0" prefHeight="252.0" prefWidth="307.0" title="Packets Parsed" />
                   <PieChart fx:id="top5SourceIpPie" layoutX="23.0" layoutY="36.0" prefHeight="330.0" prefWidth="399.0" title="Top Source IP's" />
+                  <PieChart fx:id="top5DestIpPie" layoutX="454.0" layoutY="36.0" prefHeight="298.0" prefWidth="373.0" title="Top Destination IP's" />
                </children></AnchorPane>
         </items>
       </SplitPane>

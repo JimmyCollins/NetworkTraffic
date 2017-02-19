@@ -2,16 +2,10 @@ package org.jimmycollins.networktraffic.util;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Scanner;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import org.jimmycollins.networktraffic.model.NetworkPacket;
 import org.jimmycollins.networktraffic.model.PacketFileStats;
 
 
@@ -134,9 +128,9 @@ public class TrafficFileParser {
                     np.setSourceBytes(Integer.parseInt(fields[13]));
                     np.setLabel(fields[14]);*/           
                     
-                    stats.AddPacket();
+                    //stats.AddPacket();
                     stats.AddSourceHost(fields[3]);
-                    stats.AddDestinationHost(InetAddress.getByName(fields[6]));
+                    stats.AddDestinationHost(fields[6]);
                     stats.AddSourcePort(Integer.parseInt(fields[4]));
                     stats.AddDestinationPort(Integer.parseInt(fields[7]));
 
@@ -147,7 +141,7 @@ public class TrafficFileParser {
                }
                catch(Exception ex)  // TODO - Create custom exception
                {
-                   stats.AddToNumberOfRubbishPackets();
+                   //stats.AddToNumberOfRubbishPackets();
                }
                
             }        

@@ -9,28 +9,28 @@ import java.util.List;
 public class PacketFileStats 
 {
     
-    private static int NumberOfPackets = 0;
+    //private static int NumberOfPackets = 0;
     
-    private static int NumberOfRubbishPackets = 0;
+    //private static int NumberOfRubbishPackets = 0;
     
-    private static ArrayList<String> SourceHosts = new ArrayList<>();
+    private static ArrayList<String> SourceHosts;
     
-    private static ArrayList<InetAddress> DestinationHosts = new ArrayList<>();
+    private static ArrayList<String> DestinationHosts;
     
-    private static ArrayList<Integer> SourcePorts = new ArrayList<>();
+    private static ArrayList<Integer> SourcePorts;
     
-    private static ArrayList<Integer> DestinationPorts = new ArrayList<>();
+    private static ArrayList<Integer> DestinationPorts;
     
     
     public PacketFileStats()
     {
-        //this.NumberOfPackets = 0;
-        //this.NumberOfRubbishPackets = 0;
-        //this.SourceIP = new ArrayList<>();
-        //this.DestinationIP = new ArrayList<>();
+        SourceHosts = new ArrayList<>();
+        DestinationHosts = new ArrayList<>();
+        SourcePorts = new ArrayList<>();
+        DestinationPorts = new ArrayList<>();
     }
     
-    public void AddPacket()
+    /*public void AddPacket()
     {
         NumberOfPackets++;
     }
@@ -39,14 +39,14 @@ public class PacketFileStats
     public void AddToNumberOfRubbishPackets()
     {
         NumberOfRubbishPackets++;
-    }
+    }*/
     
     public void AddSourceHost(String host)
     {
         SourceHosts.add(host);
     }
     
-    public void AddDestinationHost(InetAddress host)
+    public void AddDestinationHost(String host)
     {
         DestinationHosts.add(host);
     }
@@ -61,7 +61,7 @@ public class PacketFileStats
         DestinationPorts.add(port);
     }
     
-    public int GetNumberOfPackets()
+    /*public int GetNumberOfPackets()
     {
         return NumberOfPackets;
     }
@@ -69,11 +69,16 @@ public class PacketFileStats
     public int GetNumberOfRubbishPackets()
     {
         return NumberOfRubbishPackets;
-    }
+    }*/
     
     public ArrayList<String> GetSourceHosts()
     {
         return SourceHosts;
+    }
+    
+    public ArrayList<String> GetDestinationHosts()
+    {
+        return DestinationHosts;
     }
     
 }

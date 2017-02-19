@@ -3,38 +3,25 @@ package org.jimmycollins.networktraffic.view;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.jimmycollins.networktraffic.model.NetworkPacket;
 import org.jimmycollins.networktraffic.model.PacketFileStats;
 import org.jimmycollins.networktraffic.util.TrafficFileParser;
 import org.jimmycollins.networktraffic.util.Utility;
 
 public class FXMLDocumentController implements Initializable 
-{
-    @FXML
-    private PieChart packetOverviewChart;
-    
+{   
     @FXML
     private PieChart top5SourceIpPie;
+    
+    @FXML
+    private PieChart top5DestIpPie;
     
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
@@ -65,23 +52,27 @@ public class FXMLDocumentController implements Initializable
             //mostCommonSourceIP.setText(""+Utility.getMostUsedIpAddress(stats.GetSourceHosts()));
             
             // Pie Chart - parsed packets
-            PieChart.Data good = new PieChart.Data("Parsed", stats.GetNumberOfPackets());
+            /*PieChart.Data good = new PieChart.Data("Parsed", stats.GetNumberOfPackets());
             PieChart.Data bad = new PieChart.Data("Unparsable", stats.GetNumberOfRubbishPackets());          
             packetOverviewChart.getData().add(good);
-            packetOverviewChart.getData().add(bad);
+            packetOverviewChart.getData().add(bad);*/
             
             
             // Pie Chart - most common source IPs
-            Map<String,Integer> map = Utility.GetTopElements(stats.GetSourceHosts());
+            Map<String,Integer> map = Utility.GetTopElements(stats.GetSourceHosts(), 5);
             
-            for (Map.Entry<String, Integer> entry : map.entrySet())
+            map.entrySet().stream().map((entry) -> new PieChart.Data(entry.getKey(), entry.getValue())).forEachOrdered((test) -> 
             {
-                System.out.println(entry.getKey() + " : " + entry.getValue());              
-                PieChart.Data test = new PieChart.Data(entry.getKey(), entry.getValue());
                 top5SourceIpPie.getData().add(test);
-            }
+            });
             
-            //XYChart.Series series1 = new XYChart.Series();
+            // Pie Chart - most common source IPs
+            Map<String,Integer> map2 = Utility.GetTopElements(stats.GetDestinationHosts(), 5);
+            
+            map2.entrySet().stream().map((entry) -> new PieChart.Data(entry.getKey(), entry.getValue())).forEachOrdered((test) -> 
+            {
+                top5DestIpPie.getData().add(test);
+            }); //XYChart.Series series1 = new XYChart.Series();
             
             
             
