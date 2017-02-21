@@ -6,17 +6,18 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javafx.scene.control.Alert.AlertType;
-import org.jimmycollins.networktraffic.model.PacketFileStats;
+import org.jimmycollins.networktraffic.ParsingException;
+import org.jimmycollins.networktraffic.model.TrafficFileStats;
 
 
 public class TrafficFileParser {
     
-    private final File TrafficFile;
+    //private final File TrafficFile;
     
     //public ArrayList<NetworkPacket> RubbishPackets;
     
-    public TrafficFileParser(File file) {
-        this.TrafficFile = file;
+    public TrafficFileParser() {
+        //this.TrafficFile = file;
         //this.RubbishPackets = new ArrayList<>();
     }
     
@@ -95,19 +96,21 @@ public class TrafficFileParser {
     
     
     
-    public PacketFileStats ParseFile() 
-    {      
-        //ArrayList list = new ArrayList<>();
-        PacketFileStats stats = new PacketFileStats();
+    public static TrafficFileStats ParseFile(File file) 
+    {   
+        TrafficFileStats stats = new TrafficFileStats();
         
         try
         {    
-            BufferedReader reader = new BufferedReader(new FileReader(TrafficFile));
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             reader.readLine(); 
             String line = null;
             while ((line = reader.readLine()) != null)
             {             
                String[] fields = line.split(",");
+               
+               // Could pass line to analyzer here to be processed, which
+               // would update a TrafficFileStats Object?
                
                try
                {
@@ -128,20 +131,24 @@ public class TrafficFileParser {
                     np.setSourceBytes(Integer.parseInt(fields[13]));
                     np.setLabel(fields[14]);*/           
                     
-                    //stats.AddPacket();
+
+                    
                     stats.AddSourceHost(fields[3]);
                     stats.AddDestinationHost(fields[6]);
                     stats.AddSourcePort(Integer.parseInt(fields[4]));
                     stats.AddDestinationPort(Integer.parseInt(fields[7]));
+                    stats.AddPacket();
 
                     // TODO - Do we need the np object here?
                     // TODO: Add other stats - e.g. IP's etc.?
                     
-                    //list.add(np);     
+                    //list.add(np);
                }
                catch(Exception ex)  // TODO - Create custom exception
                {
-                   //stats.AddToNumberOfRubbishPackets();
+                   stats.AddUnparsablePacket(); // TODO: Add to UI
+                   //Utility.Alert(AlertType.ERROR, "Error", ex.toString());
+                   // TODO: Log exception (have log tab on UI?)
                }
                
             }        

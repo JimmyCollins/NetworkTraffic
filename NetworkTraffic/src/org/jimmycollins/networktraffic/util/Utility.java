@@ -43,8 +43,8 @@ public class Utility
         
         for(int i = 0; i < list.size(); i++)
         {            
-            Integer count = map.get(list.get(i));       
-            map.put(list.get(i), count == null ? 1 : count + 1);   //auto boxing and count
+            Integer count = map.get(list.get(i));       // Autoboxing?
+            map.put(list.get(i), count == null ? 1 : count + 1);   
         }
         
         map = SortMapByValue(map);

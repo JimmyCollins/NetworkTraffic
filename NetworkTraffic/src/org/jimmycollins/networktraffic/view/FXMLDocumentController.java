@@ -9,9 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.jimmycollins.networktraffic.model.PacketFileStats;
+import org.jimmycollins.networktraffic.model.TrafficFileStats;
 import org.jimmycollins.networktraffic.util.TrafficFileParser;
 import org.jimmycollins.networktraffic.util.Utility;
 
@@ -31,7 +33,7 @@ public class FXMLDocumentController implements Initializable
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(new Stage());
         
-        TrafficFileParser tfp = new TrafficFileParser(file);
+        //TrafficFileParser tfp = new TrafficFileParser(file);
         
         try
         {
@@ -39,7 +41,9 @@ public class FXMLDocumentController implements Initializable
             
             //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Parsed " + trafficInfo.size() + " packets from file.");
             
-            PacketFileStats stats = tfp.ParseFile();
+            
+            // TODO: Hand off to Analyzer class to get the stats??
+            TrafficFileStats stats = TrafficFileParser.ParseFile(file);
             
             //Utility.Alert(AlertType.INFORMATION, "Parsed File Successfully", "Good Packet Count: " + stats.GetNumberOfPackets());
             //goodPackets.setText(""+stats.GetNumberOfPackets());
@@ -79,7 +83,8 @@ public class FXMLDocumentController implements Initializable
         }
         catch(Exception ex)
         {
-            
+            Utility.Alert(AlertType.ERROR, "Error", ex.toString());
+            // TODO: Log Exception
         }
         
 

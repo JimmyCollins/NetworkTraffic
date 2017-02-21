@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PacketFileStats 
-{
+public class TrafficFileStats 
+{    
+    private static int ParsedPackets = 0;
     
-    //private static int NumberOfPackets = 0;
-    
-    //private static int NumberOfRubbishPackets = 0;
+    private static int UnparsablePackets;
     
     private static ArrayList<String> SourceHosts;
     
@@ -22,24 +21,25 @@ public class PacketFileStats
     private static ArrayList<Integer> DestinationPorts;
     
     
-    public PacketFileStats()
+    public TrafficFileStats()
     {
+        ParsedPackets = 0;
+        UnparsablePackets = 0;
         SourceHosts = new ArrayList<>();
         DestinationHosts = new ArrayList<>();
         SourcePorts = new ArrayList<>();
         DestinationPorts = new ArrayList<>();
     }
     
-    /*public void AddPacket()
+    public void AddPacket()
     {
-        NumberOfPackets++;
+        ParsedPackets++;
     }
     
-    
-    public void AddToNumberOfRubbishPackets()
+    public void AddUnparsablePacket()
     {
-        NumberOfRubbishPackets++;
-    }*/
+        UnparsablePackets++;
+    }
     
     public void AddSourceHost(String host)
     {
@@ -61,16 +61,6 @@ public class PacketFileStats
         DestinationPorts.add(port);
     }
     
-    /*public int GetNumberOfPackets()
-    {
-        return NumberOfPackets;
-    }
-    
-    public int GetNumberOfRubbishPackets()
-    {
-        return NumberOfRubbishPackets;
-    }*/
-    
     public ArrayList<String> GetSourceHosts()
     {
         return SourceHosts;
@@ -79,6 +69,16 @@ public class PacketFileStats
     public ArrayList<String> GetDestinationHosts()
     {
         return DestinationHosts;
+    }
+    
+    public int GetParsedPackets()
+    {
+        return ParsedPackets;
+    }
+    
+    public int GetUnparsablePackets()
+    {
+        return UnparsablePackets;
     }
     
 }
