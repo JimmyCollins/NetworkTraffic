@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jimmycollins.networktraffic.view.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="661.0" prefWidth="1036.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jimmycollins.networktraffic.view.FXMLDocumentController">
     <children>
-      <SplitPane dividerPositions="0.15430861723446893" layoutX="128.0" layoutY="147.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.15430861723446893" layoutX="-50.0" layoutY="-51.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -18,8 +18,43 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="626.0" prefWidth="877.0">
                <children>
-                  <PieChart fx:id="top5SourceIpPie" layoutX="23.0" layoutY="36.0" prefHeight="330.0" prefWidth="399.0" title="Top Source IP's" />
-                  <PieChart fx:id="top5DestIpPie" layoutX="454.0" layoutY="36.0" prefHeight="298.0" prefWidth="373.0" title="Top Destination IP's" />
+                  <TabPane layoutX="-7.0" layoutY="21.0" prefHeight="659.0" prefWidth="878.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab text="Source">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <PieChart fx:id="top5SourceIpPie" layoutX="189.0" layoutY="52.0" title="Top Source IP Addresses" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Destination">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <PieChart fx:id="top5DestIpPie" layoutX="189.0" layoutY="54.0" title="Top Destination IP Addresses" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Protocols">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab text="Services">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab text="Misc.">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
                </children></AnchorPane>
         </items>
       </SplitPane>
