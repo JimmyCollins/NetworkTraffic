@@ -1,9 +1,7 @@
 
 package org.jimmycollins.networktraffic.model;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class TrafficFileStats 
@@ -16,9 +14,9 @@ public class TrafficFileStats
     
     private static ArrayList<String> DestinationHosts;
     
-    private static ArrayList<Integer> SourcePorts;
+    private static ArrayList<String> SourcePorts;
     
-    private static ArrayList<Integer> DestinationPorts;
+    private static ArrayList<String> DestinationPorts;
     
     
     public TrafficFileStats()
@@ -51,12 +49,12 @@ public class TrafficFileStats
         DestinationHosts.add(host);
     }
     
-    public void AddSourcePort(int port)
+    public void AddSourcePort(String port)
     {
         SourcePorts.add(port);
     }
     
-    public void AddDestinationPort(int port)
+    public void AddDestinationPort(String port)
     {
         DestinationPorts.add(port);
     }
@@ -69,6 +67,16 @@ public class TrafficFileStats
     public ArrayList<String> GetDestinationHosts()
     {
         return DestinationHosts;
+    }
+    
+    public ArrayList<String> GetSourcePorts()
+    {
+        return SourcePorts;
+    }
+    
+    public ArrayList<String> GetDestinationPorts()
+    {
+        return DestinationPorts;
     }
     
     public int GetParsedPackets()

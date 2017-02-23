@@ -135,8 +135,8 @@ public class TrafficFileParser {
                     
                     stats.AddSourceHost(fields[3]);
                     stats.AddDestinationHost(fields[6]);
-                    stats.AddSourcePort(Integer.parseInt(fields[4]));
-                    stats.AddDestinationPort(Integer.parseInt(fields[7]));
+                    stats.AddSourcePort(fields[4]);
+                    stats.AddDestinationPort(fields[7]);
                     stats.AddPacket();
 
                     // TODO - Do we need the np object here?
