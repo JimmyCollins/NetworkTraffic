@@ -10,7 +10,7 @@ public class NetworkTraffic extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/MainUI.fxml"));
         
         stage.setTitle("Network Traffic Analysis");
  
