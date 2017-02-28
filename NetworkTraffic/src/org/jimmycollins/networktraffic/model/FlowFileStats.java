@@ -3,12 +3,11 @@ package org.jimmycollins.networktraffic.model;
 
 import java.util.ArrayList;
 
-
-public class TrafficFileStats 
+public class FlowFileStats 
 {    
-    private static int ParsedPackets = 0;
+    private static int ParsedFlows = 0;
     
-    private static int UnparsablePackets;
+    private static int UnparsableFlows;
     
     private static ArrayList<String> SourceHosts;
     
@@ -18,25 +17,27 @@ public class TrafficFileStats
     
     private static ArrayList<String> DestinationPorts;
     
+    private static ArrayList<String> Protocols;
     
-    public TrafficFileStats()
+    public FlowFileStats()
     {
-        ParsedPackets = 0;
-        UnparsablePackets = 0;
+        ParsedFlows = 0;
+        UnparsableFlows = 0;
         SourceHosts = new ArrayList<>();
         DestinationHosts = new ArrayList<>();
         SourcePorts = new ArrayList<>();
         DestinationPorts = new ArrayList<>();
+        Protocols = new ArrayList();
     }
     
-    public void AddPacket()
+    public void AddFlow()
     {
-        ParsedPackets++;
+        ParsedFlows++;
     }
     
-    public void AddUnparsablePacket()
+    public void AddUnparsableFlow()
     {
-        UnparsablePackets++;
+        UnparsableFlows++;
     }
     
     public void AddSourceHost(String host)
@@ -59,6 +60,11 @@ public class TrafficFileStats
         DestinationPorts.add(port);
     }
     
+    public void AddProtocol(String protocol)
+    {
+        Protocols.add(protocol);
+    }
+    
     public ArrayList<String> GetSourceHosts()
     {
         return SourceHosts;
@@ -79,14 +85,19 @@ public class TrafficFileStats
         return DestinationPorts;
     }
     
-    public int GetParsedPackets()
+    public int GetParsedFlows()
     {
-        return ParsedPackets;
+        return ParsedFlows;
     }
     
-    public int GetUnparsablePackets()
+    public int GetUnparsableFlows()
     {
-        return UnparsablePackets;
+        return UnparsableFlows;
+    }
+    
+    public ArrayList<String> GetProtocols()
+    {
+        return Protocols;
     }
     
 }

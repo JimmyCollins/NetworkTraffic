@@ -4,11 +4,11 @@ package org.jimmycollins.networktraffic;
 import java.util.Map;
 import javafx.scene.control.Tab;
 
-public class ChartContext 
+public class DisplayContext 
 {    
-    private ChartStrategy chartStrategy;
+    private DisplayStrategy chartStrategy;
     
-    public void setChartStrategy(ChartStrategy chartStrategy) 
+    public void setChartStrategy(DisplayStrategy chartStrategy) 
     {
         this.chartStrategy = chartStrategy;
     }

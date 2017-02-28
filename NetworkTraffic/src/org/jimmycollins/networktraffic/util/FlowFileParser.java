@@ -7,16 +7,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import javafx.scene.control.Alert.AlertType;
 import org.jimmycollins.networktraffic.ParsingException;
-import org.jimmycollins.networktraffic.model.TrafficFileStats;
+import org.jimmycollins.networktraffic.model.FlowFileStats;
 
 
-public class TrafficFileParser {
+public class FlowFileParser {
     
     //private final File TrafficFile;
     
     //public ArrayList<NetworkPacket> RubbishPackets;
     
-    public TrafficFileParser() {
+    public FlowFileParser() {
         //this.TrafficFile = file;
         //this.RubbishPackets = new ArrayList<>();
     }
@@ -96,9 +96,9 @@ public class TrafficFileParser {
     
     
     
-    public static TrafficFileStats ParseFile(File file) 
+    public static FlowFileStats ParseFile(File file) 
     {   
-        TrafficFileStats stats = new TrafficFileStats();
+        FlowFileStats stats = new FlowFileStats();
         
         try
         {    
@@ -132,12 +132,22 @@ public class TrafficFileParser {
                     np.setLabel(fields[14]);*/           
                     
 
+                    // Get rid of adds and use Observable List??
+                   
+                   // FIX THIS - looks ugly - maybe try to parse and dump if can't
+                   
+                    if(fields[3] != null && !fields[3].isEmpty())
+                        stats.AddSourceHost(fields[3]);
+                    if(fields[6] != null && !fields[6].isEmpty())
+                        stats.AddDestinationHost(fields[6]);
+                    if(fields[4] != null && !fields[4].isEmpty())
+                        stats.AddSourcePort(fields[4]);
+                    if(fields[7] != null && !fields[7].isEmpty())
+                        stats.AddDestinationPort(fields[7]);
+                    if(fields[2] != null && !fields[2].isEmpty())
+                        stats.AddProtocol(fields[2]);
+                    stats.AddFlow();
                     
-                    stats.AddSourceHost(fields[3]);
-                    stats.AddDestinationHost(fields[6]);
-                    stats.AddSourcePort(fields[4]);
-                    stats.AddDestinationPort(fields[7]);
-                    stats.AddPacket();
 
                     // TODO - Do we need the np object here?
                     // TODO: Add other stats - e.g. IP's etc.?
@@ -146,7 +156,7 @@ public class TrafficFileParser {
                }
                catch(Exception ex)  // TODO - Create custom exception
                {
-                   stats.AddUnparsablePacket(); // TODO: Add to UI
+                   stats.AddUnparsableFlow(); // TODO: Add to UI
                    //Utility.Alert(AlertType.ERROR, "Error", ex.toString());
                    // TODO: Log exception (have log tab on UI?)
                }

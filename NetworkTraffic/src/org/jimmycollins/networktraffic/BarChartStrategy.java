@@ -8,7 +8,7 @@ import javafx.scene.chart.Chart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
-public class BarChartStrategy implements ChartStrategy {
+public class BarChartStrategy implements DisplayStrategy {
     
     @Override
     public Chart ChartData(Map<String,Integer> chartData, String chartTitle)

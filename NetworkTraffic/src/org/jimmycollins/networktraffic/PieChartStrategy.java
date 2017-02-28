@@ -5,7 +5,7 @@ import java.util.Map;
 import javafx.scene.chart.Chart;
 import javafx.scene.chart.PieChart;
 
-public class PieChartStrategy implements ChartStrategy {
+public class PieChartStrategy implements DisplayStrategy {
     
     @Override
     public Chart ChartData(Map<String,Integer> chartData, String chartTitle)

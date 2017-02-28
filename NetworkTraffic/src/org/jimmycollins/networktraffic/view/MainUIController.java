@@ -15,10 +15,10 @@ import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jimmycollins.networktraffic.BarChartStrategy;
-import org.jimmycollins.networktraffic.ChartContext;
+import org.jimmycollins.networktraffic.DisplayContext;
 import org.jimmycollins.networktraffic.PieChartStrategy;
-import org.jimmycollins.networktraffic.model.TrafficFileStats;
-import org.jimmycollins.networktraffic.util.TrafficFileParser;
+import org.jimmycollins.networktraffic.model.FlowFileStats;
+import org.jimmycollins.networktraffic.util.FlowFileParser;
 import org.jimmycollins.networktraffic.util.Utility;
 
 public class MainUIController implements Initializable 
@@ -29,9 +29,9 @@ public class MainUIController implements Initializable
     @FXML
     private Button showBarChartsButton;
     
-    private final ChartContext chartContext = new ChartContext();
+    private final DisplayContext chartContext = new DisplayContext();
     
-    private TrafficFileStats stats;
+    private FlowFileStats stats;
     
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
@@ -44,7 +44,7 @@ public class MainUIController implements Initializable
         try
         {
             // Parse the traffic file
-            stats = TrafficFileParser.ParseFile(file);         
+            stats = FlowFileParser.ParseFile(file);         
             
             // Show Pie Charts by default
             chartContext.setChartStrategy(new PieChartStrategy());
@@ -70,12 +70,16 @@ public class MainUIController implements Initializable
         drawCharts();
     }
     
+    // TODO: Allow a change back to Bar Charts
+    // TODO: Add Line graphs
+    
     private void drawCharts()
     {
         Map<String,Integer> topSourceIPAddresses = Utility.GetTopElements(stats.GetSourceHosts(), 5);
         Map<String,Integer> topDestinationIPAddresses = Utility.GetTopElements(stats.GetDestinationHosts(), 5);
         Map<String,Integer> topSourcePorts = Utility.GetTopElements(stats.GetSourcePorts(), 5);
         Map<String,Integer> topDestinationPorts = Utility.GetTopElements(stats.GetDestinationPorts(), 5);
+        Map<String,Integer> topProtocols = Utility.GetTopElements(stats.GetProtocols(), 5);
 
         // Top Source IP Addresses
         Tab sourceIPAddresses = chartContext.createChartTab(topSourceIPAddresses, "Top Source IP Addresses");
@@ -97,7 +101,18 @@ public class MainUIController implements Initializable
         destinationPorts.setText("Destination Ports");
         tabPane.getTabs().add(destinationPorts);
         
+        // Top Protocols
+        Tab protocols = chartContext.createChartTab(topProtocols, "Top Protocols");
+        protocols.setText("Protocols");
+        tabPane.getTabs().add(protocols);
+        
         // TODO: More Charts
+        
+        // TODO: Add General stats tab that always gets added?
+        // Total packets
+        // Packets parsed from file
+        // Total Bytes
+        // Averge Bytes?
     }
     
     @Override
