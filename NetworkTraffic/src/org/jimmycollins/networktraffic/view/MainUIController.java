@@ -75,34 +75,33 @@ public class MainUIController implements Initializable
     
     private void drawCharts()
     {
-        Map<String,Integer> topSourceIPAddresses = Utility.GetTopElements(stats.GetSourceHosts(), 5);
-        Map<String,Integer> topDestinationIPAddresses = Utility.GetTopElements(stats.GetDestinationHosts(), 5);
-        Map<String,Integer> topSourcePorts = Utility.GetTopElements(stats.GetSourcePorts(), 5);
-        Map<String,Integer> topDestinationPorts = Utility.GetTopElements(stats.GetDestinationPorts(), 5);
-        Map<String,Integer> topProtocols = Utility.GetTopElements(stats.GetProtocols(), 5);
-
-        // Top Source IP Addresses
-        Tab sourceIPAddresses = chartContext.createChartTab(topSourceIPAddresses, "Top Source IP Addresses");
-        sourceIPAddresses.setText("Source IP");
-        tabPane.getTabs().add(sourceIPAddresses);
-
-        // Top Destination IP Addresses
-        Tab destinationIPAddresses = chartContext.createChartTab(topDestinationIPAddresses, "Top Destination IP Addresses");
-        destinationIPAddresses.setText("Destination IP");
-        tabPane.getTabs().add(destinationIPAddresses);
-
+        Map<String,Integer> topSourcePorts = stats.GetTop5SourcePorts();
+        Map<String,Integer> topDestinationPorts = stats.GetTop5DestinationPorts();
+        Map<String,Integer> topSourceIPAddresses = stats.GetTop5SourceIPAddresses();
+        Map<String,Integer> topDestinationIPAddresses = stats.GetTop5DestinationIPAddresses();
+        
         // Top Source Ports
         Tab sourcePorts = chartContext.createChartTab(topSourcePorts, "Top Source Ports");
         sourcePorts.setText("Source Ports");
         tabPane.getTabs().add(sourcePorts);
-
+        
         // Top Destination Ports
         Tab destinationPorts = chartContext.createChartTab(topDestinationPorts, "Top Destination Ports");
         destinationPorts.setText("Destination Ports");
         tabPane.getTabs().add(destinationPorts);
         
+        // Top Source IP Addresses
+        Tab sourceIPAddresses = chartContext.createChartTab(topSourceIPAddresses, "Top Source IP Addresses");
+        sourceIPAddresses.setText("Source IP");
+        tabPane.getTabs().add(sourceIPAddresses);
+        
+        // Top Destination IP Addresses
+        Tab destinationIPAddresses = chartContext.createChartTab(topDestinationIPAddresses, "Top Destination IP Addresses");
+        destinationIPAddresses.setText("Destination IP");
+        tabPane.getTabs().add(destinationIPAddresses);
+        
         // Top Protocols
-        Tab protocols = chartContext.createChartTab(topProtocols, "Top Protocols");
+        Tab protocols = chartContext.createChartTab(stats.GetTop5Protocols(), "Top Protocols");
         protocols.setText("Protocols");
         tabPane.getTabs().add(protocols);
         

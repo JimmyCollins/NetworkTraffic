@@ -1,7 +1,10 @@
 
 package org.jimmycollins.networktraffic.model;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Map;
+import org.jimmycollins.networktraffic.util.Utility;
 
 public class FlowFileStats 
 {    
@@ -9,29 +12,15 @@ public class FlowFileStats
     
     private static int UnparsableFlows;
     
-    private static ArrayList<String> SourceHosts;  // Should be
+    private static ArrayList<InetAddress> SourceHosts;
     
-    private static ArrayList<String> DestinationHosts;
+    private static ArrayList<InetAddress> DestinationHosts;
     
-    private static ArrayList<String> SourcePorts;
+    private static ArrayList<Integer> SourcePorts;
     
-    private static ArrayList<String> DestinationPorts;
+    private static ArrayList<Integer> DestinationPorts;
     
     private static ArrayList<String> Protocols;
-    
-    // This could have the top five things stored and created here??
-    
-    // And a set of gets that return them as <String,Integer> maps?
-    
-    /**
-     * Potential steps to fix the data model:
-     * 
-     * 1. Make things the proper types they should be here
-     * 2. Fix the parser so we try to parse things as their types
-     * 3. Add functions here to get the top 5's in <String,Integer> maps (remove these calls from the controller)
-    */
-    
-    
     
     public FlowFileStats()
     {
@@ -54,22 +43,22 @@ public class FlowFileStats
         UnparsableFlows++;
     }
     
-    public void AddSourceHost(String host)
+    public void AddSourceHost(InetAddress host)
     {
         SourceHosts.add(host);
     }
     
-    public void AddDestinationHost(String host)
+    public void AddDestinationHost(InetAddress host)
     {
         DestinationHosts.add(host);
     }
     
-    public void AddSourcePort(String port)
+    public void AddSourcePort(Integer port)
     {
         SourcePorts.add(port);
     }
     
-    public void AddDestinationPort(String port)
+    public void AddDestinationPort(Integer port)
     {
         DestinationPorts.add(port);
     }
@@ -79,22 +68,22 @@ public class FlowFileStats
         Protocols.add(protocol);
     }
     
-    public ArrayList<String> GetSourceHosts()
+    public ArrayList<InetAddress> GetSourceHosts()
     {
         return SourceHosts;
     }
     
-    public ArrayList<String> GetDestinationHosts()
+    public ArrayList<InetAddress> GetDestinationHosts()
     {
         return DestinationHosts;
     }
     
-    public ArrayList<String> GetSourcePorts()
+    public ArrayList<Integer> GetSourcePorts()
     {
         return SourcePorts;
     }
     
-    public ArrayList<String> GetDestinationPorts()
+    public ArrayList<Integer> GetDestinationPorts()
     {
         return DestinationPorts;
     }
@@ -113,5 +102,77 @@ public class FlowFileStats
     {
         return Protocols;
     }
+    
+    // TODO: New class? Consolidate/parameterize these?
+    
+    public Map<String,Integer> GetTop5SourcePorts()
+    {
+        ArrayList<String> sourcePorts = new ArrayList<>();     
+        for(int i=0; i<SourcePorts.size();i++)
+        {
+            if(SourcePorts.get(i) != -1)
+            {
+                sourcePorts.add(SourcePorts.get(i).toString());
+            }
+        }
+        
+        return Utility.GetTopElements(sourcePorts, 4);    
+    }
+     
+    public Map<String,Integer> GetTop5DestinationPorts()
+    {
+        ArrayList<String> destinationPorts = new ArrayList<>();      
+        for(int i=0; i<DestinationPorts.size();i++)
+        {
+            if(DestinationPorts.get(i) != -1)
+            {
+                destinationPorts.add(DestinationPorts.get(i).toString());
+            }
+        }
+        
+        return Utility.GetTopElements(destinationPorts, 4);    
+    }
+      
+    public Map<String,Integer> GetTop5SourceIPAddresses()
+    {
+        ArrayList<String> sourceIPs = new ArrayList<>();     
+        for(int i=0; i<SourceHosts.size();i++)
+        {
+            if(SourceHosts.get(i) != null)
+            {
+                sourceIPs.add(SourceHosts.get(i).getHostAddress());
+            }
+        }
+        
+        return Utility.GetTopElements(sourceIPs, 4);    
+    }
+    
+    public Map<String,Integer> GetTop5DestinationIPAddresses()
+    {
+        ArrayList<String> destinationIPs = new ArrayList<>();     
+        for(int i=0; i<DestinationHosts.size();i++)
+        {
+            if(DestinationHosts.get(i) != null)
+            {
+                destinationIPs.add(DestinationHosts.get(i).getHostAddress());
+            }
+        }
+        
+        return Utility.GetTopElements(destinationIPs, 4);    
+    }
+    
+    public Map<String,Integer> GetTop5Protocols()
+    {
+        ArrayList<String> protocols = new ArrayList<>();     
+        for(int i=0; i<Protocols.size();i++)
+        {
+            if(Protocols.get(i) != null || !Protocols.get(i).isEmpty())
+            {
+                protocols.add(Protocols.get(i).toUpperCase());
+            }
+        }
+        
+        return Utility.GetTopElements(protocols, 4);    
+    } 
     
 }

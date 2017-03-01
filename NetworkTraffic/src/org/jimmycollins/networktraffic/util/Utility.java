@@ -1,6 +1,8 @@
 
 package org.jimmycollins.networktraffic.util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,6 +18,54 @@ import org.jimmycollins.networktraffic.model.GenericMap;
 
 public class Utility 
 {
+    /**
+     * Parse an Integer from this string or return a default value 
+     * @param value The string to attempt to parse
+     * @return This string as an Integer, or -1 in error
+     */
+    public static int ParseInt(String value)
+    {
+        if(value == null || value.isEmpty())
+        {
+            return -1;
+        }
+        
+        try
+        {
+            return Integer.parseInt(value);
+        }
+        catch(NumberFormatException nfe)
+        {
+            // TODO: Log exception
+            return -1;
+        }
+    }
+    
+    
+    /**
+     * Parse an IP address from this string or return a default value
+     * @param value The string to attempt to parse
+     * @return This string as an InetAddress, or null in error
+     */
+    public static InetAddress ParseInetAddress(String value)
+    {
+        if(value == null || value.isEmpty())
+        {
+            return null;
+        }
+        
+        try
+        {
+            return InetAddress.getByName(value);
+        }
+        catch(UnknownHostException uhe)
+        {
+            // TODO: Log Exception
+            return null;
+        }
+    }
+    
+    
     /**
      * Generates an alert to the user
      * @param type The Alert type
@@ -75,9 +125,6 @@ public class Utility
      * @param mapToSort The map to sort
      * @return The map sorted by value, largest in ascending order
      */
-    
-    // TODO: Do we neeed V extends Comparable here???
-    
     private static <K, V extends Comparable<? super V>> Map<K, V> SortMapByValue(Map<K, V> mapToSort)
     {
         List<Map.Entry<K, V>> list = new LinkedList<>(mapToSort.entrySet());
