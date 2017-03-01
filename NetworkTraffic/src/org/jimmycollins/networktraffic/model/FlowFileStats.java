@@ -9,7 +9,7 @@ public class FlowFileStats
     
     private static int UnparsableFlows;
     
-    private static ArrayList<String> SourceHosts;
+    private static ArrayList<String> SourceHosts;  // Should be
     
     private static ArrayList<String> DestinationHosts;
     
@@ -18,6 +18,20 @@ public class FlowFileStats
     private static ArrayList<String> DestinationPorts;
     
     private static ArrayList<String> Protocols;
+    
+    // This could have the top five things stored and created here??
+    
+    // And a set of gets that return them as <String,Integer> maps?
+    
+    /**
+     * Potential steps to fix the data model:
+     * 
+     * 1. Make things the proper types they should be here
+     * 2. Fix the parser so we try to parse things as their types
+     * 3. Add functions here to get the top 5's in <String,Integer> maps (remove these calls from the controller)
+    */
+    
+    
     
     public FlowFileStats()
     {

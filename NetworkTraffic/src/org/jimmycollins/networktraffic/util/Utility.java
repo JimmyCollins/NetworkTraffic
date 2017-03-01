@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import org.jimmycollins.networktraffic.model.GenericMap;
 
 
 public class Utility 
@@ -74,9 +75,12 @@ public class Utility
      * @param mapToSort The map to sort
      * @return The map sorted by value, largest in ascending order
      */
+    
+    // TODO: Do we neeed V extends Comparable here???
+    
     private static <K, V extends Comparable<? super V>> Map<K, V> SortMapByValue(Map<K, V> mapToSort)
     {
-        List<Map.Entry<K, V>> list = new LinkedList<>( mapToSort.entrySet() );
+        List<Map.Entry<K, V>> list = new LinkedList<>(mapToSort.entrySet());
         
         // Uses Lamdba Espression (Java 8+) TODO: Check this
         //sort it by largest value ascending
