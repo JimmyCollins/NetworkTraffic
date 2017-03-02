@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import org.jimmycollins.networktraffic.model.GenericMap;
 
 
 public class Utility 
