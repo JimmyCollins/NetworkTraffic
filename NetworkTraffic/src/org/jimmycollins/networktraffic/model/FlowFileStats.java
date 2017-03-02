@@ -3,12 +3,16 @@ package org.jimmycollins.networktraffic.model;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.jimmycollins.networktraffic.util.Utility;
 
 public class FlowFileStats 
 {    
-    private static int ParsedFlows = 0;
+    
+    private List<Observer> observers = new ArrayList<Observer>();
+    
+    public static int ParsedFlows = 0;
     
     private static int UnparsableFlows;
     
@@ -36,6 +40,7 @@ public class FlowFileStats
     public void AddFlow()
     {
         ParsedFlows++;
+        notifyAllObservers();
     }
     
     public void AddUnparsableFlow()
@@ -102,6 +107,18 @@ public class FlowFileStats
     {
         return Protocols;
     }
+    
+    
+    // Observer Patter stuff
+    public void attach(Observer observer){
+      observers.add(observer);		
+   }
+
+    public void notifyAllObservers(){
+      for (Observer observer : observers) {
+         observer.update();
+      }
+   }	
     
     // TODO: New class? Consolidate/parameterize these?
     

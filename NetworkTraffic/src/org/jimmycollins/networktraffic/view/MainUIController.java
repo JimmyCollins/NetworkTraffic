@@ -16,65 +16,95 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jimmycollins.networktraffic.BarChartStrategy;
 import org.jimmycollins.networktraffic.DisplayContext;
+import org.jimmycollins.networktraffic.DisplayStrategy;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.util.FlowFileParser;
 import org.jimmycollins.networktraffic.util.Utility;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableView;
+import org.jimmycollins.networktraffic.model.Observer;
 
-public class MainUIController implements Initializable 
+public class MainUIController implements Initializable
 {   
     @FXML
     private TabPane tabPane;
     
     @FXML
+    private Tab generalTab;
+    
+    @FXML
+    //private ListView<String> logs;
+    private TableView tableView;
+    
+    @FXML
     private Button showBarChartsButton;
     
-    private final DisplayContext chartContext = new DisplayContext();
     
-    private FlowFileStats stats;
+    
+    private final DisplayContext chartContext = new DisplayContext();
+       
+    private FlowFileStats stats = new FlowFileStats();
+    
+    private File file;
+    
+    @FXML
+    private ChoiceBox chartChoice;
     
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
-    {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("binetflow files (*.binetflow)", "*.binetflow");
-        fileChooser.getExtensionFilters().add(extFilter);
-        File file = fileChooser.showOpenDialog(new Stage());
-        
+    {    
         try
         {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("binetflow files (*.binetflow)", "*.binetflow");
+            fileChooser.getExtensionFilters().add(extFilter);
+            file = fileChooser.showOpenDialog(new Stage());
+        
             // Parse the traffic file
-            stats = FlowFileParser.ParseFile(file);         
-            
+            //stats = FlowFileParser.ParseFile(file);  
+                        
             // Show Pie Charts by default
-            chartContext.setChartStrategy(new PieChartStrategy());
+            //chartContext.setChartStrategy(new PieChartStrategy());
             
-            // Draw the charts
-            drawCharts();
+            // Draw the charts based on the data in the passed file
+            
+            drawCharts(file, new PieChartStrategy());
             showBarChartsButton.setDisable(false);
         }
         catch(Exception ex)
         {
             // TODO: Log Exception
-            Utility.Alert(AlertType.ERROR, "Error", ex.getMessage() + "\n" + ex.getStackTrace());
+            Utility.Alert(AlertType.ERROR, "Error", ex.getMessage() + "\n" + ex.toString());
         }
 
     }
+    
     
     @FXML
     private void handleSelectChangeGraphs(ActionEvent event)
     {
         // Allows user to show Bar Charts instead of Pie Charts
-        tabPane.getTabs().clear();     
-        chartContext.setChartStrategy(new BarChartStrategy());
-        drawCharts();
+        //tabPane.getTabs().clear();     
+        //chartContext.setChartStrategy(new BarChartStrategy());
+        drawCharts(file, new BarChartStrategy());
     }
     
     // TODO: Allow a change back to Bar Charts
     // TODO: Add Line graphs
     
-    private void drawCharts()
-    {
+    private void drawCharts(File file, DisplayStrategy strategy)  // Should be in Chart Manager class?
+    {    
+        //tabPane.getTabs().clear();
+        
+        // Parse the traffic file
+        //stats = FlowFileParser.ParseFile(file);  
+        
+        FlowFileParser parser = new FlowFileParser(file);
+        stats = parser.ParseFile(stats);
+
+        chartContext.setChartStrategy(strategy);
+        
         Map<String,Integer> topSourcePorts = stats.GetTop5SourcePorts();
         Map<String,Integer> topDestinationPorts = stats.GetTop5DestinationPorts();
         Map<String,Integer> topSourceIPAddresses = stats.GetTop5SourceIPAddresses();
@@ -117,6 +147,26 @@ public class MainUIController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        //chartChoice.getItems().add("Pie Charts");
+        //chartChoice.getItems().add("Bar Charts");
+
+        stats.attach(new ParsingObserver(stats));
+        
     }    
+    
+    // Inner Class that handles updating the 'General' table
+    private class ParsingObserver extends Observer {
+        
+        ParsingObserver(FlowFileStats stats) {
+            this.stats = stats ;
+        }
+
+        @Override
+        public void update() {
+            System.out.println("In update");
+            tableView.getItems().setAll(stats.GetSourcePorts());
+        }
+       
+    }
     
 }

@@ -8,9 +8,18 @@ import java.io.IOException;
 import javafx.scene.control.Alert.AlertType;
 import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
+//import org.jimmycollins.networktraffic.model.ParsingObserver;
 
 
 public class FlowFileParser {
+    
+    
+    private File theFile;
+    
+    public FlowFileParser(File file)
+    {
+        theFile = file;
+    }
     
     
     /**
@@ -18,13 +27,14 @@ public class FlowFileParser {
      * @param file
      * @return 
      */ 
-    public static FlowFileStats ParseFile(File file) 
+    public FlowFileStats ParseFile(FlowFileStats stats) 
     {   
-        FlowFileStats stats = new FlowFileStats();
+        //FlowFileStats stats = new FlowFileStats();
+        //ParsingObserver p = new ParsingObserver(stats);
         
         try
         {    
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedReader reader = new BufferedReader(new FileReader(theFile));
             reader.readLine(); 
             String line = null;
             while ((line = reader.readLine()) != null)

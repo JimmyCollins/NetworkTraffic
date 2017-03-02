@@ -4,13 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/view/MainUIController.java</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/PieChartStrategy.java</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/util/TrafficFileParser.java</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/util/Utility.java</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/BarChartStrategy.java</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/ChartStrategy.java</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/view/MainUI.fxml</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/ChartContext.java</file>
+            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/model/ParsingObserver.java</file>
+            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/util/FlowFileParser.java</file>
+            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/model/Observer.java</file>
+            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/NetworkTraffic.java</file>
+            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/model/FlowFileStats.java</file>
         </group>
     </open-files>
 </project-private>
