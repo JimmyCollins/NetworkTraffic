@@ -32,18 +32,57 @@ public class BinetFileParser extends ParsableFile {
         
         try
         {    
-            BufferedReader reader = new BufferedReader(new FileReader(super.GetFile()));
-            reader.readLine(); 
-            String line = null;
-            while ((line = reader.readLine()) != null)
-            {             
-               String[] fields = line.split(",");
+            File file = super.GetFile();
+            
+            // Example of Anonymous inner class
+            Thread t = new Thread(new Runnable() {
+                public void run() {
+                   
+                try
+                {
+                    BufferedReader reader = new BufferedReader(new FileReader(file));
+                    reader.readLine(); 
+                    String line = null;
+                    while ((line = reader.readLine()) != null)
+                    {             
+                       String[] fields = line.split(",");
+                    
+                        stats.AddSourceHost(Utility.ParseInetAddress(fields[3]));
+                        stats.AddDestinationHost(Utility.ParseInetAddress(fields[6]));
+                        stats.AddSourcePort(Utility.ParseInt(fields[4]));
+                        stats.AddDestinationPort(Utility.ParseInt(fields[7]));
+                        stats.AddProtocol(fields[2]);
+                        stats.AddFlow();
+                    }
+                    
+                    
+
+                }
+                catch(Exception ex)  // TODO - Create custom exception
+                {
+                    stats.AddUnparsableFlow(); // TODO: Add to UI
+                    //Utility.Alert(AlertType.ERROR, "Error", ex.toString());
+                    // TODO: Log exception (have log tab on UI?)
+                }
+                }
+            });
+
+            t.start();
+            
+            
+            
+            //BufferedReader reader = new BufferedReader(new FileReader(super.GetFile()));
+            //reader.readLine(); 
+            //String line = null;
+            //while ((line = reader.readLine()) != null)
+            //{             
+              // String[] fields = line.split(",");
                
                // Could pass line to analyzer here to be processed, which
                // would update a TrafficFileStats Object?
                
-               try
-               {
+               //try
+               //{
                     /*NetworkPacket np = new NetworkPacket();
                     np.setDate((fields[0]));
                     np.setDuration(Float.parseFloat(fields[1]));
@@ -65,25 +104,25 @@ public class BinetFileParser extends ParsableFile {
                     // Get rid of adds and use Observable List??
                    
 
-                    stats.AddSourceHost(Utility.ParseInetAddress(fields[3]));
-                    stats.AddDestinationHost(Utility.ParseInetAddress(fields[6]));
-                    stats.AddSourcePort(Utility.ParseInt(fields[4]));
-                    stats.AddDestinationPort(Utility.ParseInt(fields[7]));
-                    stats.AddProtocol(fields[2]);
-                    stats.AddFlow();
+                 //   stats.AddSourceHost(Utility.ParseInetAddress(fields[3]));
+                   // stats.AddDestinationHost(Utility.ParseInetAddress(fields[6]));
+                    //stats.AddSourcePort(Utility.ParseInt(fields[4]));
+                    //stats.AddDestinationPort(Utility.ParseInt(fields[7]));
+                    //stats.AddProtocol(fields[2]);
+                    //stats.AddFlow();
                     
                     // TODO: Add other stats - e.g. IP's etc.?
                     
                     //list.add(np);
-               }
-               catch(Exception ex)  // TODO - Create custom exception
-               {
-                   stats.AddUnparsableFlow(); // TODO: Add to UI
+               //}
+               //catch(Exception ex)  // TODO - Create custom exception
+               //{
+                 //  stats.AddUnparsableFlow(); // TODO: Add to UI
                    //Utility.Alert(AlertType.ERROR, "Error", ex.toString());
                    // TODO: Log exception (have log tab on UI?)
-               }
+               //}
                
-            }        
+            /*}        
         }
         catch(FileNotFoundException ex)
         {
@@ -94,9 +133,15 @@ public class BinetFileParser extends ParsableFile {
         {
             // TODO: Log exception
             Utility.Alert(AlertType.ERROR, "IOException", ex.toString());
-        }
+        }*/
         
-        return stats;
+        //return stats;
+    }
+    catch(Exception ex)
+    {
+        
     }
     
+        return stats;
+}
 }

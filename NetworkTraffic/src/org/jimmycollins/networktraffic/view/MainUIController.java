@@ -35,21 +35,15 @@ public class MainUIController implements Initializable
     private TabPane tabPane;
     
     @FXML
-    private Tab generalTab;
-    
-    @FXML
-    //private ListView<String> logs;
-    private TableView tableView;
-    
-    @FXML
-    private TableColumn<String, String> sourceIpColumn;
-    
-    @FXML
     private Button showBarChartsButton;
     
     @FXML
-    private Label test;
+    private Label parsedFlowsLabel;
     
+    @FXML
+    private Label parsingErrorsLabel;
+    
+    TableView table = new TableView();
     
     private final DisplayContext chartContext = new DisplayContext();
        
@@ -59,6 +53,8 @@ public class MainUIController implements Initializable
     
     @FXML
     private ChoiceBox chartChoice;
+    
+    
     
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
@@ -80,11 +76,11 @@ public class MainUIController implements Initializable
             
             // Draw the charts based on the data in the passed file
             
-           BinetFileParser parser = new BinetFileParser(file);
+            BinetFileParser parser = new BinetFileParser(file);
             //stats = parser.ParseFile(stats);
             stats = parser.ParseBinetFile(stats);
             
-            drawCharts(file, new PieChartStrategy());
+            drawCharts(new PieChartStrategy());
             showBarChartsButton.setDisable(false);
         }
         catch(Exception ex)
@@ -103,16 +99,16 @@ public class MainUIController implements Initializable
         //tabPane.getTabs().clear();     
         //chartContext.setChartStrategy(new BarChartStrategy());
         tabPane.getTabs().remove(1, 6);
-        drawCharts(file, new BarChartStrategy());
+        drawCharts(new BarChartStrategy());
     }
     
     // TODO: Allow a change back to Bar Charts
     // TODO: Add Line graphs
     
-    private void drawCharts(File file, DisplayStrategy strategy)  // Should be in Chart Manager class?
+    private void drawCharts(DisplayStrategy strategy)  // Should be in Chart Manager class?
     {    
-        //tabPane.getTabs().clear();
-        
+        tabPane.getTabs().clear();
+        //tabPane.getTabs().remove(1, 6);
         
         // Parse the traffic file
         //stats = FlowFileParser.ParseFile(file);  
@@ -120,6 +116,20 @@ public class MainUIController implements Initializable
         //FlowFileParser parser = new FlowFileParser(file);
         //stats = parser.ParseFile(stats);
         //stats = parser.ParseBinetFile();
+        
+        // TODO: Draw general tab here to avoid complications with removing it??
+        Tab tableTab = new Tab();
+        table = new TableView();
+        TableColumn sourceIP = new TableColumn("Source IP");
+        TableColumn destinationIP = new TableColumn("Destination IP");
+        
+        table.getColumns().addAll(sourceIP, destinationIP);
+        tableTab.setText("General");
+        tableTab.setContent(table);
+        tabPane.getTabs().add(tableTab);
+        
+        
+        
 
         chartContext.setChartStrategy(strategy);
         
@@ -181,14 +191,28 @@ public class MainUIController implements Initializable
 
         @Override
         public void update() {
-            System.out.println("In update");
-            tableView.getItems().setAll(stats.GetSourcePorts());
             
-            /*Platform.runLater(new Runnable() {
+            System.out.println("In update");
+            //tableView.getItems().setAll(stats.GetSourcePorts());
+            
+            
+            // Anonymous Inner Class
+            Platform.runLater(new Runnable() {
                     @Override public void run() {
-                      test.setText(""+stats.GetParsedFlows());
+                      parsedFlowsLabel.setText(""+stats.GetParsedFlows());
+                      parsingErrorsLabel.setText(""+stats.GetUnparsableFlows());
+                      
+                      // TODO: Update General table here
+                      
+                      //table.getItems().setAll(stats.GetSourcePorts());
+                      
+                      
+                      //drawCharts(new PieChartStrategy());
+                      //topSourcePorts = stats.GetTop5SourcePorts();
                     }
-                  });*/
+                  });
+            
+            //test.setText(""+stats.GetParsedFlows());
             
             //sourceIpColumn.setCellValueFactory(stats -> stats.getValue().);
             //sourceIpColumn.textProperty().bind(stats.lst);

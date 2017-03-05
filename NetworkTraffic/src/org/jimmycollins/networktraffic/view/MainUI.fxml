@@ -9,34 +9,22 @@
 
 <AnchorPane id="AnchorPane" prefHeight="661.0" prefWidth="1036.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jimmycollins.networktraffic.view.MainUIController">
     <children>
-      <SplitPane dividerPositions="0.15430861723446893" layoutX="-50.0" layoutY="-51.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.16247582205029013" layoutX="-50.0" layoutY="-51.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                     <Button fx:id="button" layoutX="23.0" layoutY="20.0" onAction="#handleSelectTrafficFile" text="Select Traffic File..." />
                   <Button fx:id="showBarChartsButton" disable="true" layoutX="23.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleSelectChangeGraphs" prefHeight="25.0" prefWidth="113.0" text="Show Bar Charts" />
                   <ChoiceBox fx:id="chartChoice" layoutX="23.0" layoutY="99.0" prefHeight="25.0" prefWidth="113.0" />
-                  <Label fx:id="test" layoutX="39.0" layoutY="211.0" text="Label" />
+                  <Label layoutX="23.0" layoutY="155.0" text="Parsed Flows:" />
+                  <Label layoutX="23.0" layoutY="185.0" text="Parsing Errors:" />
+                  <Label fx:id="parsedFlowsLabel" layoutX="108.0" layoutY="155.0" />
+                  <Label fx:id="parsingErrorsLabel" layoutX="108.0" layoutY="185.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="626.0" prefWidth="877.0">
                <children>
-                  <TabPane fx:id="tabPane" layoutX="-7.0" layoutY="21.0" prefHeight="659.0" prefWidth="878.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <tabs>
-                        <Tab text="General">
-                           <content>
-                              <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
-                                <columns>
-                                  <TableColumn fx:id="sourceIpColumn" prefWidth="90.0" text="Source IP" />
-                                  <TableColumn prefWidth="107.0" text="Destination IP" />
-                                    <TableColumn prefWidth="88.0" text="Source Port" />
-                                    <TableColumn prefWidth="118.0" text="Destination Port" />
-                                    <TableColumn prefWidth="75.0" text="Protocol" />
-                                </columns>
-                              </TableView>
-                           </content>
-                        </Tab>
-                     </tabs></TabPane>
+                  <TabPane fx:id="tabPane" layoutX="-7.0" layoutY="21.0" prefHeight="659.0" prefWidth="878.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>

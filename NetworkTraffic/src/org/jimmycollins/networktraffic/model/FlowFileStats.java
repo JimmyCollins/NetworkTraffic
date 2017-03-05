@@ -54,7 +54,7 @@ public class FlowFileStats
     public void AddSourceHost(InetAddress host)
     {
         SourceHosts.add(host);
-        //lst.add(host.getHostAddress());
+        //lst.add(host.toString());
     }
     
     public void AddDestinationHost(InetAddress host)
