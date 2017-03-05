@@ -5,6 +5,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,9 +21,11 @@ import org.jimmycollins.networktraffic.DisplayContext;
 import org.jimmycollins.networktraffic.DisplayStrategy;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
-import org.jimmycollins.networktraffic.util.FlowFileParser;
+import org.jimmycollins.networktraffic.util.BinetFileParser;
 import org.jimmycollins.networktraffic.util.Utility;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.jimmycollins.networktraffic.model.Observer;
 
@@ -38,8 +42,13 @@ public class MainUIController implements Initializable
     private TableView tableView;
     
     @FXML
+    private TableColumn<String, String> sourceIpColumn;
+    
+    @FXML
     private Button showBarChartsButton;
     
+    @FXML
+    private Label test;
     
     
     private final DisplayContext chartContext = new DisplayContext();
@@ -60,6 +69,8 @@ public class MainUIController implements Initializable
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("binetflow files (*.binetflow)", "*.binetflow");
             fileChooser.getExtensionFilters().add(extFilter);
             file = fileChooser.showOpenDialog(new Stage());
+            
+            
         
             // Parse the traffic file
             //stats = FlowFileParser.ParseFile(file);  
@@ -68,6 +79,10 @@ public class MainUIController implements Initializable
             //chartContext.setChartStrategy(new PieChartStrategy());
             
             // Draw the charts based on the data in the passed file
+            
+           BinetFileParser parser = new BinetFileParser(file);
+            //stats = parser.ParseFile(stats);
+            stats = parser.ParseBinetFile(stats);
             
             drawCharts(file, new PieChartStrategy());
             showBarChartsButton.setDisable(false);
@@ -87,6 +102,7 @@ public class MainUIController implements Initializable
         // Allows user to show Bar Charts instead of Pie Charts
         //tabPane.getTabs().clear();     
         //chartContext.setChartStrategy(new BarChartStrategy());
+        tabPane.getTabs().remove(1, 6);
         drawCharts(file, new BarChartStrategy());
     }
     
@@ -97,11 +113,13 @@ public class MainUIController implements Initializable
     {    
         //tabPane.getTabs().clear();
         
+        
         // Parse the traffic file
         //stats = FlowFileParser.ParseFile(file);  
         
-        FlowFileParser parser = new FlowFileParser(file);
-        stats = parser.ParseFile(stats);
+        //FlowFileParser parser = new FlowFileParser(file);
+        //stats = parser.ParseFile(stats);
+        //stats = parser.ParseBinetFile();
 
         chartContext.setChartStrategy(strategy);
         
@@ -165,8 +183,18 @@ public class MainUIController implements Initializable
         public void update() {
             System.out.println("In update");
             tableView.getItems().setAll(stats.GetSourcePorts());
-        }
+            
+            /*Platform.runLater(new Runnable() {
+                    @Override public void run() {
+                      test.setText(""+stats.GetParsedFlows());
+                    }
+                  });*/
+            
+            //sourceIpColumn.setCellValueFactory(stats -> stats.getValue().);
+            //sourceIpColumn.textProperty().bind(stats.lst);
+            
        
     }
     
+}
 }

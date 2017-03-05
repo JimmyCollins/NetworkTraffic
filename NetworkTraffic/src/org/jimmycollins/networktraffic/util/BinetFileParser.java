@@ -8,33 +8,31 @@ import java.io.IOException;
 import javafx.scene.control.Alert.AlertType;
 import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
+import org.jimmycollins.networktraffic.model.ParsableFile;
 //import org.jimmycollins.networktraffic.model.ParsingObserver;
 
 
-public class FlowFileParser {
+public class BinetFileParser extends ParsableFile {
     
     
-    private File theFile;
+    //private File theFile;
     
-    public FlowFileParser(File file)
+    public BinetFileParser(File file)
     {
-        theFile = file;
+        super(file);
+        //theFile = fie;
     }
     
     
-    /**
-     * 
-     * @param file
-     * @return 
-     */ 
-    public FlowFileStats ParseFile(FlowFileStats stats) 
+    @Override
+    public FlowFileStats ParseBinetFile(FlowFileStats stats) 
     {   
         //FlowFileStats stats = new FlowFileStats();
         //ParsingObserver p = new ParsingObserver(stats);
         
         try
         {    
-            BufferedReader reader = new BufferedReader(new FileReader(theFile));
+            BufferedReader reader = new BufferedReader(new FileReader(super.GetFile()));
             reader.readLine(); 
             String line = null;
             while ((line = reader.readLine()) != null)

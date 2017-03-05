@@ -5,12 +5,15 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.jimmycollins.networktraffic.util.Utility;
 
 public class FlowFileStats 
 {    
+    //public ObservableList<String> lst = FXCollections.observableArrayList();
     
-    private List<Observer> observers = new ArrayList<Observer>();
+    private final List<Observer> observers = new ArrayList<>();
     
     public static int ParsedFlows = 0;
     
@@ -51,6 +54,7 @@ public class FlowFileStats
     public void AddSourceHost(InetAddress host)
     {
         SourceHosts.add(host);
+        //lst.add(host.getHostAddress());
     }
     
     public void AddDestinationHost(InetAddress host)

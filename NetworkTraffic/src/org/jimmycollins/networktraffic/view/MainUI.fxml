@@ -16,6 +16,7 @@
                     <Button fx:id="button" layoutX="23.0" layoutY="20.0" onAction="#handleSelectTrafficFile" text="Select Traffic File..." />
                   <Button fx:id="showBarChartsButton" disable="true" layoutX="23.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleSelectChangeGraphs" prefHeight="25.0" prefWidth="113.0" text="Show Bar Charts" />
                   <ChoiceBox fx:id="chartChoice" layoutX="23.0" layoutY="99.0" prefHeight="25.0" prefWidth="113.0" />
+                  <Label fx:id="test" layoutX="39.0" layoutY="211.0" text="Label" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="626.0" prefWidth="877.0">
