@@ -113,7 +113,7 @@ public class FlowFileStats
     }
     
     
-    // Observer Patter stuff
+    // Observer Pattern stuff
     public void attach(Observer observer){
       observers.add(observer);		
    }

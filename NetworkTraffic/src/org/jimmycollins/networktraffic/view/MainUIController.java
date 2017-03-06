@@ -201,7 +201,7 @@ public class MainUIController implements Initializable
                     @Override public void run() {
                       parsedFlowsLabel.setText(""+stats.GetParsedFlows());
                       parsingErrorsLabel.setText(""+stats.GetUnparsableFlows());
-                      
+                      //tabPane.requestLayout();
                       // TODO: Update General table here
                       
                       //table.getItems().setAll(stats.GetSourcePorts());

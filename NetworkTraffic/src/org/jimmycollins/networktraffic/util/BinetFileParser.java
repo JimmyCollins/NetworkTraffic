@@ -36,6 +36,7 @@ public class BinetFileParser extends ParsableFile {
             
             // Example of Anonymous inner class
             Thread t = new Thread(new Runnable() {
+                @Override
                 public void run() {
                    
                 try
@@ -53,10 +54,7 @@ public class BinetFileParser extends ParsableFile {
                         stats.AddDestinationPort(Utility.ParseInt(fields[7]));
                         stats.AddProtocol(fields[2]);
                         stats.AddFlow();
-                    }
-                    
-                    
-
+                    }                
                 }
                 catch(Exception ex)  // TODO - Create custom exception
                 {
@@ -66,10 +64,8 @@ public class BinetFileParser extends ParsableFile {
                 }
                 }
             });
-
+            t.setDaemon(true); // End thread if app closes
             t.start();
-            
-            
             
             //BufferedReader reader = new BufferedReader(new FileReader(super.GetFile()));
             //reader.readLine(); 
