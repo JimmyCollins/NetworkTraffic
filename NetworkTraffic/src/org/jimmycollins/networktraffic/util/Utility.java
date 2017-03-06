@@ -11,9 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-
 
 public class Utility 
 {
@@ -62,22 +59,6 @@ public class Utility
             // TODO: Log Exception
             return null;
         }
-    }
-    
-    
-    /**
-     * Generates an alert to the user
-     * @param type The Alert type
-     * @param header The Alert header text
-     * @param message The Alert message
-     */
-    public static void Alert(AlertType type, String header, String message)
-    {
-        Alert alert = new Alert(type);
-        alert.setTitle("Network Traffic Analyzer");
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        alert.show();
     }
     
     

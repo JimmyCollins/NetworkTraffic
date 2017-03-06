@@ -25,7 +25,7 @@ public class BinetFileParser extends ParsableFile {
     
     
     @Override
-    public FlowFileStats ParseBinetFile(FlowFileStats stats) 
+    public FlowFileStats ParseFile(FlowFileStats stats) 
     {   
         //FlowFileStats stats = new FlowFileStats();
         //ParsingObserver p = new ParsingObserver(stats);

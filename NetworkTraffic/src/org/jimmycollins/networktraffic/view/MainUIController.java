@@ -28,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.jimmycollins.networktraffic.model.Observer;
+import org.jimmycollins.networktraffic.util.Logger;
 
 public class MainUIController implements Initializable
 {   
@@ -78,15 +79,14 @@ public class MainUIController implements Initializable
             
             BinetFileParser parser = new BinetFileParser(file);
             //stats = parser.ParseFile(stats);
-            stats = parser.ParseBinetFile(stats);
+            stats = parser.ParseFile(stats);
             
             drawCharts(new PieChartStrategy());
             showBarChartsButton.setDisable(false);
         }
         catch(Exception ex)
         {
-            // TODO: Log Exception
-            Utility.Alert(AlertType.ERROR, "Error", ex.getMessage() + "\n" + ex.toString());
+            Logger.Log(AlertType.ERROR, "Error", ex.getMessage() + "\n" + ex.toString());
         }
 
     }

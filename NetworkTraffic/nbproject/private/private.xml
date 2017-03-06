@@ -4,8 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/view/MainUIController.java</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/model/ParsingObserver.java</file>
-            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/util/FlowFileParser.java</file>
+            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/model/ParsableFile.java</file>
+            <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/util/BinetFileParser.java</file>
             <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/model/Observer.java</file>
             <file>file:/C:/Users/Jimmy/Desktop/MSc.%20Software%20Development/Semester%202/COMP%209002%20Advanced%20Object%20Technology/Assignment_1/NetworkTraffic/NetworkTraffic/src/org/jimmycollins/networktraffic/model/FlowFileStats.java</file>
         </group>

@@ -16,7 +16,7 @@ public abstract class ParsableFile {
         return File;
     }
 	
-    public abstract FlowFileStats ParseBinetFile(FlowFileStats Stats);
+    public abstract FlowFileStats ParseFile(FlowFileStats Stats);
     
     // Other file types could be support here if required and implemented in a subclass.
 }
