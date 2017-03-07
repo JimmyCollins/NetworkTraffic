@@ -11,7 +11,7 @@ import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.ParsableFile;
 //import org.jimmycollins.networktraffic.model.ParsingObserver;
 
-
+// Rename to BinetFile??
 public class BinetFileParser extends ParsableFile {
     
     

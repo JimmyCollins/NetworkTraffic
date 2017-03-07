@@ -67,6 +67,22 @@ public class MainUIController implements Initializable
             fileChooser.getExtensionFilters().add(extFilter);
             file = fileChooser.showOpenDialog(new Stage());
             
+            long fileSize = file.length();
+            
+            if(fileSize >= 100000000)
+            {
+                Logger.Log(AlertType.INFORMATION, "Network Traffic Analyzer", "This file is larger than "
+                        + "100MB, and may take some time to parse. Parsing can be monitored "
+                        + "on the panel on the left.");
+            }
+            
+            
+            // TODO: Add file size label in stats panel on the left
+            
+            // TODO: Parse file but don't draw charts until user asks
+            
+            
+            
             
         
             // Parse the traffic file
@@ -81,8 +97,8 @@ public class MainUIController implements Initializable
             //stats = parser.ParseFile(stats);
             stats = parser.ParseFile(stats);
             
-            drawCharts(new PieChartStrategy());
-            showBarChartsButton.setDisable(false);
+            //drawCharts(new PieChartStrategy());
+            //showBarChartsButton.setDisable(false);
         }
         catch(Exception ex)
         {
@@ -98,7 +114,7 @@ public class MainUIController implements Initializable
         // Allows user to show Bar Charts instead of Pie Charts
         //tabPane.getTabs().clear();     
         //chartContext.setChartStrategy(new BarChartStrategy());
-        tabPane.getTabs().remove(1, 6);
+        //tabPane.getTabs().remove(1, 6);
         drawCharts(new BarChartStrategy());
     }
     
