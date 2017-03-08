@@ -15,7 +15,7 @@ public class FlowFileStats
     
     private final List<Observer> observers = new ArrayList<>();
     
-    public static int ParsedFlows = 0;
+    public static int ParsedFlows;
     
     private static int UnparsableFlows;
     
