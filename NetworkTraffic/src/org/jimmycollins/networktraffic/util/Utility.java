@@ -95,6 +95,12 @@ public class Utility
        return topElements;
     }
     
+    public static long BytesToMb(long bytes) 
+    {
+        long sizeInMb = bytes / (1024 * 1024);
+        return sizeInMb;
+    }
+    
     
     //todo rewrite http://stackoverflow.com/questions/109383/sort-a-mapkey-value-by-values-java
     
@@ -122,5 +128,7 @@ public class Utility
         
         return result;
     }
+    
+    
     
 }

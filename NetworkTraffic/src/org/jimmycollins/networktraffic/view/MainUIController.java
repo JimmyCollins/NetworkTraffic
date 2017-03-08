@@ -39,10 +39,16 @@ public class MainUIController implements Initializable
     private Button showBarChartsButton;
     
     @FXML
+    private Button showPieChartsButton;
+    
+    @FXML
     private Label parsedFlowsLabel;
     
     @FXML
     private Label parsingErrorsLabel;
+    
+    @FXML
+    private Label fileSizeLabel;
     
     TableView table = new TableView();
     
@@ -68,6 +74,20 @@ public class MainUIController implements Initializable
             file = fileChooser.showOpenDialog(new Stage());
             
             long fileSize = file.length();
+            long fileSizeAsMb = Utility.BytesToMb(fileSize);
+            
+            if(fileSizeAsMb < 1)
+            {
+                fileSizeLabel.setText("< 1MB");
+            }
+            else
+            {
+                fileSizeLabel.setText("" + fileSizeAsMb + "MB");
+            }
+            
+            
+            
+
             
             if(fileSize >= 100000000)
             {
@@ -109,13 +129,24 @@ public class MainUIController implements Initializable
     
     
     @FXML
-    private void handleSelectChangeGraphs(ActionEvent event)
+    private void handleDrawBarCharts(ActionEvent event)
     {
         // Allows user to show Bar Charts instead of Pie Charts
         //tabPane.getTabs().clear();     
         //chartContext.setChartStrategy(new BarChartStrategy());
         //tabPane.getTabs().remove(1, 6);
         drawCharts(new BarChartStrategy());
+    }
+    
+    
+    @FXML
+    private void handleDrawPieCharts(ActionEvent event)
+    {
+        // Allows user to show Bar Charts instead of Pie Charts
+        //tabPane.getTabs().clear();     
+        //chartContext.setChartStrategy(new BarChartStrategy());
+        //tabPane.getTabs().remove(1, 6);
+        drawCharts(new PieChartStrategy());
     }
     
     // TODO: Allow a change back to Bar Charts
@@ -134,7 +165,7 @@ public class MainUIController implements Initializable
         //stats = parser.ParseBinetFile();
         
         // TODO: Draw general tab here to avoid complications with removing it??
-        Tab tableTab = new Tab();
+        /*Tab tableTab = new Tab();
         table = new TableView();
         TableColumn sourceIP = new TableColumn("Source IP");
         TableColumn destinationIP = new TableColumn("Destination IP");
@@ -142,7 +173,7 @@ public class MainUIController implements Initializable
         table.getColumns().addAll(sourceIP, destinationIP);
         tableTab.setText("General");
         tableTab.setContent(table);
-        tabPane.getTabs().add(tableTab);
+        tabPane.getTabs().add(tableTab);*/
         
         
         
