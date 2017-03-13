@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
@@ -39,7 +40,11 @@ public class MainUIController implements Initializable
     @FXML
     private Label fileSizeLabel;
     
-    TableView table = new TableView();
+    @FXML
+    private Button showBarChartsButton;
+    
+    @FXML
+    private Button showPieChartsButton;
     
     private final DisplayContext chartContext = new DisplayContext();
        
@@ -87,8 +92,8 @@ public class MainUIController implements Initializable
             
             // TODO: Decide if we draw the charts as we go (if refresh works) or make the user draw them after parsing
             
-            //drawCharts(new PieChartStrategy());
-            //showBarChartsButton.setDisable(false);
+            showBarChartsButton.setDisable(false);
+            showPieChartsButton.setDisable(false);
         }
         catch(Exception ex)
         {
@@ -101,14 +106,18 @@ public class MainUIController implements Initializable
     @FXML
     private void handleDrawBarCharts(ActionEvent event)
     {
+        int currentIndex = tabPane.getSelectionModel().getSelectedIndex();
         drawCharts(new BarChartStrategy());
+        tabPane.getSelectionModel().select(currentIndex);
     }
     
     
     @FXML
     private void handleDrawPieCharts(ActionEvent event)
     {
+        int currentIndex = tabPane.getSelectionModel().getSelectedIndex();
         drawCharts(new PieChartStrategy());
+        tabPane.getSelectionModel().select(currentIndex);
     }
     
     // TODO: Allow a change back to Bar Charts
