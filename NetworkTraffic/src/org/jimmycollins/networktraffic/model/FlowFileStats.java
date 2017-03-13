@@ -11,18 +11,20 @@ public class FlowFileStats
 {      
     private final List<Observer> Observers = new ArrayList<>();
     
-    public static int ParsedFlows;
+    private final ArrayList<Flow> Flows;
+    
+    private static int ParsedFlows;
     
     private static int UnparsableFlows;
     
-    private ArrayList<Flow> Flows;
+    private static int TotalPackets;
     
     public FlowFileStats()
     {
         ParsedFlows = 0;
         UnparsableFlows = 0;
-        Flows = new ArrayList();
-        
+        TotalPackets = 0;
+        Flows = new ArrayList();      
     }
     
     public void IncrementFlowCounter()
@@ -37,6 +39,16 @@ public class FlowFileStats
         notifyAllObservers();
     }
     
+    public void AddFlow(Flow flow)
+    {
+        this.Flows.add(flow);
+    }
+    
+    public void AddPackets(int packetCount)
+    {
+        TotalPackets += packetCount;
+    }
+    
     public int GetParsedFlows()
     {
         return ParsedFlows;
@@ -46,17 +58,15 @@ public class FlowFileStats
     {
         return UnparsableFlows;
     }
-    
-    
-    public void AddFlow(Flow flow)
-    {
-        this.Flows.add(flow);
-    }
-    
-    
+      
     public ArrayList<Flow> GetFlows()
     {
         return Flows;
+    }
+    
+    public int GetTotalPacketCount()
+    {
+        return TotalPackets;
     }
     
     

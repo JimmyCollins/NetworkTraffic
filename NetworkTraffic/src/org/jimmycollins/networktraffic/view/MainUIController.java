@@ -21,7 +21,6 @@ import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.util.BinetFile;
 import org.jimmycollins.networktraffic.util.Utility;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.util.Logger;
@@ -45,6 +44,9 @@ public class MainUIController implements Initializable
     
     @FXML
     private Button showPieChartsButton;
+    
+    @FXML
+    private Label totalPacketsLabel;
     
     private final DisplayContext chartContext = new DisplayContext();
        
@@ -199,6 +201,9 @@ public class MainUIController implements Initializable
                     @Override public void run() {
                       parsedFlowsLabel.setText(""+stats.GetParsedFlows());
                       parsingErrorsLabel.setText(""+stats.GetUnparsableFlows());
+                      totalPacketsLabel.setText(""+stats.GetTotalPacketCount());
+                      
+                      
                       //tabPane.requestLayout();
                       // TODO: Update General table here
                       

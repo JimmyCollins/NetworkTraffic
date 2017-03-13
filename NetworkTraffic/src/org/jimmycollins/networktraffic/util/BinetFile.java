@@ -41,6 +41,7 @@ public class BinetFile extends ParsableFile {
                         flow.SetSourcePort(Utility.ParseInt(fields[4]));
                         flow.SetDestinationPort(Utility.ParseInt(fields[7]));
                         
+                        stats.AddPackets(Utility.ParseInt(fields[11]));
                         stats.AddFlow(flow);
                         stats.IncrementFlowCounter();
                     }                
