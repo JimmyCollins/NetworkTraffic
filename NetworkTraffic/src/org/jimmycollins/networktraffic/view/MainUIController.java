@@ -3,15 +3,12 @@ package org.jimmycollins.networktraffic.view;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
@@ -20,13 +17,11 @@ import org.jimmycollins.networktraffic.BarChartStrategy;
 import org.jimmycollins.networktraffic.DisplayContext;
 import org.jimmycollins.networktraffic.DisplayStrategy;
 import org.jimmycollins.networktraffic.PieChartStrategy;
-import org.jimmycollins.networktraffic.model.FlowFileStats;
-import org.jimmycollins.networktraffic.util.BinetFileParser;
+import org.jimmycollins.networktraffic.util.BinetFile;
 import org.jimmycollins.networktraffic.util.Utility;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.util.Logger;
 
@@ -34,12 +29,6 @@ public class MainUIController implements Initializable
 {   
     @FXML
     private TabPane tabPane;
-    
-    @FXML
-    private Button showBarChartsButton;
-    
-    @FXML
-    private Button showPieChartsButton;
     
     @FXML
     private Label parsedFlowsLabel;
@@ -57,10 +46,6 @@ public class MainUIController implements Initializable
     private FlowFileStats stats = new FlowFileStats();
     
     private File file;
-    
-    @FXML
-    private ChoiceBox chartChoice;
-    
     
     
     @FXML
@@ -85,10 +70,7 @@ public class MainUIController implements Initializable
                 fileSizeLabel.setText("" + fileSizeAsMb + "MB");
             }
             
-            
-            
-
-            
+            // Alert the user if that parsing may take a while for large files         
             if(fileSize >= 100000000)
             {
                 Logger.Log(AlertType.INFORMATION, "Network Traffic Analyzer", "This file is larger than "
@@ -97,25 +79,13 @@ public class MainUIController implements Initializable
             }
             
             
-            // TODO: Add file size label in stats panel on the left
-            
             // TODO: Parse file but don't draw charts until user asks
-            
-            
-            
-            
-        
-            // Parse the traffic file
-            //stats = FlowFileParser.ParseFile(file);  
-                        
-            // Show Pie Charts by default
-            //chartContext.setChartStrategy(new PieChartStrategy());
-            
-            // Draw the charts based on the data in the passed file
-            
-            BinetFileParser parser = new BinetFileParser(file);
-            //stats = parser.ParseFile(stats);
+                 
+            // Parse the traffic file       
+            BinetFile parser = new BinetFile(file);
             stats = parser.ParseFile(stats);
+            
+            // TODO: Decide if we draw the charts as we go (if refresh works) or make the user draw them after parsing
             
             //drawCharts(new PieChartStrategy());
             //showBarChartsButton.setDisable(false);
@@ -131,10 +101,6 @@ public class MainUIController implements Initializable
     @FXML
     private void handleDrawBarCharts(ActionEvent event)
     {
-        // Allows user to show Bar Charts instead of Pie Charts
-        //tabPane.getTabs().clear();     
-        //chartContext.setChartStrategy(new BarChartStrategy());
-        //tabPane.getTabs().remove(1, 6);
         drawCharts(new BarChartStrategy());
     }
     
@@ -142,10 +108,6 @@ public class MainUIController implements Initializable
     @FXML
     private void handleDrawPieCharts(ActionEvent event)
     {
-        // Allows user to show Bar Charts instead of Pie Charts
-        //tabPane.getTabs().clear();     
-        //chartContext.setChartStrategy(new BarChartStrategy());
-        //tabPane.getTabs().remove(1, 6);
         drawCharts(new PieChartStrategy());
     }
     
@@ -155,14 +117,6 @@ public class MainUIController implements Initializable
     private void drawCharts(DisplayStrategy strategy)  // Should be in Chart Manager class?
     {    
         tabPane.getTabs().clear();
-        //tabPane.getTabs().remove(1, 6);
-        
-        // Parse the traffic file
-        //stats = FlowFileParser.ParseFile(file);  
-        
-        //FlowFileParser parser = new FlowFileParser(file);
-        //stats = parser.ParseFile(stats);
-        //stats = parser.ParseBinetFile();
         
         // TODO: Draw general tab here to avoid complications with removing it??
         /*Tab tableTab = new Tab();
@@ -175,33 +129,25 @@ public class MainUIController implements Initializable
         tableTab.setContent(table);
         tabPane.getTabs().add(tableTab);*/
         
-        
-        
-
         chartContext.setChartStrategy(strategy);
         
-        Map<String,Integer> topSourcePorts = stats.GetTop5SourcePorts();
-        Map<String,Integer> topDestinationPorts = stats.GetTop5DestinationPorts();
-        Map<String,Integer> topSourceIPAddresses = stats.GetTop5SourceIPAddresses();
-        Map<String,Integer> topDestinationIPAddresses = stats.GetTop5DestinationIPAddresses();
-        
         // Top Source Ports
-        Tab sourcePorts = chartContext.createChartTab(topSourcePorts, "Top Source Ports");
+        Tab sourcePorts = chartContext.createChartTab(stats.GetTop5SourcePorts(), "Top Source Ports");
         sourcePorts.setText("Source Ports");
         tabPane.getTabs().add(sourcePorts);
         
         // Top Destination Ports
-        Tab destinationPorts = chartContext.createChartTab(topDestinationPorts, "Top Destination Ports");
+        Tab destinationPorts = chartContext.createChartTab(stats.GetTop5DestinationPorts(), "Top Destination Ports");
         destinationPorts.setText("Destination Ports");
         tabPane.getTabs().add(destinationPorts);
         
         // Top Source IP Addresses
-        Tab sourceIPAddresses = chartContext.createChartTab(topSourceIPAddresses, "Top Source IP Addresses");
+        Tab sourceIPAddresses = chartContext.createChartTab(stats.GetTop5SourceIPAddresses(), "Top Source IP Addresses");
         sourceIPAddresses.setText("Source IP");
         tabPane.getTabs().add(sourceIPAddresses);
         
         // Top Destination IP Addresses
-        Tab destinationIPAddresses = chartContext.createChartTab(topDestinationIPAddresses, "Top Destination IP Addresses");
+        Tab destinationIPAddresses = chartContext.createChartTab(stats.GetTop5DestinationIPAddresses(), "Top Destination IP Addresses");
         destinationIPAddresses.setText("Destination IP");
         tabPane.getTabs().add(destinationIPAddresses);
         
@@ -222,14 +168,10 @@ public class MainUIController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        //chartChoice.getItems().add("Pie Charts");
-        //chartChoice.getItems().add("Bar Charts");
-
-        stats.attach(new ParsingObserver(stats));
-        
+        stats.attach(new ParsingObserver(stats));    
     }    
     
-    // Inner Class that handles updating the 'General' table
+    // Inner Class that handles updating the 'General' table - TODO
     private class ParsingObserver extends Observer {
         
         ParsingObserver(FlowFileStats stats) {
@@ -262,9 +204,7 @@ public class MainUIController implements Initializable
             //test.setText(""+stats.GetParsedFlows());
             
             //sourceIpColumn.setCellValueFactory(stats -> stats.getValue().);
-            //sourceIpColumn.textProperty().bind(stats.lst);
-            
-       
+            //sourceIpColumn.textProperty().bind(stats.lst);       
     }
     
 }

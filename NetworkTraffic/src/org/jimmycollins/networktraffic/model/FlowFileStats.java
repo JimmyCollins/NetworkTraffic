@@ -1,100 +1,40 @@
 
 package org.jimmycollins.networktraffic.model;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.jimmycollins.networktraffic.util.Utility;
 
+
 public class FlowFileStats 
-{    
-    //public ObservableList<String> lst = FXCollections.observableArrayList();
-    
-    private final List<Observer> observers = new ArrayList<>();
+{      
+    private final List<Observer> Observers = new ArrayList<>();
     
     public static int ParsedFlows;
     
     private static int UnparsableFlows;
     
-    private static ArrayList<InetAddress> SourceHosts;
-    
-    private static ArrayList<InetAddress> DestinationHosts;
-    
-    private static ArrayList<Integer> SourcePorts;
-    
-    private static ArrayList<Integer> DestinationPorts;
-    
-    private static ArrayList<String> Protocols;
+    private ArrayList<Flow> Flows;
     
     public FlowFileStats()
     {
         ParsedFlows = 0;
         UnparsableFlows = 0;
-        SourceHosts = new ArrayList<>();
-        DestinationHosts = new ArrayList<>();
-        SourcePorts = new ArrayList<>();
-        DestinationPorts = new ArrayList<>();
-        Protocols = new ArrayList();
+        Flows = new ArrayList();
+        
     }
     
-    public void AddFlow()
+    public void IncrementFlowCounter()
     {
         ParsedFlows++;
         notifyAllObservers();
     }
     
-    public void AddUnparsableFlow()
+    public void IncrementUnparsableFlowCounter()
     {
         UnparsableFlows++;
-    }
-    
-    public void AddSourceHost(InetAddress host)
-    {
-        SourceHosts.add(host);
-        //lst.add(host.toString());
-    }
-    
-    public void AddDestinationHost(InetAddress host)
-    {
-        DestinationHosts.add(host);
-    }
-    
-    public void AddSourcePort(Integer port)
-    {
-        SourcePorts.add(port);
-    }
-    
-    public void AddDestinationPort(Integer port)
-    {
-        DestinationPorts.add(port);
-    }
-    
-    public void AddProtocol(String protocol)
-    {
-        Protocols.add(protocol);
-    }
-    
-    public ArrayList<InetAddress> GetSourceHosts()
-    {
-        return SourceHosts;
-    }
-    
-    public ArrayList<InetAddress> GetDestinationHosts()
-    {
-        return DestinationHosts;
-    }
-    
-    public ArrayList<Integer> GetSourcePorts()
-    {
-        return SourcePorts;
-    }
-    
-    public ArrayList<Integer> GetDestinationPorts()
-    {
-        return DestinationPorts;
+        notifyAllObservers();
     }
     
     public int GetParsedFlows()
@@ -107,62 +47,77 @@ public class FlowFileStats
         return UnparsableFlows;
     }
     
-    public ArrayList<String> GetProtocols()
+    
+    public void AddFlow(Flow flow)
     {
-        return Protocols;
+        this.Flows.add(flow);
+    }
+    
+    
+    public ArrayList<Flow> GetFlows()
+    {
+        return Flows;
     }
     
     
     // Observer Pattern stuff
-    public void attach(Observer observer){
-      observers.add(observer);		
-   }
+    public void attach(Observer observer)
+    {
+      Observers.add(observer);		
+    }
 
-    public void notifyAllObservers(){
-      for (Observer observer : observers) {
-         observer.update();
-      }
+    public void notifyAllObservers()
+    {
+        Observers.stream().forEach((observer) -> {
+            observer.update();
+        });
    }	
     
-    // TODO: New class? Consolidate/parameterize these?
+    
+    // TODO: Comment these
     
     public Map<String,Integer> GetTop5SourcePorts()
     {
-        ArrayList<String> sourcePorts = new ArrayList<>();     
-        for(int i=0; i<SourcePorts.size();i++)
+        ArrayList<String> sourcePorts = new ArrayList<>();  
+        
+        for(int i=0; i<Flows.size();i++)
         {
-            if(SourcePorts.get(i) != -1)
-            {
-                sourcePorts.add(SourcePorts.get(i).toString());
-            }
+           if(Flows.get(i).GetSourcePort() != -1) 
+           {
+               int port = Flows.get(i).GetSourcePort();
+               sourcePorts.add(Integer.toString(port));
+           }
         }
         
         return Utility.GetTopElements(sourcePorts, 4);    
     }
-     
+    
     public Map<String,Integer> GetTop5DestinationPorts()
     {
-        ArrayList<String> destinationPorts = new ArrayList<>();      
-        for(int i=0; i<DestinationPorts.size();i++)
+        ArrayList<String> destinationPorts = new ArrayList<>();  
+        
+        for(int i=0; i<Flows.size();i++)
         {
-            if(DestinationPorts.get(i) != -1)
-            {
-                destinationPorts.add(DestinationPorts.get(i).toString());
-            }
+           if(Flows.get(i).GetSourcePort() != -1) 
+           {
+               int port = Flows.get(i).GetDestinationPort();
+               destinationPorts.add(Integer.toString(port));
+           }
         }
         
         return Utility.GetTopElements(destinationPorts, 4);    
     }
-      
+     
     public Map<String,Integer> GetTop5SourceIPAddresses()
     {
-        ArrayList<String> sourceIPs = new ArrayList<>();     
-        for(int i=0; i<SourceHosts.size();i++)
+        ArrayList<String> sourceIPs = new ArrayList<>();   
+             
+        for(int i=0; i<Flows.size();i++)
         {
-            if(SourceHosts.get(i) != null)
-            {
-                sourceIPs.add(SourceHosts.get(i).getHostAddress());
-            }
+           if(Flows.get(i).GetSourcePort() != -1) 
+           {
+               sourceIPs.add(Flows.get(i).GetSourceHost().getHostAddress());
+           }
         }
         
         return Utility.GetTopElements(sourceIPs, 4);    
@@ -171,12 +126,13 @@ public class FlowFileStats
     public Map<String,Integer> GetTop5DestinationIPAddresses()
     {
         ArrayList<String> destinationIPs = new ArrayList<>();     
-        for(int i=0; i<DestinationHosts.size();i++)
+        
+        for(int i=0; i<Flows.size();i++)
         {
-            if(DestinationHosts.get(i) != null)
-            {
-                destinationIPs.add(DestinationHosts.get(i).getHostAddress());
-            }
+           if(Flows.get(i).GetSourcePort() != -1) 
+           {
+               destinationIPs.add(Flows.get(i).GetDestinationHost().getHostAddress());
+           }
         }
         
         return Utility.GetTopElements(destinationIPs, 4);    
@@ -184,13 +140,14 @@ public class FlowFileStats
     
     public Map<String,Integer> GetTop5Protocols()
     {
-        ArrayList<String> protocols = new ArrayList<>();     
-        for(int i=0; i<Protocols.size();i++)
+        ArrayList<String> protocols = new ArrayList<>();  
+        
+        for(int i=0; i<Flows.size();i++)
         {
-            if(Protocols.get(i) != null || !Protocols.get(i).isEmpty())
-            {
-                protocols.add(Protocols.get(i).toUpperCase());
-            }
+           if(Flows.get(i).GetSourcePort() != -1) 
+           {
+               protocols.add(Flows.get(i).GetFlowType());
+           }
         }
         
         return Utility.GetTopElements(protocols, 4);    
