@@ -9,12 +9,13 @@ public class FlowFactory {
 	TCP, UDP, ICMP, ARP, RTP, PIM, IPXSPX, RTCP, IGMP, IPV6, IPV6ICMP, UDT, ESP, UNAS, RARP
     }
     
+    
     /**
      * Create a new Flow
      * @param type The type of the flow (based on the network protocol()
      * @return A new Flow object with the given type
      */
-    public static Flow CreateFlow(String type)
+    public Flow CreateFlow(String type)
     {
         Flow flow = null;
 

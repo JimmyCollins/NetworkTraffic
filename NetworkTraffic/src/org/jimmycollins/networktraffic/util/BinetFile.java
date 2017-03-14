@@ -9,9 +9,12 @@ import org.jimmycollins.networktraffic.model.ParsableFile;
 
 public class BinetFile extends ParsableFile {
     
+    private final FlowFactory Factory;
+    
     public BinetFile(File file)
     {
         super(file);
+        Factory = new FlowFactory();
     }
      
     @Override
@@ -35,7 +38,7 @@ public class BinetFile extends ParsableFile {
                     {                            
                         String[] fields = line.split(",");
                         
-                        Flow flow = FlowFactory.CreateFlow(fields[2]);
+                        Flow flow = Factory.CreateFlow(fields[2]);
                         flow.SetSourceHost(Utility.ParseInetAddress(fields[3]));
                         flow.SetDestinationHost(Utility.ParseInetAddress(fields[6]));
                         flow.SetSourcePort(Utility.ParseInt(fields[4]));
