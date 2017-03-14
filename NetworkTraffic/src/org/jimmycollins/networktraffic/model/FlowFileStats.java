@@ -86,7 +86,7 @@ public class FlowFileStats
     
     // TODO: Comment these
     
-    public Map<String,Integer> GetTop5SourcePorts()
+    public Map<String,Integer> GetTopSourcePorts()
     {
         ArrayList<String> sourcePorts = new ArrayList<>();  
         
@@ -99,10 +99,10 @@ public class FlowFileStats
            }
         }
         
-        return Utility.GetTopElements(sourcePorts, 4);    
+        return Utility.GetTopElements(sourcePorts, 9);    
     }
     
-    public Map<String,Integer> GetTop5DestinationPorts()
+    public Map<String,Integer> GetTopDestinationPorts()
     {
         ArrayList<String> destinationPorts = new ArrayList<>();  
         
@@ -115,10 +115,10 @@ public class FlowFileStats
            }
         }
         
-        return Utility.GetTopElements(destinationPorts, 4);    
+        return Utility.GetTopElements(destinationPorts, 9);    
     }
      
-    public Map<String,Integer> GetTop5SourceIPAddresses()
+    public Map<String,Integer> GetTopSourceIPAddresses()
     {
         ArrayList<String> sourceIPs = new ArrayList<>();   
              
@@ -130,10 +130,10 @@ public class FlowFileStats
            }
         }
         
-        return Utility.GetTopElements(sourceIPs, 4);    
+        return Utility.GetTopElements(sourceIPs, 9);    
     }
     
-    public Map<String,Integer> GetTop5DestinationIPAddresses()
+    public Map<String,Integer> GetTopDestinationIPAddresses()
     {
         ArrayList<String> destinationIPs = new ArrayList<>();     
         
@@ -145,10 +145,10 @@ public class FlowFileStats
            }
         }
         
-        return Utility.GetTopElements(destinationIPs, 4);    
+        return Utility.GetTopElements(destinationIPs, 9);    
     }
     
-    public Map<String,Integer> GetTop5Protocols()
+    public Map<String,Integer> GetTopProtocols()
     {
         ArrayList<String> protocols = new ArrayList<>();  
         
@@ -160,7 +160,7 @@ public class FlowFileStats
            }
         }
         
-        return Utility.GetTopElements(protocols, 4);    
+        return Utility.GetTopElements(protocols, 9);    
     } 
     
 }
