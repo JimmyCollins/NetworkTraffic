@@ -3,6 +3,7 @@ package org.jimmycollins.networktraffic.view;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -58,6 +59,8 @@ public class MainUIController implements Initializable
     
     private File file;
     
+    Locale locale = new Locale("en", "US");
+    ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
     
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
@@ -72,7 +75,7 @@ public class MainUIController implements Initializable
             // Ensure the user has selected a file
             if(file == null)
             {
-                Logger.Log(AlertType.WARNING, "Network Traffic Analyzer", "You have not selected a file.");
+                Logger.Log(AlertType.WARNING, resources.getString("alertheader"), resources.getString("nofileselectederror"));
                 return;
             }
             
@@ -91,9 +94,7 @@ public class MainUIController implements Initializable
             // Alert the user that parsing may take a while for large files         
             if(fileSize >= 100000000)
             {
-                Logger.Log(AlertType.INFORMATION, "Network Traffic Analyzer", "This file is larger than "
-                        + "100MB, and may take some time to parse. Parsing can be monitored "
-                        + "on the panel on the left.");
+                Logger.Log(AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("bigfilewarning"));
             }
                  
             // Parse the traffic file       
@@ -108,7 +109,7 @@ public class MainUIController implements Initializable
         }
         catch(Exception ex)
         {
-            Logger.Log(AlertType.ERROR, "Error", ex.getMessage() + "\n" + ex.toString());
+            Logger.Log(AlertType.ERROR, resources.getString("error"), ex.getMessage() + "\n" + ex.toString());
         }
     }
     
@@ -158,28 +159,28 @@ public class MainUIController implements Initializable
         chartContext.setChartStrategy(strategy);
         
         // Top Source Ports
-        Tab sourcePorts = chartContext.createChartTab(stats.GetTopSourcePorts(), "Top Source Ports");
-        sourcePorts.setText("Source Ports");
+        Tab sourcePorts = chartContext.createChartTab(stats.GetTopSourcePorts(), resources.getString("topsourceports"));
+        sourcePorts.setText(resources.getString("sourceports"));
         tabPane.getTabs().add(sourcePorts);
         
         // Top Destination Ports
-        Tab destinationPorts = chartContext.createChartTab(stats.GetTopDestinationPorts(), "Top Destination Ports");
-        destinationPorts.setText("Destination Ports");
+        Tab destinationPorts = chartContext.createChartTab(stats.GetTopDestinationPorts(), resources.getString("topdestinationports"));
+        destinationPorts.setText(resources.getString("destinationports"));
         tabPane.getTabs().add(destinationPorts);
         
         // Top Source IP Addresses
-        Tab sourceIPAddresses = chartContext.createChartTab(stats.GetTopSourceIPAddresses(), "Top Source IP Addresses");
-        sourceIPAddresses.setText("Source IP");
+        Tab sourceIPAddresses = chartContext.createChartTab(stats.GetTopSourceIPAddresses(), resources.getString("topsourceipaddresses"));
+        sourceIPAddresses.setText(resources.getString("sourceip"));
         tabPane.getTabs().add(sourceIPAddresses);
         
         // Top Destination IP Addresses
-        Tab destinationIPAddresses = chartContext.createChartTab(stats.GetTopDestinationIPAddresses(), "Top Destination IP Addresses");
-        destinationIPAddresses.setText("Destination IP");
+        Tab destinationIPAddresses = chartContext.createChartTab(stats.GetTopDestinationIPAddresses(), resources.getString("topdestinationipaddresses"));
+        destinationIPAddresses.setText(resources.getString("destinationip"));
         tabPane.getTabs().add(destinationIPAddresses);
         
         // Top Protocols
-        Tab protocols = chartContext.createChartTab(stats.GetTopProtocols(), "Top Protocols");
-        protocols.setText("Protocols");
+        Tab protocols = chartContext.createChartTab(stats.GetTopProtocols(), resources.getString("topprotocols"));
+        protocols.setText(resources.getString("protocols"));
         tabPane.getTabs().add(protocols);
         
         // TODO: More Charts
@@ -192,8 +193,8 @@ public class MainUIController implements Initializable
     }
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
+    public void initialize(URL url, ResourceBundle rb) 
+    {
         stats.attach(new ParsingObserver(stats));    
     }    
     

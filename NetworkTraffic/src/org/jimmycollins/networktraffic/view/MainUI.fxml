@@ -16,17 +16,17 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="button" layoutX="23.0" layoutY="20.0" onAction="#handleSelectTrafficFile" prefHeight="25.0" prefWidth="113.0" text="Add Traffic File" />
-                  <Button fx:id="showBarChartsButton" disable="true" layoutX="23.0" layoutY="58.0" mnemonicParsing="false" onAction="#handleDrawBarCharts" prefHeight="25.0" prefWidth="113.0" text="Show Bar Charts" />
-                  <Button fx:id="showLineChartsButton" disable="true" layoutX="24.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleDrawLineCharts" prefHeight="25.0" prefWidth="113.0" text="Show Line Charts" />
-                  <Button fx:id="showPieChartsButton" disable="true" layoutX="23.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleDrawPieCharts" prefHeight="25.0" prefWidth="113.0" text="Show Pie Charts" />
+                  <Button fx:id="button" layoutX="23.0" layoutY="20.0" onAction="#handleSelectTrafficFile" prefHeight="25.0" prefWidth="113.0" text="%addfilebutton" />
+                  <Button fx:id="showBarChartsButton" disable="true" layoutX="23.0" layoutY="58.0" mnemonicParsing="false" onAction="#handleDrawBarCharts" prefHeight="25.0" prefWidth="113.0" text="%showbarchartsbutton" />
+                  <Button fx:id="showLineChartsButton" disable="true" layoutX="24.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleDrawLineCharts" prefHeight="25.0" prefWidth="113.0" text="%showlinechartsbutton" />
+                  <Button fx:id="showPieChartsButton" disable="true" layoutX="23.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleDrawPieCharts" prefHeight="25.0" prefWidth="113.0" text="%showpiechartsbutton" />
                   <Label layoutX="24.0" layoutY="205.0" text="Parsed Flows:" />
-                  <Label layoutX="24.0" layoutY="233.0" text="Parsing Errors:" />
+                  <Label layoutX="24.0" layoutY="233.0" text="%parsingerrorslabel" />
                   <Label fx:id="parsedFlowsLabel" layoutX="112.0" layoutY="205.0" />
                   <Label fx:id="parsingErrorsLabel" layoutX="112.0" layoutY="233.0" />
-                  <Label layoutX="24.0" layoutY="178.0" text="File Size:" />
+                  <Label layoutX="24.0" layoutY="178.0" text="%filesizelabel" />
                   <Label fx:id="fileSizeLabel" layoutX="112.0" layoutY="178.0" />
-                  <Label layoutX="24.0" layoutY="262.0" text="Total Packets:" />
+                  <Label layoutX="24.0" layoutY="262.0" text="%totalpacketslabel" />
                   <Label fx:id="totalPacketsLabel" layoutX="112.0" layoutY="262.0" />                
                </children>
             </AnchorPane>
