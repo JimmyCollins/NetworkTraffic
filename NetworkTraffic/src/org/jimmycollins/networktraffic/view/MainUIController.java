@@ -188,7 +188,7 @@ public class MainUIController implements Initializable
         stats.attach(new ParsingObserver(stats));    
     }    
     
-    // Inner class that handles updating the stats panel on the UI
+    // Nested Class
     private class ParsingObserver extends Observer {
         
         ParsingObserver(FlowFileStats stats) {
@@ -208,7 +208,7 @@ public class MainUIController implements Initializable
                       totalPacketsLabel.setText(""+stats.GetTotalPacketCount());
                     }
                   });     
-    }
+        }
     
     }
 }

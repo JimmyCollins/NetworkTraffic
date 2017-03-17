@@ -1,12 +1,16 @@
 package org.jimmycollins.networktraffic;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -27,9 +31,22 @@ public class NetworkTraffic extends Application {
         // TODO:
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
           @Override
-          public void handle(WindowEvent we) {
-              System.out.println("Stage is closing");
-          }
+          public void handle(WindowEvent we) 
+          {
+              Alert alert = new Alert(AlertType.CONFIRMATION);
+              alert.setTitle(bundle.getString("alertheader"));
+              alert.setContentText(bundle.getString("exitconfirmation"));
+
+              Optional<ButtonType> result = alert.showAndWait();
+              if (result.get() == ButtonType.OK)
+              {
+                   System.exit(0);
+              }
+              else 
+              {
+                  we.consume();
+              }
+          }               
         });
         
     }
