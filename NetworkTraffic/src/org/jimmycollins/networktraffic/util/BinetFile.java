@@ -54,12 +54,14 @@ public class BinetFile extends ParsableFile {
 
                         if(sourceAddress == null || destinationAddress == null)
                         {
+                            LogUtil.Log(LogUtil.LogLevel.INFO, "Ignore flow due to bad source or destination IP.");
                             stats.IncrementUnparsableFlowCounter();
                             continue;
                         }
 
                         if(sourcePort == -1 || destinationPort == -1)
                         {
+                            LogUtil.Log(LogUtil.LogLevel.INFO, "Ignore flow due to bad source or destination port number.");
                             stats.IncrementUnparsableFlowCounter();
                             continue;
                         }
@@ -76,7 +78,7 @@ public class BinetFile extends ParsableFile {
                 }
                 catch(IOException ex)
                 {
-                    Logger.Log(Alert.AlertType.ERROR, resources.getString("error"), ex.getMessage() + "\n" + ex.toString());
+                    LogUtil.Log(Alert.AlertType.ERROR, resources.getString("error"), ex.getMessage() + "\n" + ex.toString());
                 }
             }
         });

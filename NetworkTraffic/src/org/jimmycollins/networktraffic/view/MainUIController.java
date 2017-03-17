@@ -25,7 +25,7 @@ import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.util.BinetFile;
-import org.jimmycollins.networktraffic.util.Logger;
+import org.jimmycollins.networktraffic.util.LogUtil;
 import org.jimmycollins.networktraffic.util.Utility;
 
 public class MainUIController implements Initializable
@@ -63,6 +63,7 @@ public class MainUIController implements Initializable
     Locale locale = new Locale("en", "US");
     ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
     
+    
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
     {    
@@ -76,7 +77,7 @@ public class MainUIController implements Initializable
             // Ensure the user has selected a file
             if(file == null)
             {
-                Logger.Log(AlertType.WARNING, resources.getString("alertheader"), resources.getString("nofileselectederror"));
+                LogUtil.Log(AlertType.WARNING, resources.getString("alertheader"), resources.getString("nofileselectederror"));
                 return;
             }
             
@@ -95,7 +96,7 @@ public class MainUIController implements Initializable
             // Alert the user that parsing may take a while for large files         
             if(fileSize >= 100000000)
             {
-                Logger.Log(AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("bigfilewarning"));
+                LogUtil.Log(AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("bigfilewarning"));
             }
                  
             // Parse the traffic file       
@@ -108,7 +109,8 @@ public class MainUIController implements Initializable
         }
         catch(ParsingException ex)
         {
-            Logger.Log(AlertType.ERROR, resources.getString("error"), ex.getMessage() + "\n" + ex.toString());
+            LogUtil.Log(LogUtil.LogLevel.SEVERE, "Parsing Error. Exception was: " + ex.toString());
+            LogUtil.Log(AlertType.ERROR, resources.getString("error"), resources.getString("parsingerror"));
         }
     }
     
@@ -143,17 +145,6 @@ public class MainUIController implements Initializable
     private void drawCharts(DisplayStrategy strategy)
     {    
         tabPane.getTabs().clear();
-        
-        // TODO: Draw general tab here to avoid complications with removing it??
-        /*Tab tableTab = new Tab();
-        table = new TableView();
-        TableColumn sourceIP = new TableColumn("Source IP");
-        TableColumn destinationIP = new TableColumn("Destination IP");
-        
-        table.getColumns().addAll(sourceIP, destinationIP);
-        tableTab.setText("General");
-        tableTab.setContent(table);
-        tabPane.getTabs().add(tableTab);*/
         
         chartContext.setChartStrategy(strategy);
         
@@ -215,11 +206,9 @@ public class MainUIController implements Initializable
                       parsedFlowsLabel.setText(""+stats.GetParsedFlows());
                       parsingErrorsLabel.setText(""+stats.GetUnparsableFlows());
                       totalPacketsLabel.setText(""+stats.GetTotalPacketCount());
-                      
-                      // TODO
                     }
                   });     
     }
     
-}
+    }
 }
