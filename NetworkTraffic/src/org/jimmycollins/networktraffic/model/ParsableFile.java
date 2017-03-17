@@ -2,6 +2,7 @@
 package org.jimmycollins.networktraffic.model;
 
 import java.io.File;
+import org.jimmycollins.networktraffic.ParsingException;
 
 public abstract class ParsableFile {
     
@@ -16,7 +17,7 @@ public abstract class ParsableFile {
         return File;
     }
 	
-    public abstract FlowFileStats ParseFile(FlowFileStats Stats);
+    public abstract FlowFileStats ParseFile(FlowFileStats Stats) throws ParsingException;
     
     // Other file types could be support here if required and implemented in a subclass.
 }

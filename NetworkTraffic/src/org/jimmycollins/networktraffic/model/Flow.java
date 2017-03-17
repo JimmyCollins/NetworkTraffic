@@ -17,8 +17,6 @@ public class Flow {
     
     private int DestinationPort;
     
-    private String Protocol;
-    
     public Enum FlowType;
     
     /**
@@ -50,11 +48,6 @@ public class Flow {
         this.DestinationPort = port;
     }
     
-    public void SetProtocol(String protocol)
-    {
-        this.Protocol = protocol;
-    }
-    
     public InetAddress GetSourceHost()
     {
         return SourceHost;
@@ -73,11 +66,6 @@ public class Flow {
     public int GetDestinationPort()
     {
         return DestinationPort;
-    }
-    
-    public String GetProtocol()
-    {
-        return Protocol;
     }
     
     public String GetFlowType()

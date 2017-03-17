@@ -20,6 +20,7 @@ import org.jimmycollins.networktraffic.BarChartStrategy;
 import org.jimmycollins.networktraffic.DisplayContext;
 import org.jimmycollins.networktraffic.DisplayStrategy;
 import org.jimmycollins.networktraffic.LineChartStrategy;
+import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
@@ -101,13 +102,11 @@ public class MainUIController implements Initializable
             BinetFile parser = new BinetFile(file);
             stats = parser.ParseFile(stats);
             
-            // TODO: Decide if we draw the charts as we go (if refresh works) or make the user draw them after parsing
-            
             showBarChartsButton.setDisable(false);
             showPieChartsButton.setDisable(false);
             showLineChartsButton.setDisable(false);
         }
-        catch(Exception ex)
+        catch(ParsingException ex)
         {
             Logger.Log(AlertType.ERROR, resources.getString("error"), ex.getMessage() + "\n" + ex.toString());
         }

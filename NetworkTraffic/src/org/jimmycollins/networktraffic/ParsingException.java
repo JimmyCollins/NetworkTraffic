@@ -1,7 +1,7 @@
 
 package org.jimmycollins.networktraffic;
 
-public class ParsingException extends RuntimeException {
+public class ParsingException extends Exception {
     
     public ParsingException() {}
     
