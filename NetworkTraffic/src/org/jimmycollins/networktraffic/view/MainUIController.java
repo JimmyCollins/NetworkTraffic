@@ -24,6 +24,7 @@ import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
+import org.jimmycollins.networktraffic.model.ParsableFile;
 import org.jimmycollins.networktraffic.util.BinetFile;
 import org.jimmycollins.networktraffic.util.LogUtil;
 import org.jimmycollins.networktraffic.util.Utility;
@@ -99,9 +100,10 @@ public class MainUIController implements Initializable
                 LogUtil.Log(AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("bigfilewarning"));
             }
                  
-            // Parse the traffic file       
-            BinetFile parser = new BinetFile(file);
-            stats = parser.ParseFile(stats);
+            // Parse the traffic file     
+            // Example of Dynamic Binding here
+            ParsableFile pfile = new BinetFile(file);
+            stats = pfile.ParseFile(stats);
             
             showBarChartsButton.setDisable(false);
             showPieChartsButton.setDisable(false);
