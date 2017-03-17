@@ -61,10 +61,13 @@ public class MainUIController implements Initializable
     
     private File file;
     
-    Locale locale = new Locale("en", "US");
-    ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
+    private final Locale locale = new Locale("en", "US");
+    private final ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
     
-    
+    /**
+     * Handler for the add traffic file button
+     * @param event The triggered action event
+     */
     @FXML
     private void handleSelectTrafficFile(ActionEvent event)
     {    
@@ -116,7 +119,10 @@ public class MainUIController implements Initializable
         }
     }
     
-    
+    /**
+     * Handler for the draw bar charts button
+     * @param event The triggered action event
+     */
     @FXML
     private void handleDrawBarCharts(ActionEvent event)
     {
@@ -125,7 +131,10 @@ public class MainUIController implements Initializable
         tabPane.getSelectionModel().select(currentIndex);
     }
     
-    
+    /**
+     * Handler for the draw pie charts button
+     * @param event The triggered action event
+     */
     @FXML
     private void handleDrawPieCharts(ActionEvent event)
     {
@@ -134,7 +143,10 @@ public class MainUIController implements Initializable
         tabPane.getSelectionModel().select(currentIndex);
     }
     
-    
+    /**
+     * Handler for the draw line charts button
+     * @param event The triggered action event
+     */
     @FXML
     private void handleDrawLineCharts(ActionEvent event)
     {
@@ -143,7 +155,10 @@ public class MainUIController implements Initializable
         tabPane.getSelectionModel().select(currentIndex);
     }
     
-    
+    /**
+     * Main logic used to draw the charts n the UI
+     * @param DisplayStrategy The display strategy to use (e.g. Pie Charts vs. Bar Charts etc.)
+     */
     private void drawCharts(DisplayStrategy strategy)
     {    
         tabPane.getTabs().clear();
@@ -177,11 +192,8 @@ public class MainUIController implements Initializable
         
         // TODO: More Charts
         
-        // TODO: Add General stats tab that always gets added?
-        // Total packets
-        // Packets parsed from file
         // Total Bytes
-        // Average Bytes?
+        // Average Bytes
     }
     
     @Override
@@ -190,7 +202,7 @@ public class MainUIController implements Initializable
         stats.attach(new ParsingObserver(stats));    
     }    
     
-    // Nested Class
+    // Nested Class used to update the statistics panel on the UI as parsing progresses
     private class ParsingObserver extends Observer {
         
         ParsingObserver(FlowFileStats stats) {

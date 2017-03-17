@@ -13,6 +13,9 @@ import org.jimmycollins.networktraffic.model.Flow;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.ParsableFile;
 
+/**
+ * Define a parser for a .binet file
+ */
 public class BinetFile extends ParsableFile {
     
     private final FlowFactory Factory;
@@ -20,12 +23,22 @@ public class BinetFile extends ParsableFile {
     Locale locale = new Locale("en", "US");
     ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
     
+    /**
+     * Constructor
+     * @param file The file to parse 
+     */
     public BinetFile(File file)
     {
         super(file);
         Factory = new FlowFactory();
     }
      
+    /**
+     * Parses a .binet file
+     * @param stats The statistics object to populate during parsing
+     * @return The statistics object populated during parsing
+     * @throws ParsingException Exception if one occurs during parsing
+     */
     @Override
     public FlowFileStats ParseFile(FlowFileStats stats) throws ParsingException
     {   
@@ -73,7 +86,6 @@ public class BinetFile extends ParsableFile {
 
                         stats.AddPackets(Utility.ParseInt(fields[11]));
                         stats.AddFlow(flow);
-                        stats.IncrementFlowCounter();
                     }                
                 }
                 catch(IOException ex)

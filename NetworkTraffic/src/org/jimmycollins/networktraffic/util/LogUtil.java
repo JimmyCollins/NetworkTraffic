@@ -2,16 +2,24 @@
 package org.jimmycollins.networktraffic.util;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 
+/**
+ * Utility class for logging
+ */
 public class LogUtil {
     
     private static final Logger LOGGER = Logger.getLogger("com.jimmycollins.networktraffic");
     private static Boolean LOGGER_INITIALIZED = false;
     
     private static FileHandler handler;
+    
+    private static final Locale locale = new Locale("en", "US");
+    private static final ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
     
     public enum LogLevel {
 	INFO, WARN, SEVERE
@@ -31,14 +39,12 @@ public class LogUtil {
         catch(IOException | SecurityException ex)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Network Traffic Analyzer");
-            alert.setHeaderText("ERROR");
-            alert.setContentText("Could not initialize logger!");
+            alert.setTitle(resources.getString("alertheader"));
+            alert.setContentText(resources.getString("loggingerror"));
             alert.show();
         }
     }
-    
-    
+       
     /**
      * Log a message to the log file
      * @param level The log level
@@ -67,8 +73,7 @@ public class LogUtil {
                 break;
         }
     }
-    
-    
+      
     /**
      * Generates a log alert to the user
      * @param type The Alert type
@@ -78,7 +83,7 @@ public class LogUtil {
     public static void Log(Alert.AlertType type, String header, String message)
     {
         Alert alert = new Alert(type);
-        alert.setTitle("Network Traffic Analyzer");
+        alert.setTitle(resources.getString("alertheader"));
         alert.setHeaderText(header);
         alert.setContentText(message);
         alert.show();

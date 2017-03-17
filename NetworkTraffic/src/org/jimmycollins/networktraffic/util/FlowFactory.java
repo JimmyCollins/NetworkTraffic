@@ -3,12 +3,14 @@ package org.jimmycollins.networktraffic.util;
 
 import org.jimmycollins.networktraffic.model.Flow;
 
+/**
+ * Provides a factory method for creating Flow objects
+ */
 public class FlowFactory {
     
     private enum FlowType {
 	TCP, UDP, ICMP, ARP, RTP, PIM, IPXSPX, RTCP, IGMP, IPV6, IPV6ICMP, UDT, ESP, UNAS, RARP
     }
-    
     
     /**
      * Create a new Flow
@@ -72,5 +74,4 @@ public class FlowFactory {
 
         return flow;
     }
-    
 }

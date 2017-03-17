@@ -5,7 +5,6 @@ import java.net.InetAddress;
 
 /**
  * Represents a single flow parsed from the file
- * @author Jimmy Collins
  */
 public class Flow {
     
@@ -27,47 +26,83 @@ public class Flow {
     {
         this.FlowType = type;
     }
-       
+    
+    /**
+     * Set the source host
+     * @param host The source host
+     */
     public void SetSourceHost(InetAddress host)
     {
         this.SourceHost = host;
     }
     
+    /**
+     * Set the destination host
+     * @param host The destination host
+     */
     public void SetDestinationHost(InetAddress host)
     {
         this.DestinationHost = host;
     }
     
+    /**
+     * Set the source port
+     * @param port The source port
+     */
     public void SetSourcePort(int port)
     {
         this.SourcePort = port;
     }
     
+    /**
+     * Set the destination port
+     * @param port The destination port
+     */
     public void SetDestinationPort(int port)
     {
         this.DestinationPort = port;
     }
     
+    /**
+     * Get the source host
+     * @return The source host
+     */
     public InetAddress GetSourceHost()
     {
         return SourceHost;
     }
     
+    /**
+     * Get the destination host
+     * @return The destination host
+     */
     public InetAddress GetDestinationHost()
     {
         return DestinationHost;
     }
     
+    /**
+     * Get the source port
+     * @return The source port
+     */
     public int GetSourcePort()
     {
         return SourcePort;
     }
     
+    /**
+     * Get the destination port
+     * @return The destination port
+     */
     public int GetDestinationPort()
     {
         return DestinationPort;
     }
     
+    /**
+     * Get the flow type
+     * @return The flow type
+     */
     public String GetFlowType()
     {
         return FlowType.toString();

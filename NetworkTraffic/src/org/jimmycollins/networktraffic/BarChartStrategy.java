@@ -8,8 +8,17 @@ import javafx.scene.chart.Chart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+/**
+ * Defines functionality necessary for creating Bar Charts on the UI
+ */
 public class BarChartStrategy implements DisplayStrategy {
     
+    /**
+     * Create a Bar Chart from the given data
+     * @param chartData The data from which to create the chart
+     * @param chartTitle The title to use for the chart
+     * @return A Bar Chart from the given data
+     */
     @Override
     public Chart ChartData(Map<String,Integer> chartData, String chartTitle)
     {
@@ -30,5 +39,4 @@ public class BarChartStrategy implements DisplayStrategy {
         
         return barChart;
     }
-    
 }

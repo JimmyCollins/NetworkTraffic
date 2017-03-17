@@ -8,8 +8,17 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+/**
+ * Defines functionality necessary for creating Line Charts on the UI
+ */
 public class LineChartStrategy implements DisplayStrategy {
     
+    /**
+     * Create a Line Chart from the given data
+     * @param chartData The data from which to create the chart
+     * @param chartTitle The title to use for the chart
+     * @return A Line Chart from the given data
+     */
     @Override
     public Chart ChartData(Map<String,Integer> chartData, String chartTitle)
     {
@@ -28,8 +37,7 @@ public class LineChartStrategy implements DisplayStrategy {
                 series.getData().add(data);
             });
         
-        lineChart.getData().add(series);
-        
+        lineChart.getData().add(series);     
         lineChart.setTitle(chartTitle);
             
         return lineChart;

@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * Provides common utility functions
+ */
 public class Utility 
 {
     /**
@@ -32,12 +35,11 @@ public class Utility
         }
         catch(NumberFormatException nfe)
         {
-            // TODO: Log exception
+            LogUtil.Log(LogUtil.LogLevel.INFO, "Could not parse '" + value + "' as an Integer, exception was: " + nfe.getMessage());
             return -1;
         }
     }
-    
-    
+     
     /**
      * Parse an IP address from this string or return a default value
      * @param value The string to attempt to parse
@@ -56,17 +58,16 @@ public class Utility
         }
         catch(UnknownHostException uhe)
         {
-            // TODO: Log Exception
+            LogUtil.Log(LogUtil.LogLevel.INFO, "Could not parse '" + value + "' as an InetAddress, exception was: " + uhe.getMessage());
             return null;
         }
     }
-    
-    
+     
     /**
      * Get the top X elements in an ArrayList
      * @param list The list to analyze
      * @param elementCount The number of elements to return
-     * @return 
+     * @return A new map with the top X elements from the given strings list (containing the element and the number of times it occurs)
      */
     public static Map<String, Integer> GetTopElements(ArrayList<String> list, int elementCount)   
     {
@@ -74,36 +75,40 @@ public class Utility
         
         for(int i = 0; i < list.size(); i++)
         {            
-            Integer count = map.get(list.get(i));       // Autoboxing?
+            Integer count = map.get(list.get(i)); // Autoboxing
             map.put(list.get(i), count == null ? 1 : count + 1);   
         }
         
+        // Sort the map by value
         map = SortMapByValue(map);
         
+        // Get and return the elements
         Map<String,Integer> topElements = new HashMap<>();
         
         for (Entry<String, Integer> entry : map.entrySet())
         {
-             if (topElements.size() > elementCount)
-             {
-                 break;
-             }
+            if (topElements.size() > elementCount)
+            {
+                break;
+            }
              
-             topElements.put(entry.getKey(), entry.getValue());
+            topElements.put(entry.getKey(), entry.getValue());
         }
         
        return topElements;
     }
     
+    /**
+     * Converts bytes to megabytes
+     * @param bytes The bytes to convert
+     * @return The given bytes values as megabytes
+     */
     public static long BytesToMb(long bytes) 
     {
         long sizeInMb = bytes / (1024 * 1024);
         return sizeInMb;
     }
-    
-    
-    //todo rewrite http://stackoverflow.com/questions/109383/sort-a-mapkey-value-by-values-java
-    
+      
     /**
      * Sorts a map by value (largest in ascending order)
      * @param <K> The key type
@@ -115,20 +120,17 @@ public class Utility
     {
         List<Map.Entry<K, V>> list = new LinkedList<>(mapToSort.entrySet());
         
-        // Uses Lamdba Espression (Java 8+) TODO: Check this
-        //sort it by largest value ascending
-        Collections.sort(list, (Map.Entry<K,V> o1, Map.Entry<K,V> o2) -> (o2.getValue()).compareTo(o1.getValue()));
+        // Sort it by largest value ascending (uses Lambda expression)
+        Collections.sort(list, (Map.Entry<K,V> o1, Map.Entry<K,V> o2) -> 
+                (o2.getValue()).compareTo(o1.getValue()));
 
-        Map<K, V> result = new LinkedHashMap<>();
+        Map<K, V> sortedMap = new LinkedHashMap<>();
         
         list.forEach((entry) ->
         {
-            result.put( entry.getKey(), entry.getValue());
+            sortedMap.put( entry.getKey(), entry.getValue());
         });
         
-        return result;
+        return sortedMap;
     }
-    
-    
-    
 }
