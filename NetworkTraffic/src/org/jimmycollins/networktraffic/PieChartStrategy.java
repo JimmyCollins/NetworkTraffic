@@ -31,3 +31,4 @@ public class PieChartStrategy implements DisplayStrategy {
         return chart;
     }
 }
+
