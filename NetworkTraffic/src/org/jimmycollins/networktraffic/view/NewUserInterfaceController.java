@@ -9,17 +9,22 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.Chart;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.jimmycollins.networktraffic.BarChartStrategy;
 import org.jimmycollins.networktraffic.DisplayContext;
 import org.jimmycollins.networktraffic.DisplayStrategy;
+import org.jimmycollins.networktraffic.LineChartStrategy;
 import org.jimmycollins.networktraffic.ParsingException;
+import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
@@ -39,6 +44,17 @@ public class NewUserInterfaceController implements Initializable {
     @FXML
     private Label totalPacketsLabel;
     
+    @FXML
+    private Pane topSourcePortsPane;
+    
+    @FXML
+    private Pane topDestinationPortsPane;
+    
+    @FXML
+    private Pane topSourceIPsPane;
+    
+    @FXML
+    private Pane topDestinationIPsPane;
     
     
     private final DisplayContext chartContext = new DisplayContext();
@@ -113,7 +129,7 @@ public class NewUserInterfaceController implements Initializable {
     private void handleDrawGeneralCharts(ActionEvent event)
     {
         // Draw bar charts by default (user can change from the UI)
-        
+        drawGeneralCharts(new PieChartStrategy());
     }
       
     @FXML
@@ -129,35 +145,47 @@ public class NewUserInterfaceController implements Initializable {
     }
     
     
+    @FXML
+    private void handleDrawBarCharts(ActionEvent event)
+    {
+        drawGeneralCharts(new BarChartStrategy());
+    }
+    
+    
+    @FXML
+    private void handleDrawLineCharts(ActionEvent event)
+    {
+        drawGeneralCharts(new LineChartStrategy());
+    }
+    
     
     private void drawGeneralCharts(DisplayStrategy strategy)
     {
         chartContext.setChartStrategy(strategy);
         
-        // Change DisplayStrategy to use panes as opposed to tabs?
+        topSourcePortsPane.getChildren().clear();
+        topDestinationPortsPane.getChildren().clear();
+        topSourceIPsPane.getChildren().clear();
+        topDestinationIPsPane.getChildren().clear();
         
         // Top Source Ports
-        /*Tab sourcePorts = chartContext.createChartTab(stats.GetTopSourcePorts(), resources.getString("topsourceports"));
-        sourcePorts.setText(resources.getString("sourceports"));
-        tabPane.getTabs().add(sourcePorts);
+        Chart sourcePorts = chartContext.createChart(stats.GetTopSourcePorts(), resources.getString("topsourceports"));
+        topSourcePortsPane.getChildren().add(sourcePorts);
         
         // Top Destination Ports
-        Tab destinationPorts = chartContext.createChartTab(stats.GetTopDestinationPorts(), resources.getString("topdestinationports"));
-        destinationPorts.setText(resources.getString("destinationports"));
-        tabPane.getTabs().add(destinationPorts);
+        Chart destinationPorts = chartContext.createChart(stats.GetTopDestinationPorts(), resources.getString("topdestinationports"));
+        topDestinationPortsPane.getChildren().add(destinationPorts);
         
         // Top Source IP Addresses
-        Tab sourceIPAddresses = chartContext.createChartTab(stats.GetTopSourceIPAddresses(), resources.getString("topsourceipaddresses"));
-        sourceIPAddresses.setText(resources.getString("sourceip"));
-        tabPane.getTabs().add(sourceIPAddresses);
+        Chart topSourceIPAddresses = chartContext.createChart(stats.GetTopSourceIPAddresses(), resources.getString("topsourceipaddresses"));
+        topSourceIPsPane.getChildren().add(topSourceIPAddresses);
         
         // Top Destination IP Addresses
-        Tab destinationIPAddresses = chartContext.createChartTab(stats.GetTopDestinationIPAddresses(), resources.getString("topdestinationipaddresses"));
-        destinationIPAddresses.setText(resources.getString("destinationip"));
-        tabPane.getTabs().add(destinationIPAddresses);
-        
+        Chart topDestinationIPAddresses = chartContext.createChart(stats.GetTopDestinationIPAddresses(), resources.getString("topdestinationipaddresses"));
+        topDestinationIPsPane.getChildren().add(topDestinationIPAddresses);
+           
         // Top Protocols
-        Tab protocols = chartContext.createChartTab(stats.GetTopProtocols(), resources.getString("topprotocols"));
+        /*Tab protocols = chartContext.createChartTab(stats.GetTopProtocols(), resources.getString("topprotocols"));
         protocols.setText(resources.getString("protocols"));
         tabPane.getTabs().add(protocols);*/
         

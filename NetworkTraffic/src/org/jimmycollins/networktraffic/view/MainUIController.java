@@ -166,7 +166,7 @@ public class MainUIController implements Initializable
         chartContext.setChartStrategy(strategy);
         
         // Top Source Ports
-        Tab sourcePorts = chartContext.createChartTab(stats.GetTopSourcePorts(), resources.getString("topsourceports"));
+        /*Tab sourcePorts = chartContext.createChartTab(stats.GetTopSourcePorts(), resources.getString("topsourceports"));
         sourcePorts.setText(resources.getString("sourceports"));
         tabPane.getTabs().add(sourcePorts);
         
@@ -188,7 +188,7 @@ public class MainUIController implements Initializable
         // Top Protocols
         Tab protocols = chartContext.createChartTab(stats.GetTopProtocols(), resources.getString("topprotocols"));
         protocols.setText(resources.getString("protocols"));
-        tabPane.getTabs().add(protocols);
+        tabPane.getTabs().add(protocols);*/
         
         // TODO: More Charts
         

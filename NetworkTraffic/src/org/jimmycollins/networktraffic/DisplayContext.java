@@ -2,7 +2,7 @@
 package org.jimmycollins.networktraffic;
 
 import java.util.Map;
-import javafx.scene.control.Tab;
+import javafx.scene.chart.Chart;
 
 /**
  * Display context used by Strategy Pattern implementation
@@ -27,10 +27,8 @@ public class DisplayContext
      * @param chartTitle The title to be used on the chart
      * @return A new tab for use on the UI with the given information
      */
-    public Tab createChartTab(Map<String,Integer> chartData, String chartTitle) 
+    public Chart createChart(Map<String,Integer> chartData, String chartTitle) 
     {
-        Tab tab = new Tab();
-        tab.setContent(chartStrategy.ChartData(chartData, chartTitle));
-        return tab;
+        return chartStrategy.ChartData(chartData, chartTitle);
     }
 }
