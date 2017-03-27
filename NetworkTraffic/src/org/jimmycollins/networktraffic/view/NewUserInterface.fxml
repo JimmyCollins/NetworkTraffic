@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="827.0" prefWidth="1156.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="org.jimmycollins.networktraffic.view.NewUserInterfaceController">
+    <stylesheets>
+        <URL value="@newuserinterface.css" />
+    </stylesheets>
+   <children>
+      <SplitPane dividerPositions="0.15424610051993068" layoutX="117.0" layoutY="50.0" prefHeight="827.0" prefWidth="1156.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Accordion fx:id="mainMenu" layoutX="-6.0" layoutY="76.0" prefHeight="295.0" prefWidth="190.0" AnchorPane.bottomAnchor="530.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <panes>
+                      <TitledPane text="Analysis Session">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="parseNewFileBtn" layoutX="18.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleParseNewFile" prefHeight="27.0" prefWidth="138.0" text="Parse New File" />
+                                    <Button layoutX="18.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleLoadSession" prefHeight="27.0" prefWidth="137.0" text="Load Existing Session" />
+                                    <Button layoutX="18.0" layoutY="131.0" mnemonicParsing="false" onAction="#handleSaveSession" prefHeight="27.0" prefWidth="138.0" text="Save Current Session" />
+                                    <Button fx:id="drawChartsBtn" layoutX="18.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleDrawGeneralCharts" prefHeight="27.0" prefWidth="138.0" text="Draw Charts" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                      </TitledPane>
+                      <TitledPane expanded="false" text="Advanced Analysis">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                      </TitledPane>
+                      <TitledPane expanded="false" prefHeight="235.0" prefWidth="190.0" text="Help">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+                  <Label layoutX="14.0" layoutY="347.0" text="Parsed Flows:" />
+                  <Label fx:id="parsedFlowsLabel" layoutX="102.0" layoutY="347.0" />
+                  <Label layoutX="14.0" layoutY="380.0" text="Parsing Errors:" />
+                  <Label fx:id="parsingErrorsLabel" layoutX="102.0" layoutY="380.0" />
+                  <Label layoutX="14.0" layoutY="413.0" text="Total Packets:" />
+                  <Label fx:id="totalPacketsLabel" layoutX="102.0" layoutY="413.0" />
+                  <Text layoutX="28.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="General Statistics" textAlignment="CENTER" wrappingWidth="124.13671875">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TabPane layoutX="296.0" layoutY="98.0" prefHeight="825.0" prefWidth="958.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab text="General">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

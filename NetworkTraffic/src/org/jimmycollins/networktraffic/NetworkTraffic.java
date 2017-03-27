@@ -25,11 +25,12 @@ public class NetworkTraffic extends Application {
     {
         Locale locale = new Locale("en", "US");
         ResourceBundle bundle = ResourceBundle.getBundle("ResourcesBundle", locale);
-        Parent root = FXMLLoader.load(getClass().getResource("view/MainUI.fxml"), bundle);
+        Parent root = FXMLLoader.load(getClass().getResource("view/NewUserInterface.fxml"), bundle);
         
         stage.setTitle(bundle.getString("maintitle"));
  
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
         
         // Example of Lambda expression (could also use an Anonymous Class here)
