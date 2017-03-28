@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="856.0" prefWidth="1229.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="org.jimmycollins.networktraffic.view.NewUserInterfaceController">
+<AnchorPane id="AnchorPane" prefHeight="856.0" prefWidth="1229.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jimmycollins.networktraffic.view.NewUserInterfaceController">
     <stylesheets>
         <URL value="@newuserinterface.css" />
     </stylesheets>
@@ -21,7 +21,7 @@
                <children>
                   <Accordion fx:id="mainMenu" layoutX="-6.0" layoutY="76.0" prefHeight="295.0" prefWidth="190.0" AnchorPane.bottomAnchor="530.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <panes>
-                      <TitledPane text="Analysis Session">
+                      <TitledPane fx:id="analysisPane" expanded="true" text="Analysis Session">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -58,6 +58,7 @@
                            </font>
                       </TitledPane>
                     </panes>
+                    <expandedPane><fx:reference source="analysisPane"/></expandedPane>
                   </Accordion>
                   <Label layoutX="14.0" layoutY="394.0" text="Parsed Flows:" />
                   <Label fx:id="parsedFlowsLabel" layoutX="102.0" layoutY="394.0" />
