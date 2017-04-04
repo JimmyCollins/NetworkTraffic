@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
@@ -60,6 +61,7 @@ public class BinetFile extends ParsableFile {
 
                         Flow flow = Factory.CreateFlow(fields[2]);
 
+                        LocalDateTime date = Utility.ParseDateTime(fields[0]);
                         InetAddress sourceAddress = Utility.ParseInetAddress(fields[3]);
                         InetAddress destinationAddress = Utility.ParseInetAddress(fields[6]);
                         int sourcePort = Utility.ParseInt(fields[4]);
@@ -67,18 +69,23 @@ public class BinetFile extends ParsableFile {
 
                         if(sourceAddress == null || destinationAddress == null)
                         {
-                            LogUtil.Log(LogUtil.LogLevel.INFO, "Ignore flow due to bad source or destination IP.");
                             stats.IncrementUnparsableFlowCounter();
                             continue;
                         }
 
                         if(sourcePort == -1 || destinationPort == -1)
                         {
-                            LogUtil.Log(LogUtil.LogLevel.INFO, "Ignore flow due to bad source or destination port number.");
+                            stats.IncrementUnparsableFlowCounter();
+                            continue;
+                        }
+                        
+                        if(date == null)
+                        {
                             stats.IncrementUnparsableFlowCounter();
                             continue;
                         }
 
+                        flow.SetDate(date);
                         flow.SetSourceHost(sourceAddress);
                         flow.SetDestinationHost(destinationAddress);
                         flow.SetSourcePort(sourcePort);
@@ -97,7 +104,6 @@ public class BinetFile extends ParsableFile {
         t.setDaemon(true); // End thread if app closes
         t.start();
          
-    
-    return stats;
+        return stats;
    }
 }

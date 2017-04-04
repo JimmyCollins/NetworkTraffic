@@ -3,6 +3,10 @@ package org.jimmycollins.networktraffic.util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,6 +21,35 @@ import java.util.Map.Entry;
  */
 public class Utility 
 {
+    /**
+     * Parse a Date/Time from this string or return a default value 
+     * @param value The string to attempt to parse
+     * @return This string as a Date/Time, or null in error
+     */
+    public static LocalDateTime ParseDateTime(String value)
+    {
+        if(value == null || value.isEmpty())
+        {
+            return null;
+        }
+        
+        try
+        {
+            DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendPattern("yyyy/MM/dd HH:mm:ss")
+                .appendFraction(ChronoField.MICRO_OF_SECOND, 0, 6, true)
+                .toFormatter();
+            
+            LocalDateTime dateTime = LocalDateTime.parse(value, formatter);
+            return dateTime;
+        }
+        catch(Exception pe)
+        {
+            LogUtil.Log(LogUtil.LogLevel.INFO, "Could not parse '" + value + "' as an Date, exception was: " + pe.getMessage());
+            return null;
+        }
+    }
+    
     /**
      * Parse an Integer from this string or return a default value 
      * @param value The string to attempt to parse

@@ -2,11 +2,14 @@
 package org.jimmycollins.networktraffic.model;
 
 import java.net.InetAddress;
+import java.time.LocalDateTime;
 
 /**
  * Represents a single flow parsed from the file
  */
 public class Flow {
+    
+    private LocalDateTime Date;
     
     private InetAddress SourceHost;
     
@@ -27,6 +30,15 @@ public class Flow {
         this.FlowType = type;
     }
     
+    /**
+     * Set the date
+     * @param date The date
+     */
+    public void SetDate(LocalDateTime date)
+    {
+        this.Date = date;
+    }
+       
     /**
      * Set the source host
      * @param host The source host
@@ -106,5 +118,14 @@ public class Flow {
     public String GetFlowType()
     {
         return FlowType.toString();
+    }
+    
+    /**
+     * Get the date
+     * @return The date
+     */
+    public LocalDateTime GetDate()
+    {
+        return Date;
     }
 }
