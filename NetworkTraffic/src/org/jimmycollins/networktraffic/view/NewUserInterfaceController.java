@@ -56,6 +56,9 @@ public class NewUserInterfaceController implements Initializable {
     @FXML
     private Pane topDestinationIPsPane;
     
+    @FXML
+    private Button saveCurrentAnalysisBtn;
+    
     
     private final DisplayContext chartContext = new DisplayContext();
     
@@ -130,6 +133,7 @@ public class NewUserInterfaceController implements Initializable {
     {
         // Draw bar charts by default (user can change from the UI)
         drawGeneralCharts(new PieChartStrategy());
+        saveCurrentAnalysisBtn.setDisable(false);
     }
       
     @FXML
