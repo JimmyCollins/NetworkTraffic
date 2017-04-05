@@ -3,6 +3,7 @@ package org.jimmycollins.networktraffic.view;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -29,6 +30,7 @@ import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
 import org.jimmycollins.networktraffic.util.BinetFile;
+import org.jimmycollins.networktraffic.util.Database;
 import org.jimmycollins.networktraffic.util.LogUtil;
 import org.jimmycollins.networktraffic.util.Utility;
 
@@ -145,7 +147,13 @@ public class NewUserInterfaceController implements Initializable {
     @FXML
     private void handleSaveSession(ActionEvent event)
     {
+        Connection db = Database.getInstance().getConnection();
+        
         // TODO
+        
+        
+        
+        
     }
     
     
