@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `networktraffic` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `networktraffic`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: networktraffic
@@ -26,7 +28,7 @@ CREATE TABLE `savedanalyses` (
   `AnalysisId` int(11) NOT NULL AUTO_INCREMENT,
   `Date` datetime NOT NULL,
   PRIMARY KEY (`AnalysisId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,12 +41,12 @@ DROP TABLE IF EXISTS `topdestinationips`;
 CREATE TABLE `topdestinationips` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `AnalysisId` int(11) NOT NULL,
-  `IP` int(11) NOT NULL,
+  `IP` varchar(255) NOT NULL,
   `Count` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `AnalysisId-destinationips_idx` (`AnalysisId`),
-  CONSTRAINT `AnalysisId-destinationips` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `destinationips-AnalysisId_idx` (`AnalysisId`),
+  CONSTRAINT `destinationips-AnalysisId` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +64,7 @@ CREATE TABLE `topdestinationports` (
   PRIMARY KEY (`Id`),
   KEY `AnalysisId_idx` (`AnalysisId`),
   CONSTRAINT `AnalysisId-destinationports` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,12 +77,12 @@ DROP TABLE IF EXISTS `topsourceips`;
 CREATE TABLE `topsourceips` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `AnalysisId` int(11) NOT NULL,
-  `IP` int(11) NOT NULL,
+  `IP` varchar(255) NOT NULL,
   `Count` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `AnalysisId-sourceips_idx` (`AnalysisId`),
-  CONSTRAINT `AnalysisId-sourceips` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `sourceips-AnalysisId_idx` (`AnalysisId`),
+  CONSTRAINT `sourceips-AnalysisId` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +100,7 @@ CREATE TABLE `topsourceports` (
   PRIMARY KEY (`Id`),
   KEY `AnalysisId_idx` (`AnalysisId`),
   CONSTRAINT `AnalysisId-sourceports` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -110,4 +112,4 @@ CREATE TABLE `topsourceports` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-05 21:01:29
+-- Dump completed on 2017-04-06 20:13:27

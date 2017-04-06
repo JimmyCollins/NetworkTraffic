@@ -3,11 +3,14 @@ package org.jimmycollins.networktraffic.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javafx.scene.control.Alert;
 //import java.sql.Statement;
 
 
 // Ref: http://stackoverflow.com/questions/6567839/using-a-singleton-class-for-database-connection
 /// Getting a connection - Connection con = Database.getInstance().getConnection();
+
+// TODO - Cleanup and commnet this file
 
 public class Database 
 {
@@ -45,7 +48,8 @@ public class Database
             } 
             catch (SQLException ex) 
             {
-                LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.getMessage());
+                LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.toString());
+                LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Could not connect to database: \n" + ex.getMessage());
             }
         }
 

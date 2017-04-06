@@ -4,19 +4,24 @@ package org.jimmycollins.networktraffic.view;
 import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.Chart;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -60,6 +65,12 @@ public class NewUserInterfaceController implements Initializable {
     
     @FXML
     private Button saveCurrentAnalysisBtn;
+    
+    
+    Map<String,Integer> sourcePortData = new HashMap<>();
+    Map<String,Integer> destinationPortData = new HashMap<>();
+    Map<String,Integer> sourceIpData = new HashMap<>();
+    Map<String,Integer> destinationIpData = new HashMap<>();
     
     
     private final DisplayContext chartContext = new DisplayContext();
@@ -147,13 +158,98 @@ public class NewUserInterfaceController implements Initializable {
     @FXML
     private void handleSaveSession(ActionEvent event)
     {
+        // Confirm the user wishes to save the data
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Network Traffic Analyzer");
+        alert.setContentText("Do you wish to save the current analysis to the database?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.CANCEL)
+        {
+            return;
+        }      
+        
+        // Get a connection to the database
         Connection db = Database.getInstance().getConnection();
         
-        // TODO
-        
-        
-        
-        
+        try
+        {
+            // First we need to save a row in the savedanalysis table
+            String timestamp = Utility.GenerateTimestamp();
+            String savedAnalysesQuery = "insert into savedanalyses (AnalysisId, Date)"
+                              + " values (NULL, '" + timestamp + "')";
+            
+            int analysisId = 0; // The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved
+            
+            PreparedStatement savedAnalysesStatement = db.prepareStatement(savedAnalysesQuery, Statement.RETURN_GENERATED_KEYS);      
+            savedAnalysesStatement.executeUpdate();
+            
+            ResultSet rs = savedAnalysesStatement.getGeneratedKeys();
+            
+            if (rs.next()) 
+            {
+               analysisId = rs.getInt(1);   
+            }
+            
+            // Save the Source Port Data            
+            for (Map.Entry<String, Integer> entry : sourcePortData.entrySet())
+            {
+                String port = entry.getKey();
+                Integer count = entry.getValue();
+                
+                String sourcePortQuery = "insert into topsourceports (Id, AnalysisId, Port, Count)"
+                              + " values (NULL, " + analysisId + "," + port + "," + count + ")";
+                
+                PreparedStatement sourcePortStatement = db.prepareStatement(sourcePortQuery);      
+                sourcePortStatement.executeUpdate();
+            }
+            
+            // Save the Desination Port Data
+            for (Map.Entry<String, Integer> entry : destinationPortData.entrySet())
+            {
+                String port = entry.getKey();
+                Integer count = entry.getValue();
+                
+                String destinationPortQuery = "insert into topdestinationports (Id, AnalysisId, Port, Count)"
+                              + " values (NULL, " + analysisId + "," + port + "," + count + ")";
+                
+                PreparedStatement destinationPortStatement = db.prepareStatement(destinationPortQuery);      
+                destinationPortStatement.executeUpdate();
+            }
+            
+            // Save the Source IP Data
+            for (Map.Entry<String, Integer> entry : sourceIpData.entrySet())
+            {
+                String ip = entry.getKey();
+                Integer count = entry.getValue();
+                
+                String sourceIpQuery = "insert into topsourceips (Id, AnalysisId, IP, Count)"
+                              + " values (NULL, " + analysisId + ",'" + ip + "'," + count + ")";
+                
+                PreparedStatement sourceIpStatement = db.prepareStatement(sourceIpQuery);      
+                sourceIpStatement.executeUpdate();
+            }
+            
+            // Save the Destination IP Data
+            for (Map.Entry<String, Integer> entry : destinationIpData.entrySet())
+            {
+                String ip = entry.getKey();
+                Integer count = entry.getValue();
+                
+                String destinationIpQuery = "insert into topdestinationips (Id, AnalysisId, IP, Count)"
+                              + " values (NULL, " + analysisId + ",'" + ip + "'," + count + ")";
+                
+                PreparedStatement destinationIpStatement = db.prepareStatement(destinationIpQuery);      
+                destinationIpStatement.executeUpdate();
+            }
+            
+            LogUtil.Log(Alert.AlertType.INFORMATION, "Network Traffic Analyzer", "Current Analysis data was saved to the database successfully as '" + timestamp + "'"
+                    + "\n\nUse the Load Existing Analysis option to load this data again in the future.");
+        }
+        catch(SQLException ex)
+        {
+            LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
+        }
     }
     
     
@@ -181,19 +277,23 @@ public class NewUserInterfaceController implements Initializable {
         topDestinationIPsPane.getChildren().clear();
         
         // Top Source Ports
-        Chart sourcePorts = chartContext.createChart(stats.GetTopSourcePorts(), resources.getString("topsourceports"));
+        sourcePortData = stats.GetTopSourcePorts();
+        Chart sourcePorts = chartContext.createChart(sourcePortData, resources.getString("topsourceports"));
         topSourcePortsPane.getChildren().add(sourcePorts);
         
         // Top Destination Ports
-        Chart destinationPorts = chartContext.createChart(stats.GetTopDestinationPorts(), resources.getString("topdestinationports"));
+        destinationPortData = stats.GetTopDestinationPorts();
+        Chart destinationPorts = chartContext.createChart(destinationPortData, resources.getString("topdestinationports"));
         topDestinationPortsPane.getChildren().add(destinationPorts);
         
         // Top Source IP Addresses
-        Chart topSourceIPAddresses = chartContext.createChart(stats.GetTopSourceIPAddresses(), resources.getString("topsourceipaddresses"));
+        sourceIpData = stats.GetTopSourceIPAddresses();
+        Chart topSourceIPAddresses = chartContext.createChart(sourceIpData, resources.getString("topsourceipaddresses"));
         topSourceIPsPane.getChildren().add(topSourceIPAddresses);
         
         // Top Destination IP Addresses
-        Chart topDestinationIPAddresses = chartContext.createChart(stats.GetTopDestinationIPAddresses(), resources.getString("topdestinationipaddresses"));
+        destinationIpData = stats.GetTopDestinationIPAddresses();
+        Chart topDestinationIPAddresses = chartContext.createChart(destinationIpData, resources.getString("topdestinationipaddresses"));
         topDestinationIPsPane.getChildren().add(topDestinationIPAddresses);
            
         // Top Protocols

@@ -3,6 +3,7 @@ package org.jimmycollins.networktraffic.util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -140,6 +141,16 @@ public class Utility
     {
         long sizeInMb = bytes / (1024 * 1024);
         return sizeInMb;
+    }
+    
+    /**
+     * Generate a timestamp
+     * @return A timestamp as a string
+     */
+    public static String GenerateTimestamp()
+    {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        return timestamp.toString();
     }
       
     /**
