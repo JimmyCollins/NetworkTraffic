@@ -2,13 +2,16 @@
 package org.jimmycollins.networktraffic.view;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -16,14 +19,19 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.Chart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jimmycollins.networktraffic.BarChartStrategy;
 import org.jimmycollins.networktraffic.DisplayContext;
@@ -65,6 +73,9 @@ public class NewUserInterfaceController implements Initializable {
     
     @FXML
     private Button saveCurrentAnalysisBtn;
+    
+    @FXML
+    private Button loadExistingAnalysisButton;
     
     
     Map<String,Integer> sourcePortData = new HashMap<>();
@@ -150,9 +161,51 @@ public class NewUserInterfaceController implements Initializable {
     }
       
     @FXML
-    private void handleLoadSession(ActionEvent event)
+    private void handleLoadSession(ActionEvent event) throws IOException
     {
-        // TODO
+        // Get the list of saved sessions from the database
+        
+        // Get a connection to the database
+        Connection db = Database.getInstance().getConnection();
+        
+        try
+        {
+            String query = "select Date from savedanalyses";       
+            Statement st = db.createStatement(); 
+            ResultSet rs = st.executeQuery(query);
+            
+            List<String> savedAnalyses = new ArrayList<>();
+            
+            while (rs.next())
+            {
+                String date = rs.getString("Date");
+                savedAnalyses.add(date);
+            }
+            
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("", savedAnalyses);
+            dialog.setTitle("Network Traffic Analyzer");
+            dialog.setHeaderText("Choose the existing analysis you want to load");
+            dialog.setContentText("Choice:");
+
+            // Traditional way to get the response value.
+            Optional<String> result = dialog.showAndWait();
+            if (!result.isPresent())
+            {
+                System.out.println("User cancelled.");
+                return;
+            }
+            
+            System.out.println("User choice: " + result.get());
+            
+            
+            // TODO - Load this data and plug it into the charts
+            
+            
+        }
+        catch(SQLException ex)
+        {
+            LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
+        }
     }
     
     @FXML
@@ -190,6 +243,10 @@ public class NewUserInterfaceController implements Initializable {
             {
                analysisId = rs.getInt(1);   
             }
+            
+            
+            // TODO - Some sort of DB helper class to reduce duplicated code here?
+            
             
             // Save the Source Port Data            
             for (Map.Entry<String, Integer> entry : sourcePortData.entrySet())
