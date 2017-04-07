@@ -1,0 +1,5 @@
+Database Setup
+
+Open MySQL Workbench and connect
+Open 'schema-no-data.sql' from the 'db' folder in the source tree
+Execute this SQL to setup the necessary tables etc.

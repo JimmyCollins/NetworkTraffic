@@ -75,7 +75,7 @@ public class NewUserInterfaceController implements Initializable {
     private Button saveCurrentAnalysisBtn;
     
     @FXML
-    private Button loadExistingAnalysisButton;
+    private Button drawChartsBtn;
     
     
     Map<String,Integer> sourcePortData = new HashMap<>();
@@ -136,7 +136,7 @@ public class NewUserInterfaceController implements Initializable {
             ParsableFile pfile = new BinetFile(file);
             stats = pfile.ParseFile(stats);
             
-            
+            drawChartsBtn.setDisable(false);
             
             //showBarChartsButton.setDisable(false);
             //showPieChartsButton.setDisable(false);
@@ -156,7 +156,7 @@ public class NewUserInterfaceController implements Initializable {
     private void handleDrawGeneralCharts(ActionEvent event)
     {
         // Draw bar charts by default (user can change from the UI)
-        drawGeneralCharts(new PieChartStrategy());
+        drawChartsInitial(new PieChartStrategy());
         saveCurrentAnalysisBtn.setDisable(false);
     }
       
@@ -187,19 +187,97 @@ public class NewUserInterfaceController implements Initializable {
             dialog.setHeaderText("Choose the existing analysis you want to load");
             dialog.setContentText("Choice:");
 
-            // Traditional way to get the response value.
             Optional<String> result = dialog.showAndWait();
             if (!result.isPresent())
             {
-                System.out.println("User cancelled.");
+                //System.out.println("User cancelled.");
                 return;
             }
             
-            System.out.println("User choice: " + result.get());
+            //System.out.println("User choice: " + result.get());
+            String chosenDate = result.get();
+            drawChartsBtn.setDisable(true);
             
+            // Load data from the database
             
-            // TODO - Load this data and plug it into the charts
+            // First we need to get the ID of this saved analysis - this is used to grab the data from the other tables
+            String savedAnalysisQuery = "select * from savedanalyses where Date='" + chosenDate + "'";  
             
+            Statement savedAnalysisStatement = db.createStatement(); 
+            ResultSet savedAnalysisResult = savedAnalysisStatement.executeQuery(savedAnalysisQuery);
+            
+            String savedAnalysisId = "";
+            while (savedAnalysisResult.next())
+            {
+                savedAnalysisId = savedAnalysisResult.getString("AnalysisId");
+            }
+            
+            System.out.println("Analysis ID to Query: " + savedAnalysisId);
+            
+            // Clear out any existing data first
+            sourcePortData.clear();
+            destinationPortData.clear();
+            sourceIpData.clear();
+            destinationIpData.clear();
+            
+            // Load the Source Port Data          
+            String sourcePortDataQuery = "select * from topsourceports where AnalysisId=" + savedAnalysisId;
+            
+            Statement sourcePortStatement = db.createStatement();
+            ResultSet sourcePortResultSet = sourcePortStatement.executeQuery(sourcePortDataQuery);
+            
+            while(sourcePortResultSet.next())
+            {
+                String port = sourcePortResultSet.getString("Port");
+                Integer count = sourcePortResultSet.getInt("Count");
+                
+                sourcePortData.put(port, count);
+            }
+            
+            // Load the Destination Port Data
+            String destinationPortDataQuery = "select * from topdestinationports where AnalysisId=" + savedAnalysisId;
+            
+            Statement destinationPortStatement = db.createStatement();
+            ResultSet destinationPortResultSet = destinationPortStatement.executeQuery(destinationPortDataQuery);
+            
+            while(destinationPortResultSet.next())
+            {
+                String port = destinationPortResultSet.getString("Port");
+                Integer count = destinationPortResultSet.getInt("Count");
+                
+                destinationPortData.put(port, count);
+            }
+            
+            // Load the Source IP Data
+            String sourceIpDataQuery = "select * from topsourceips where AnalysisId=" + savedAnalysisId;
+            
+            Statement sourceIpStatement = db.createStatement();
+            ResultSet sourceIpResultSet = sourceIpStatement.executeQuery(sourceIpDataQuery);
+            
+            while(sourceIpResultSet.next())
+            {
+                String ip = sourceIpResultSet.getString("IP");
+                Integer count = sourceIpResultSet.getInt("Count");
+                
+                sourceIpData.put(ip, count);
+            }
+            
+            // Load the Destination IP Data
+            String destinationIpDataQuery = "select * from topdestinationips where AnalysisId=" + savedAnalysisId;
+            
+            Statement destinationIpStatement = db.createStatement();
+            ResultSet destinationIpResultSet = destinationIpStatement.executeQuery(destinationIpDataQuery);
+            
+            while(destinationIpResultSet.next())
+            {
+                String ip = destinationIpResultSet.getString("IP");
+                Integer count = destinationIpResultSet.getInt("Count");
+                
+                destinationIpData.put(ip, count);
+            }
+            
+            // Redraw the charts on the UI
+            drawGeneralCharts(new PieChartStrategy());
             
         }
         catch(SQLException ex)
@@ -324,6 +402,17 @@ public class NewUserInterfaceController implements Initializable {
     }
     
     
+    private void drawChartsInitial(DisplayStrategy strategy)
+    {
+        sourcePortData = stats.GetTopSourcePorts();
+        destinationPortData = stats.GetTopDestinationPorts();
+        sourceIpData = stats.GetTopSourceIPAddresses();
+        destinationIpData = stats.GetTopDestinationIPAddresses();
+        
+        drawGeneralCharts(strategy);
+    }
+    
+    
     private void drawGeneralCharts(DisplayStrategy strategy)
     {
         chartContext.setChartStrategy(strategy);
@@ -334,22 +423,22 @@ public class NewUserInterfaceController implements Initializable {
         topDestinationIPsPane.getChildren().clear();
         
         // Top Source Ports
-        sourcePortData = stats.GetTopSourcePorts();
+        //sourcePortData = stats.GetTopSourcePorts();
         Chart sourcePorts = chartContext.createChart(sourcePortData, resources.getString("topsourceports"));
         topSourcePortsPane.getChildren().add(sourcePorts);
         
         // Top Destination Ports
-        destinationPortData = stats.GetTopDestinationPorts();
+        //destinationPortData = stats.GetTopDestinationPorts();
         Chart destinationPorts = chartContext.createChart(destinationPortData, resources.getString("topdestinationports"));
         topDestinationPortsPane.getChildren().add(destinationPorts);
         
         // Top Source IP Addresses
-        sourceIpData = stats.GetTopSourceIPAddresses();
+        //sourceIpData = stats.GetTopSourceIPAddresses();
         Chart topSourceIPAddresses = chartContext.createChart(sourceIpData, resources.getString("topsourceipaddresses"));
         topSourceIPsPane.getChildren().add(topSourceIPAddresses);
         
         // Top Destination IP Addresses
-        destinationIpData = stats.GetTopDestinationIPAddresses();
+        //destinationIpData = stats.GetTopDestinationIPAddresses();
         Chart topDestinationIPAddresses = chartContext.createChart(destinationIpData, resources.getString("topdestinationipaddresses"));
         topDestinationIPsPane.getChildren().add(topDestinationIPAddresses);
            
