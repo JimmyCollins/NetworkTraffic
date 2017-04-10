@@ -19,10 +19,7 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.Chart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -31,7 +28,6 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jimmycollins.networktraffic.BarChartStrategy;
 import org.jimmycollins.networktraffic.DisplayContext;
@@ -42,10 +38,15 @@ import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
+import org.jimmycollins.networktraffic.model.TopData;
 import org.jimmycollins.networktraffic.util.BinetFile;
 import org.jimmycollins.networktraffic.util.Database;
 import org.jimmycollins.networktraffic.util.DatabaseUtil;
 import org.jimmycollins.networktraffic.util.LogUtil;
+import org.jimmycollins.networktraffic.util.TopDestinationIpAddresses;
+import org.jimmycollins.networktraffic.util.TopDestinationPorts;
+import org.jimmycollins.networktraffic.util.TopSourceIpAddresses;
+import org.jimmycollins.networktraffic.util.TopSourcePorts;
 import org.jimmycollins.networktraffic.util.Utility;
 
 
@@ -387,10 +388,17 @@ public class NewUserInterfaceController implements Initializable {
     
     private void drawChartsInitial(DisplayStrategy strategy)
     {
-        sourcePortData = stats.GetTopSourcePorts();
-        destinationPortData = stats.GetTopDestinationPorts();
-        sourceIpData = stats.GetTopSourceIPAddresses();
-        destinationIpData = stats.GetTopDestinationIPAddresses();
+        TopData sourcePorts = new TopSourcePorts();
+        sourcePortData = sourcePorts.GetTopData(stats.GetFlows());
+        
+        TopData destinationPorts = new TopDestinationPorts();
+        destinationPortData = destinationPorts.GetTopData(stats.GetFlows());
+        
+        TopData sourceIps = new TopSourceIpAddresses();
+        sourceIpData = sourceIps.GetTopData(stats.GetFlows());
+        
+        TopData destinationIps = new TopDestinationIpAddresses();
+        destinationIpData = destinationIps.GetTopData(stats.GetFlows());
         
         drawGeneralCharts(strategy);
     }
@@ -406,30 +414,20 @@ public class NewUserInterfaceController implements Initializable {
         topDestinationIPsPane.getChildren().clear();
         
         // Top Source Ports
-        //sourcePortData = stats.GetTopSourcePorts();
         Chart sourcePorts = chartContext.createChart(sourcePortData, resources.getString("topsourceports"));
         topSourcePortsPane.getChildren().add(sourcePorts);
         
         // Top Destination Ports
-        //destinationPortData = stats.GetTopDestinationPorts();
         Chart destinationPorts = chartContext.createChart(destinationPortData, resources.getString("topdestinationports"));
         topDestinationPortsPane.getChildren().add(destinationPorts);
         
         // Top Source IP Addresses
-        //sourceIpData = stats.GetTopSourceIPAddresses();
         Chart topSourceIPAddresses = chartContext.createChart(sourceIpData, resources.getString("topsourceipaddresses"));
         topSourceIPsPane.getChildren().add(topSourceIPAddresses);
         
         // Top Destination IP Addresses
-        //destinationIpData = stats.GetTopDestinationIPAddresses();
         Chart topDestinationIPAddresses = chartContext.createChart(destinationIpData, resources.getString("topdestinationipaddresses"));
         topDestinationIPsPane.getChildren().add(topDestinationIPAddresses);
-           
-        // Top Protocols
-        /*Tab protocols = chartContext.createChartTab(stats.GetTopProtocols(), resources.getString("topprotocols"));
-        protocols.setText(resources.getString("protocols"));
-        tabPane.getTabs().add(protocols);*/
-        
     }
      
     

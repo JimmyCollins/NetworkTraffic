@@ -3,8 +3,6 @@ package org.jimmycollins.networktraffic.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import org.jimmycollins.networktraffic.util.Utility;
 
 /**
  * High level Object for storing statistics from the traffic file
@@ -115,96 +113,4 @@ public class FlowFileStats
             observer.update();
         });
     }	
-    
-    /**
-     * Get the top 10 source ports from the currently parsed data
-     * @return The top 10 source ports
-     */
-    public Map<String,Integer> GetTopSourcePorts()
-    {
-        ArrayList<String> sourcePorts = new ArrayList<>();  
-        
-        for(int i=0; i<Flows.size();i++)
-        {
-           if(Flows.get(i).GetSourcePort() != -1) 
-           {
-               int port = Flows.get(i).GetSourcePort();
-               sourcePorts.add(Integer.toString(port));
-           }
-        }    
-        return Utility.GetTopElements(sourcePorts, 9);    
-    }
-    
-    /**
-     * Get the top 10 destination ports from the currently parsed data
-     * @return The top 10 destination ports
-     */
-    public Map<String,Integer> GetTopDestinationPorts()
-    {
-        ArrayList<String> destinationPorts = new ArrayList<>();  
-        
-        for(int i=0; i<Flows.size();i++)
-        {
-           if(Flows.get(i).GetSourcePort() != -1) 
-           {
-               int port = Flows.get(i).GetDestinationPort();
-               destinationPorts.add(Integer.toString(port));
-           }
-        }  
-        return Utility.GetTopElements(destinationPorts, 9);    
-    }
-     
-    /**
-     * Get the top 10 source IP addresses from the currently parsed data
-     * @return The top 10 source IP addresses
-     */
-    public Map<String,Integer> GetTopSourceIPAddresses()
-    {
-        ArrayList<String> sourceIPs = new ArrayList<>();   
-             
-        for(int i=0; i<Flows.size();i++)
-        {
-           if(Flows.get(i).GetSourcePort() != -1) 
-           {
-               sourceIPs.add(Flows.get(i).GetSourceHost().getHostAddress());
-           }
-        }     
-        return Utility.GetTopElements(sourceIPs, 9);    
-    }
-    
-    /**
-     * Get the top 10 destination IP addresses from the currently parsed data
-     * @return The top 10 destination IP addresses
-     */
-    public Map<String,Integer> GetTopDestinationIPAddresses()
-    {
-        ArrayList<String> destinationIPs = new ArrayList<>();     
-        
-        for(int i=0; i<Flows.size();i++)
-        {
-           if(Flows.get(i).GetSourcePort() != -1) 
-           {
-               destinationIPs.add(Flows.get(i).GetDestinationHost().getHostAddress());
-           }
-        }  
-        return Utility.GetTopElements(destinationIPs, 9);    
-    }
-    
-    /**
-     * Get the top 10 protocols from the currently parsed data
-     * @return The top 10 protocols
-     */
-    public Map<String,Integer> GetTopProtocols()
-    {
-        ArrayList<String> protocols = new ArrayList<>();  
-        
-        for(int i=0; i<Flows.size();i++)
-        {
-           if(Flows.get(i).GetSourcePort() != -1) 
-           {
-               protocols.add(Flows.get(i).GetFlowType());
-           }
-        }      
-        return Utility.GetTopElements(protocols, 9);    
-    } 
 }
