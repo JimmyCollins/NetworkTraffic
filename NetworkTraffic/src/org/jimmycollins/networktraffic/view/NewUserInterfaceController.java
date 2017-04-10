@@ -44,6 +44,7 @@ import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
 import org.jimmycollins.networktraffic.util.BinetFile;
 import org.jimmycollins.networktraffic.util.Database;
+import org.jimmycollins.networktraffic.util.DatabaseUtil;
 import org.jimmycollins.networktraffic.util.LogUtil;
 import org.jimmycollins.networktraffic.util.Utility;
 
@@ -163,16 +164,13 @@ public class NewUserInterfaceController implements Initializable {
     @FXML
     private void handleLoadSession(ActionEvent event) throws IOException
     {
-        // Get the list of saved sessions from the database
-        
         // Get a connection to the database
         Connection db = Database.getInstance().getConnection();
         
         try
         {
             String query = "select Date from savedanalyses";       
-            Statement st = db.createStatement(); 
-            ResultSet rs = st.executeQuery(query);
+            ResultSet rs = DatabaseUtil.ExecuteQuery(query);
             
             List<String> savedAnalyses = new ArrayList<>();
             
@@ -183,36 +181,33 @@ public class NewUserInterfaceController implements Initializable {
             }
             
             ChoiceDialog<String> dialog = new ChoiceDialog<>("", savedAnalyses);
-            dialog.setTitle("Network Traffic Analyzer");
-            dialog.setHeaderText("Choose the existing analysis you want to load");
-            dialog.setContentText("Choice:");
+            dialog.setTitle(resources.getString("alertheader"));
+            dialog.setHeaderText(resources.getString("choosesaveddata"));
+            dialog.setContentText(resources.getString("choice"));
 
             Optional<String> result = dialog.showAndWait();
             if (!result.isPresent())
             {
-                //System.out.println("User cancelled.");
                 return;
             }
             
-            //System.out.println("User choice: " + result.get());
             String chosenDate = result.get();
             drawChartsBtn.setDisable(true);
             
             // Load data from the database
             
             // First we need to get the ID of this saved analysis - this is used to grab the data from the other tables
-            String savedAnalysisQuery = "select * from savedanalyses where Date='" + chosenDate + "'";  
-            
-            Statement savedAnalysisStatement = db.createStatement(); 
-            ResultSet savedAnalysisResult = savedAnalysisStatement.executeQuery(savedAnalysisQuery);
+            String savedAnalysisQuery = "select * from savedanalyses where Date='" + chosenDate + "'";         
+            ResultSet savedAnalysisResult = DatabaseUtil.ExecuteQuery(savedAnalysisQuery);
             
             String savedAnalysisId = "";
             while (savedAnalysisResult.next())
             {
                 savedAnalysisId = savedAnalysisResult.getString("AnalysisId");
+                parsedFlowsLabel.setText(savedAnalysisResult.getString("ParsedFlowsCount"));
+                parsingErrorsLabel.setText(savedAnalysisResult.getString("ParsingErrorsCount"));
+                totalPacketsLabel.setText(savedAnalysisResult.getString("TotalPacketsCount"));
             }
-            
-            System.out.println("Analysis ID to Query: " + savedAnalysisId);
             
             // Clear out any existing data first
             sourcePortData.clear();
@@ -221,10 +216,8 @@ public class NewUserInterfaceController implements Initializable {
             destinationIpData.clear();
             
             // Load the Source Port Data          
-            String sourcePortDataQuery = "select * from topsourceports where AnalysisId=" + savedAnalysisId;
-            
-            Statement sourcePortStatement = db.createStatement();
-            ResultSet sourcePortResultSet = sourcePortStatement.executeQuery(sourcePortDataQuery);
+            String sourcePortDataQuery = "select * from topsourceports where AnalysisId=" + savedAnalysisId;  
+            ResultSet sourcePortResultSet = DatabaseUtil.ExecuteQuery(sourcePortDataQuery);
             
             while(sourcePortResultSet.next())
             {
@@ -235,10 +228,8 @@ public class NewUserInterfaceController implements Initializable {
             }
             
             // Load the Destination Port Data
-            String destinationPortDataQuery = "select * from topdestinationports where AnalysisId=" + savedAnalysisId;
-            
-            Statement destinationPortStatement = db.createStatement();
-            ResultSet destinationPortResultSet = destinationPortStatement.executeQuery(destinationPortDataQuery);
+            String destinationPortDataQuery = "select * from topdestinationports where AnalysisId=" + savedAnalysisId;        
+            ResultSet destinationPortResultSet = DatabaseUtil.ExecuteQuery(destinationPortDataQuery);
             
             while(destinationPortResultSet.next())
             {
@@ -250,9 +241,7 @@ public class NewUserInterfaceController implements Initializable {
             
             // Load the Source IP Data
             String sourceIpDataQuery = "select * from topsourceips where AnalysisId=" + savedAnalysisId;
-            
-            Statement sourceIpStatement = db.createStatement();
-            ResultSet sourceIpResultSet = sourceIpStatement.executeQuery(sourceIpDataQuery);
+            ResultSet sourceIpResultSet = DatabaseUtil.ExecuteQuery(sourceIpDataQuery);
             
             while(sourceIpResultSet.next())
             {
@@ -264,9 +253,7 @@ public class NewUserInterfaceController implements Initializable {
             
             // Load the Destination IP Data
             String destinationIpDataQuery = "select * from topdestinationips where AnalysisId=" + savedAnalysisId;
-            
-            Statement destinationIpStatement = db.createStatement();
-            ResultSet destinationIpResultSet = destinationIpStatement.executeQuery(destinationIpDataQuery);
+            ResultSet destinationIpResultSet = DatabaseUtil.ExecuteQuery(destinationIpDataQuery);
             
             while(destinationIpResultSet.next())
             {
@@ -282,7 +269,7 @@ public class NewUserInterfaceController implements Initializable {
         }
         catch(SQLException ex)
         {
-            LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("error"), ex.toString());
         }
     }
     
@@ -291,8 +278,8 @@ public class NewUserInterfaceController implements Initializable {
     {
         // Confirm the user wishes to save the data
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Network Traffic Analyzer");
-        alert.setContentText("Do you wish to save the current analysis to the database?");
+        alert.setTitle(resources.getString("alertheader"));
+        alert.setContentText(resources.getString("saveconfirmation"));
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.CANCEL)
@@ -307,8 +294,8 @@ public class NewUserInterfaceController implements Initializable {
         {
             // First we need to save a row in the savedanalysis table
             String timestamp = Utility.GenerateTimestamp();
-            String savedAnalysesQuery = "insert into savedanalyses (AnalysisId, Date)"
-                              + " values (NULL, '" + timestamp + "')";
+            String savedAnalysesQuery = "insert into savedanalyses (AnalysisId, Date, ParsedFlowsCount, ParsingErrorsCount, TotalPacketsCount)"
+                              + " values (NULL, '" + timestamp + "'," + parsedFlowsLabel.getText() + "," + parsingErrorsLabel.getText() + "," + totalPacketsLabel.getText() + ")";
             
             int analysisId = 0; // The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved
             
@@ -321,10 +308,6 @@ public class NewUserInterfaceController implements Initializable {
             {
                analysisId = rs.getInt(1);   
             }
-            
-            
-            // TODO - Some sort of DB helper class to reduce duplicated code here?
-            
             
             // Save the Source Port Data            
             for (Map.Entry<String, Integer> entry : sourcePortData.entrySet())
@@ -378,12 +361,12 @@ public class NewUserInterfaceController implements Initializable {
                 destinationIpStatement.executeUpdate();
             }
             
-            LogUtil.Log(Alert.AlertType.INFORMATION, "Network Traffic Analyzer", "Current Analysis data was saved to the database successfully as '" + timestamp + "'"
-                    + "\n\nUse the Load Existing Analysis option to load this data again in the future.");
+            LogUtil.Log(Alert.AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("currentanalysissaved") + " '" + timestamp + "'"
+                    + resources.getString("howtoload"));
         }
         catch(SQLException ex)
         {
-            LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("error"), ex.toString());
         }
     }
     

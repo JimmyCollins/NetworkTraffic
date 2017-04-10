@@ -27,8 +27,11 @@ DROP TABLE IF EXISTS `savedanalyses`;
 CREATE TABLE `savedanalyses` (
   `AnalysisId` int(11) NOT NULL AUTO_INCREMENT,
   `Date` datetime NOT NULL,
+  `ParsedFlowsCount` int(11) NOT NULL,
+  `ParsingErrorsCount` int(11) NOT NULL,
+  `TotalPacketsCount` int(11) NOT NULL,
   PRIMARY KEY (`AnalysisId`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +49,7 @@ CREATE TABLE `topdestinationips` (
   PRIMARY KEY (`Id`),
   KEY `destinationips-AnalysisId_idx` (`AnalysisId`),
   CONSTRAINT `destinationips-AnalysisId` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +67,7 @@ CREATE TABLE `topdestinationports` (
   PRIMARY KEY (`Id`),
   KEY `AnalysisId_idx` (`AnalysisId`),
   CONSTRAINT `AnalysisId-destinationports` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +85,7 @@ CREATE TABLE `topsourceips` (
   PRIMARY KEY (`Id`),
   KEY `sourceips-AnalysisId_idx` (`AnalysisId`),
   CONSTRAINT `sourceips-AnalysisId` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +103,7 @@ CREATE TABLE `topsourceports` (
   PRIMARY KEY (`Id`),
   KEY `AnalysisId_idx` (`AnalysisId`),
   CONSTRAINT `AnalysisId-sourceports` FOREIGN KEY (`AnalysisId`) REFERENCES `savedanalyses` (`AnalysisId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -112,4 +115,4 @@ CREATE TABLE `topsourceports` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-06 20:13:27
+-- Dump completed on 2017-04-10 18:47:53
