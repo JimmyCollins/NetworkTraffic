@@ -1,6 +1,7 @@
 
 package org.jimmycollins.networktraffic.view;
 
+import com.sun.prism.paint.Color;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +29,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jimmycollins.networktraffic.BarChartStrategy;
@@ -89,6 +91,9 @@ public class NewUserInterfaceController implements Initializable {
     
     @FXML
     private Label securityTabInfoMessage;
+    
+    @FXML 
+    private Label threatLevelLabel;
     
     
     Map<String,Integer> sourcePortData = new HashMap<>();
@@ -452,8 +457,32 @@ public class NewUserInterfaceController implements Initializable {
         securityTabInfoMessage.setVisible(false);
         mainTabPane.getSelectionModel().select(1);
         
-        // Load the threat level
+        // Load the threat level and display on the UI
         String threatLevel = dshieldApi.Infocon();
+        
+        switch(threatLevel.toUpperCase())
+        {
+            case "GREEN":
+                threatLevelLabel.setText("GREEN");
+                threatLevelLabel.setTextFill(Paint.valueOf("GREEN"));
+                break;
+            case "YELLOW":
+                threatLevelLabel.setText("YELLOW");
+                threatLevelLabel.setTextFill(Paint.valueOf("YELLOW"));
+                break;
+            case "ORANGE":
+                threatLevelLabel.setText("ORANGE");
+                threatLevelLabel.setTextFill(Paint.valueOf("ORANGE"));
+                break;
+            case "RED":
+                threatLevelLabel.setText("RED");
+                threatLevelLabel.setTextFill(Paint.valueOf("RED"));
+                break;
+        }
+        
+        // TODO: Test the IP's against the API
+        
+        
     }
     
     
