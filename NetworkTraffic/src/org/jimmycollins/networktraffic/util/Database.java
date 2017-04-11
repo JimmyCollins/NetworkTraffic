@@ -4,38 +4,32 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javafx.scene.control.Alert;
-//import java.sql.Statement;
 
-
-// Ref: http://stackoverflow.com/questions/6567839/using-a-singleton-class-for-database-connection
-/// Getting a connection - Connection con = Database.getInstance().getConnection();
-
-// TODO - Cleanup and commnet this file
-
+/**
+ * Database connection class
+ * Utilizes the Singleton Pattern
+ */
 public class Database 
 {
-    private static Database Db;
+    private static Database Database;
     private static Connection DbConnection;
-    //private static Statement stmt;
-    
-    
-    private Database() 
-    {
-        
-    }
 
-    public static Database getInstance()
+    /**
+     * Get an instance of the database connection
+     * @return The database connection instance
+     */
+    public static Database GetInstance()
     {
-        if(Db == null)
+        if(Database == null)
         {
-            Db = new Database();
+            Database = new Database();
         }
         
-        return Db;
+        return Database;
     }
     
     
-    public Connection getConnection()
+    public Connection GetConnection()
     {
         if(DbConnection == null)
         {

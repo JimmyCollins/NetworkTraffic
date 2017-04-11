@@ -38,7 +38,10 @@
                       </TitledPane>
                       <TitledPane expanded="false" text="Advanced Analysis">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="securityAnalysisButton" disable="true" layoutX="19.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleSecurityAnalysis" prefHeight="30.0" prefWidth="138.0" text="Security Analysis" />
+                                 </children></AnchorPane>
                         </content>
                            <font>
                               <Font size="14.0" />
@@ -74,9 +77,9 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TabPane layoutX="296.0" layoutY="98.0" prefHeight="825.0" prefWidth="958.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane fx:id="mainTabPane" layoutX="296.0" layoutY="98.0" prefHeight="825.0" prefWidth="958.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
-                      <Tab text="General">
+                      <Tab text="General Analysis">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -88,6 +91,19 @@
                               </AnchorPane>
                         </content>
                       </Tab>
+                        <Tab text="Advanced Analysis">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="securityTabInfoMessage" layoutX="238.0" layoutY="324.0" prefHeight="17.0" prefWidth="573.0" text="Use the option under Advanced Analysis to run the security analysis when data is available">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                </children>

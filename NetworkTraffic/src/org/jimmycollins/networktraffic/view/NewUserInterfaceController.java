@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -40,6 +41,7 @@ import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
 import org.jimmycollins.networktraffic.model.TopData;
 import org.jimmycollins.networktraffic.util.BinetFile;
+import org.jimmycollins.networktraffic.util.DShieldApiProxy;
 import org.jimmycollins.networktraffic.util.Database;
 import org.jimmycollins.networktraffic.util.DatabaseUtil;
 import org.jimmycollins.networktraffic.util.LogUtil;
@@ -78,6 +80,15 @@ public class NewUserInterfaceController implements Initializable {
     
     @FXML
     private Button drawChartsBtn;
+    
+    @FXML
+    private Button securityAnalysisButton;
+    
+    @FXML
+    private TabPane mainTabPane;
+    
+    @FXML
+    private Label securityTabInfoMessage;
     
     
     Map<String,Integer> sourcePortData = new HashMap<>();
@@ -139,6 +150,7 @@ public class NewUserInterfaceController implements Initializable {
             stats = pfile.ParseFile(stats);
             
             drawChartsBtn.setDisable(false);
+            securityAnalysisButton.setDisable(false);
             
             //showBarChartsButton.setDisable(false);
             //showPieChartsButton.setDisable(false);
@@ -166,7 +178,7 @@ public class NewUserInterfaceController implements Initializable {
     private void handleLoadSession(ActionEvent event) throws IOException
     {
         // Get a connection to the database
-        Connection db = Database.getInstance().getConnection();
+        Connection db = Database.GetInstance().GetConnection();
         
         try
         {
@@ -194,6 +206,7 @@ public class NewUserInterfaceController implements Initializable {
             
             String chosenDate = result.get();
             drawChartsBtn.setDisable(true);
+            securityAnalysisButton.setDisable(false);
             
             // Load data from the database
             
@@ -289,7 +302,7 @@ public class NewUserInterfaceController implements Initializable {
         }      
         
         // Get a connection to the database
-        Connection db = Database.getInstance().getConnection();
+        Connection db = Database.GetInstance().GetConnection();
         
         try
         {
@@ -430,6 +443,19 @@ public class NewUserInterfaceController implements Initializable {
         topDestinationIPsPane.getChildren().add(topDestinationIPAddresses);
     }
      
+    
+    @FXML
+    private void handleSecurityAnalysis(ActionEvent event)
+    {
+        DShieldApiProxy dshieldApi = new DShieldApiProxy();
+        
+        securityTabInfoMessage.setVisible(false);
+        mainTabPane.getSelectionModel().select(1);
+        
+        // Load the threat level
+        String threatLevel = dshieldApi.Infocon();
+    }
+    
     
     /**
      * Initializes the controller class.

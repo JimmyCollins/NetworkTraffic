@@ -17,7 +17,7 @@ public class DatabaseUtil
      */
     public static ResultSet ExecuteQuery(String query)  throws IOException
     {
-        Connection db = Database.getInstance().getConnection();
+        Connection db = Database.GetInstance().GetConnection();
         
         try
         {   
