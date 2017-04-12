@@ -519,8 +519,8 @@ public class NewUserInterfaceController implements Initializable {
                 break;
         }
         
-        // Create new thread using Lamda expression (could use Anonymous Class here also)
-        Thread t = new Thread(() -> 
+        // Create new threads using Lamda expression (could use Anonymous Class here also)
+        Thread sourceIpCheckingThread = new Thread(() -> 
         {
             // Test the Top Source IP's against the DShield API and display in the UI      
             PropertyValueFactory<DShieldIpInfo, String> sourceIpProperty = new PropertyValueFactory<>("IP");
@@ -540,7 +540,13 @@ public class NewUserInterfaceController implements Initializable {
                 DShieldIpInfo info = dshieldApi.Ip(entry.getKey());
                 sourceIPSecurityInfoData.add(info);
             });
-            
+        });
+        
+        sourceIpCheckingThread.setDaemon(true);
+        sourceIpCheckingThread.start();
+        
+        Thread destinationIpCheckingThread = new Thread(() -> 
+        {        
             // Test the Top Destination IP's against the DShield API
             PropertyValueFactory<DShieldIpInfo, String> destinationIpProperty = new PropertyValueFactory<>("IP");
             PropertyValueFactory<DShieldIpInfo, String> destinationBlockedProperty = new PropertyValueFactory<>("Blocked");
@@ -559,32 +565,26 @@ public class NewUserInterfaceController implements Initializable {
                 DShieldIpInfo info = dshieldApi.Ip(entry.getKey());
                 destinationIPSecurityInfoData.add(info);
             });
-            
-            /*// Test the Top Source Ports against the DShield API
-            sourcePortData.entrySet().stream().forEach((entry) ->
-            {
-                DShieldPortInfo sourcePortInfo = dshieldApi.Port(entry.getKey());
-
-            });
-            
-            // Test the Top Destination Ports against the DShield API
-            destinationPortData.entrySet().stream().forEach((entry) ->
-            {
-                DShieldPortInfo destinationPortInfo = dshieldApi.Port(entry.getKey());
-
-            });*/
-            
-            // TODO - Update UI with this info
-            
         });
         
-        t.setDaemon(true);
-        t.start();
+        destinationIpCheckingThread.setDaemon(true);
+        destinationIpCheckingThread.start();
         
-        
-        
-        
-        
+        // TODO - Hook up port analysis data to the UI
+            
+        /*// Test the Top Source Ports against the DShield API
+        sourcePortData.entrySet().stream().forEach((entry) ->
+        {
+            DShieldPortInfo sourcePortInfo = dshieldApi.Port(entry.getKey());
+
+        });
+
+        // Test the Top Destination Ports against the DShield API
+        destinationPortData.entrySet().stream().forEach((entry) ->
+        {
+            DShieldPortInfo destinationPortInfo = dshieldApi.Port(entry.getKey());
+
+        });*/
     }
     
     

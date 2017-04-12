@@ -107,8 +107,8 @@
                                     </Label>
                                     <TableView fx:id="sourceIpSecurityInfoTable" layoutX="132.0" layoutY="89.0" prefHeight="267.0" prefWidth="340.0">
                                       <columns>
-                                        <TableColumn fx:id="sourceIpColumn" editable="false" prefWidth="98.0" text="IP" />
-                                        <TableColumn fx:id="sourceIpBlockedColumm" editable="false" prefWidth="79.0" text="Blocked" />
+                                        <TableColumn fx:id="sourceIpColumn" editable="false" prefWidth="92.0" text="IP" />
+                                        <TableColumn fx:id="sourceIpBlockedColumm" editable="false" prefWidth="77.0" text="Blocked" />
                                           <TableColumn fx:id="sourceIpAttacksColumn" editable="false" prefWidth="63.0" text="Attacks" />
                                           <TableColumn fx:id="sourceIpCountryColumn" editable="false" prefWidth="83.0" text="Country" />
                                       </columns>
@@ -123,8 +123,8 @@
                                     </Label>
                                     <TableView fx:id="destinationIpSecurityInfoTable" layoutX="558.0" layoutY="89.0" prefHeight="267.0" prefWidth="340.0">
                                        <columns>
-                                          <TableColumn fx:id="destinationIpColumn" editable="false" prefWidth="98.0" text="IP" />
-                                          <TableColumn fx:id="destinationIpBlockedColumm" editable="false" prefWidth="79.0" text="Blocked" />
+                                          <TableColumn fx:id="destinationIpColumn" editable="false" prefWidth="93.0" text="IP" />
+                                          <TableColumn fx:id="destinationIpBlockedColumm" editable="false" prefWidth="76.0" text="Blocked" />
                                           <TableColumn fx:id="destinationIpAttacksColumn" editable="false" prefWidth="63.0" text="Attacks" />
                                           <TableColumn fx:id="destinationIpCountryColumn" editable="false" prefWidth="82.0" text="Country" />
                                        </columns>
