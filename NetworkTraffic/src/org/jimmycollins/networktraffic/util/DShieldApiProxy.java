@@ -1,6 +1,7 @@
 package org.jimmycollins.networktraffic.util;
 
 import org.jimmycollins.networktraffic.model.DShieldApi;
+import org.jimmycollins.networktraffic.model.DShieldIpInfo;
 
 // Remote Proxy Implementation - Proxy
 
@@ -20,8 +21,8 @@ public class DShieldApiProxy implements DShieldApi
     }
 
     @Override
-    public String Ip()
+    public DShieldIpInfo Ip(String ip)
     {
-        return RemoteApi.Ip();
+        return RemoteApi.Ip(ip);
     }
 }

@@ -6,5 +6,5 @@ public interface DShieldApi
 {
     public String Infocon();
 
-    public String Ip();
+    public DShieldIpInfo Ip(String ip);
 }

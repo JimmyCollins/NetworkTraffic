@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jimmycollins.networktraffic.model.DShieldApi;
+import org.jimmycollins.networktraffic.model.DShieldIpInfo;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -61,32 +62,63 @@ public class RemoteDShieldApi implements DShieldApi
     }
 
     @Override
-    public String Ip()
+    public DShieldIpInfo Ip(String ip)
     {
-        return "";
-    }
-    
-    
-    
-    // TODO: Ref - http://stackoverflow.com/questions/3058434/xml-parse-file-from-http
-    
-    private Document ParseXml(InputStream stream) throws Exception
-    {
-        DocumentBuilderFactory objDocumentBuilderFactory = null;
-        DocumentBuilder objDocumentBuilder = null;
-        Document doc = null;
+        DShieldIpInfo ipInfo = new DShieldIpInfo();
+        ipInfo.SetIP(ip);
+        System.out.println("Testing IP: " + ipInfo.GetIP());
+        
         try
         {
-            objDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
-            objDocumentBuilder = objDocumentBuilderFactory.newDocumentBuilder();
+            URL url = new URL(ApiBaseUrl + "ip/" + ip);
+            URLConnection connection = url.openConnection();
 
-            doc = objDocumentBuilder.parse(stream);
+            InputStream responseStream = connection.getInputStream();
+
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+
+            Document doc = db.parse(responseStream);
+            
+            Element rootElement;
+            rootElement = doc.getDocumentElement();
+            
+            NodeList nodes = rootElement.getChildNodes();
+            
+            for(int i=0; i<nodes.getLength(); i++)
+            {         
+                // Blocked Packets from this IP
+                if("count".equals(nodes.item(i).getNodeName().toLowerCase()))
+                {
+                    System.out.println("IP Blocked Packet Count: " + nodes.item(i).getTextContent());
+                    ipInfo.SetTotalBlockedPackets(nodes.item(i).getTextContent());
+                }
+                
+                // Number of unique destination IP addresses for these packets
+                if("attacks".equals(nodes.item(i).getNodeName().toLowerCase()))
+                {
+                    System.out.println("Attacks: " + nodes.item(i).getTextContent());
+                    ipInfo.SetAttacks(nodes.item(i).getTextContent());
+                }
+                
+                // Country
+                if("ascountry".equals(nodes.item(i).getNodeName().toLowerCase()))
+                {
+                    System.out.println("Country: " + nodes.item(i).getTextContent());
+                    ipInfo.SetCountry(nodes.item(i).getTextContent());
+                }
+            }
+            
         }
         catch(IOException | ParserConfigurationException | SAXException ex)
         {
-            throw ex;
-        }       
-
-        return doc;
+            LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.toString());
+            LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Infocon() Error - " + ex.getMessage());
+        }
+        
+        return ipInfo;
     }
+    
+    
+    
 }

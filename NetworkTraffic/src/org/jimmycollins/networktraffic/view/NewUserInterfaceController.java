@@ -38,6 +38,7 @@ import org.jimmycollins.networktraffic.DisplayStrategy;
 import org.jimmycollins.networktraffic.LineChartStrategy;
 import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.PieChartStrategy;
+import org.jimmycollins.networktraffic.model.DShieldIpInfo;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
@@ -480,7 +481,13 @@ public class NewUserInterfaceController implements Initializable {
                 break;
         }
         
-        // TODO: Test the IP's against the API
+        // Test the IP's against the API
+        // TEST: (Not appearing in UI yet) - test top source IP's
+        sourceIpData.entrySet().stream().forEach((entry) -> 
+        {
+            DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
+        });
+        
         
         
     }
