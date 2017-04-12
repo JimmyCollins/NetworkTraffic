@@ -39,6 +39,7 @@ import org.jimmycollins.networktraffic.LineChartStrategy;
 import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.DShieldIpInfo;
+import org.jimmycollins.networktraffic.model.DShieldPortInfo;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
@@ -489,18 +490,30 @@ public class NewUserInterfaceController implements Initializable {
             // Test the Top Source IP's against the DShield API
             sourceIpData.entrySet().stream().forEach((entry) ->
             {
-                DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
+                DShieldIpInfo sourceIpInfo = dshieldApi.Ip(entry.getKey());
             });
             
             // Test the Top Destination IP's against the DShield API
             destinationIpData.entrySet().stream().forEach((entry) ->
             {
-                DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
+                DShieldIpInfo destinationIpInfo = dshieldApi.Ip(entry.getKey());
+            });
+            
+            // Test the Top Source Ports against the DShield API
+            sourcePortData.entrySet().stream().forEach((entry) ->
+            {
+                DShieldPortInfo sourcePortInfo = dshieldApi.Port(entry.getKey());
+
+            });
+            
+            // Test the Top Destination Ports against the DShield API
+            destinationPortData.entrySet().stream().forEach((entry) ->
+            {
+                DShieldPortInfo destinationPortInfo = dshieldApi.Port(entry.getKey());
+
             });
             
             // TODO - Update UI with this info
-            
-            // TODO - Include Port Data - e.g. https://www.dshield.org/api/portdate/80/
             
         });
         

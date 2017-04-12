@@ -7,4 +7,6 @@ public interface DShieldApi
     public String Infocon();
 
     public DShieldIpInfo Ip(String ip);
+    
+    public DShieldPortInfo Port(String port);
 }
