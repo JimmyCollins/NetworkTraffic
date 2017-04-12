@@ -1,7 +1,6 @@
 
 package org.jimmycollins.networktraffic.view;
 
-import com.sun.prism.paint.Color;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +17,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,6 +29,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
@@ -39,7 +43,6 @@ import org.jimmycollins.networktraffic.LineChartStrategy;
 import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.DShieldIpInfo;
-import org.jimmycollins.networktraffic.model.DShieldPortInfo;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
@@ -96,6 +99,28 @@ public class NewUserInterfaceController implements Initializable {
     
     @FXML 
     private Label threatLevelLabel;
+    
+    
+    
+    /**
+     * Tables on Security Analysis Dialog
+     */
+    
+    @FXML
+    private TableView sourceIpSecurityInfoTable;
+    
+    private ObservableList<DShieldIpInfo> sourceIPSecurityInfoData = FXCollections.observableArrayList();
+    
+    @FXML
+    private TableColumn sourceIpColumn;
+    @FXML
+    private TableColumn sourceIpBlockedColumm;
+    @FXML
+    private TableColumn sourceIpAttacksColumn;
+    @FXML
+    private TableColumn sourceIpCountryColumn;
+    
+    // --------------------------------------------------- //
     
     
     Map<String,Integer> sourcePortData = new HashMap<>();
@@ -482,21 +507,34 @@ public class NewUserInterfaceController implements Initializable {
                 break;
         }
         
-        // TODO: Calls to API may need to be done in a background thread - maybe kick this off when the user loads an analysis from a file or the DB
-        
         // Create new thread using Lamda expression (could use Anonymous Class here also)
         Thread t = new Thread(() -> 
         {
-            // Test the Top Source IP's against the DShield API
+            // Test the Top Source IP's against the DShield API and display in the UI      
+            PropertyValueFactory<DShieldIpInfo, String> ipProperty = new PropertyValueFactory<DShieldIpInfo, String>("IP");
+            PropertyValueFactory<DShieldIpInfo, String> blockedProperty = new PropertyValueFactory<DShieldIpInfo, String>("Blocked");
+            PropertyValueFactory<DShieldIpInfo, String> attacksProperty = new PropertyValueFactory<DShieldIpInfo, String>("Attacks");
+            PropertyValueFactory<DShieldIpInfo, String> countryProperty = new PropertyValueFactory<DShieldIpInfo, String>("Country");
+            
+            sourceIpColumn.setCellValueFactory(ipProperty);        
+            sourceIpBlockedColumm.setCellValueFactory(blockedProperty);
+            sourceIpAttacksColumn.setCellValueFactory(attacksProperty);
+            sourceIpCountryColumn.setCellValueFactory(countryProperty);
+            
+            sourceIpSecurityInfoTable.setItems(sourceIPSecurityInfoData);
+                
             sourceIpData.entrySet().stream().forEach((entry) ->
             {
-                DShieldIpInfo sourceIpInfo = dshieldApi.Ip(entry.getKey());
+                DShieldIpInfo info = dshieldApi.Ip(entry.getKey());
+                sourceIPSecurityInfoData.add(info);
             });
             
-            // Test the Top Destination IP's against the DShield API
+
+            
+            /*// Test the Top Destination IP's against the DShield API        
             destinationIpData.entrySet().stream().forEach((entry) ->
             {
-                DShieldIpInfo destinationIpInfo = dshieldApi.Ip(entry.getKey());
+                DShieldIpInfo info = dshieldApi.Ip(entry.getKey());
             });
             
             // Test the Top Source Ports against the DShield API
@@ -511,7 +549,7 @@ public class NewUserInterfaceController implements Initializable {
             {
                 DShieldPortInfo destinationPortInfo = dshieldApi.Port(entry.getKey());
 
-            });
+            });*/
             
             // TODO - Update UI with this info
             

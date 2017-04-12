@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -74,9 +72,9 @@ public class RemoteDShieldApi implements DShieldApi
     @Override
     public DShieldIpInfo Ip(String ip)
     {
-        DShieldIpInfo ipInfo = new DShieldIpInfo();
-        ipInfo.SetIP(ip);
-        System.out.println("Testing IP: " + ipInfo.GetIP());
+        String blocked = "0";
+        String attacks = "0";
+        String country = "Unknown";
         
         try
         {
@@ -101,24 +99,38 @@ public class RemoteDShieldApi implements DShieldApi
                 if("count".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
                     System.out.println("IP Blocked Packet Count: " + nodes.item(i).getTextContent());
-                    ipInfo.SetTotalBlockedPackets(nodes.item(i).getTextContent());
+                    
+                    if(nodes.item(i).getTextContent().isEmpty())
+                        blocked = "0";
+                    else
+                        blocked = nodes.item(i).getTextContent();
                 }
                 
                 // Number of unique destination IP addresses for these packets
                 if("attacks".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
                     System.out.println("Attacks: " + nodes.item(i).getTextContent());
-                    ipInfo.SetAttacks(nodes.item(i).getTextContent());
+                    
+                    if(nodes.item(i).getTextContent().isEmpty())
+                        attacks = "0";
+                    else
+                        attacks = nodes.item(i).getTextContent();
                 }
                 
                 // Country
                 if("ascountry".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
                     System.out.println("Country: " + nodes.item(i).getTextContent());
-                    ipInfo.SetCountry(nodes.item(i).getTextContent());
+                    
+                    if(nodes.item(i).getTextContent().isEmpty())
+                        country = "Unknown";
+                    else
+                        country = nodes.item(i).getTextContent();
                 }
+                           
             }
-            
+            DShieldIpInfo info = new DShieldIpInfo(ip, blocked, attacks, country);
+            return info;
         }
         catch(IOException | ParserConfigurationException | SAXException ex)
         {
@@ -126,7 +138,7 @@ public class RemoteDShieldApi implements DShieldApi
             LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Infocon() Error - " + ex.getMessage());
         }
         
-        return ipInfo;
+        return null; // FIXME: Review this
     }
     
     

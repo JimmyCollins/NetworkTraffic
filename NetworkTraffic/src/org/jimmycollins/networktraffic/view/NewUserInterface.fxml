@@ -95,21 +95,30 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label fx:id="securityTabInfoMessage" layoutX="238.0" layoutY="324.0" prefHeight="17.0" prefWidth="573.0" text="Use the option under Advanced Analysis to run the security analysis when data is available">
+                                    <Label fx:id="securityTabInfoMessage" layoutX="241.0" layoutY="557.0" prefHeight="17.0" prefWidth="573.0" text="Use the option under Advanced Analysis to run the security analysis when data is available">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="14.0" layoutY="14.0" text="THREAT LEVEL:">
+                                    <Label layoutX="404.0" layoutY="7.0" text="THREAT LEVEL:">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="threatLevelLabel" layoutX="120.0" layoutY="14.0" text="UNDEFINED">
+                                    <Label fx:id="threatLevelLabel" layoutX="510.0" layoutY="7.0" text="UNDEFINED">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Label>
+                                    <TableView fx:id="sourceIpSecurityInfoTable" layoutX="34.0" layoutY="75.0" prefHeight="284.0" prefWidth="340.0">
+                                      <columns>
+                                        <TableColumn fx:id="sourceIpColumn" editable="false" prefWidth="98.0" text="IP" />
+                                        <TableColumn fx:id="sourceIpBlockedColumm" editable="false" prefWidth="79.0" text="Blocked" />
+                                          <TableColumn fx:id="sourceIpAttacksColumn" editable="false" prefWidth="63.0" text="Attacks" />
+                                          <TableColumn fx:id="sourceIpCountryColumn" editable="false" prefWidth="99.0" text="Country" />
+                                      </columns>
+                                    </TableView>
+                                    <Label layoutX="34.0" layoutY="48.0" text="Source IP Information" />
                                  </children>
                               </AnchorPane>
                           </content>
