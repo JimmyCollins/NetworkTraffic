@@ -481,13 +481,19 @@ public class NewUserInterfaceController implements Initializable {
                 break;
         }
         
-        // Test the IP's against the API
-        // TEST: (Not appearing in UI yet) - test top source IP's
+        // TODO: Calls to API may need to be done in a background thread - maybe kick this off when the user loads an analysis from a file or the DB
+        
+        // Test the Top Source IP's against the DShield API
         sourceIpData.entrySet().stream().forEach((entry) -> 
         {
             DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
         });
         
+        // Test the Top Destination IP's against the DShield API
+        destinationIpData.entrySet().stream().forEach((entry) -> 
+        {
+            DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
+        });
         
         
     }

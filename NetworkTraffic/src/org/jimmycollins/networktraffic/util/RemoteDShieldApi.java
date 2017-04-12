@@ -119,6 +119,4 @@ public class RemoteDShieldApi implements DShieldApi
         return ipInfo;
     }
     
-    
-    
 }
