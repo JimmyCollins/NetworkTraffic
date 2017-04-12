@@ -94,9 +94,6 @@ public class NewUserInterfaceController implements Initializable {
     @FXML
     private TabPane mainTabPane;
     
-    @FXML
-    private Label securityTabInfoMessage;
-    
     @FXML 
     private Label threatLevelLabel;
     
@@ -497,7 +494,6 @@ public class NewUserInterfaceController implements Initializable {
     {
         DShieldApiProxy dshieldApi = new DShieldApiProxy();
         
-        securityTabInfoMessage.setVisible(false);
         mainTabPane.getSelectionModel().select(1);
         
         // Load the threat level and display on the UI
@@ -527,10 +523,10 @@ public class NewUserInterfaceController implements Initializable {
         Thread t = new Thread(() -> 
         {
             // Test the Top Source IP's against the DShield API and display in the UI      
-            PropertyValueFactory<DShieldIpInfo, String> sourceIpProperty = new PropertyValueFactory<DShieldIpInfo, String>("IP");
-            PropertyValueFactory<DShieldIpInfo, String> sourceBlockedProperty = new PropertyValueFactory<DShieldIpInfo, String>("Blocked");
-            PropertyValueFactory<DShieldIpInfo, String> sourceAttacksProperty = new PropertyValueFactory<DShieldIpInfo, String>("Attacks");
-            PropertyValueFactory<DShieldIpInfo, String> sourceCountryProperty = new PropertyValueFactory<DShieldIpInfo, String>("Country");
+            PropertyValueFactory<DShieldIpInfo, String> sourceIpProperty = new PropertyValueFactory<>("IP");
+            PropertyValueFactory<DShieldIpInfo, String> sourceBlockedProperty = new PropertyValueFactory<>("Blocked");
+            PropertyValueFactory<DShieldIpInfo, String> sourceAttacksProperty = new PropertyValueFactory<>("Attacks");
+            PropertyValueFactory<DShieldIpInfo, String> sourceCountryProperty = new PropertyValueFactory<>("Country");
             
             sourceIpColumn.setCellValueFactory(sourceIpProperty);        
             sourceIpBlockedColumm.setCellValueFactory(sourceBlockedProperty);
@@ -546,10 +542,10 @@ public class NewUserInterfaceController implements Initializable {
             });
             
             // Test the Top Destination IP's against the DShield API
-            PropertyValueFactory<DShieldIpInfo, String> destinationIpProperty = new PropertyValueFactory<DShieldIpInfo, String>("IP");
-            PropertyValueFactory<DShieldIpInfo, String> destinationBlockedProperty = new PropertyValueFactory<DShieldIpInfo, String>("Blocked");
-            PropertyValueFactory<DShieldIpInfo, String> destinationAttacksProperty = new PropertyValueFactory<DShieldIpInfo, String>("Attacks");
-            PropertyValueFactory<DShieldIpInfo, String> destinationCountryProperty = new PropertyValueFactory<DShieldIpInfo, String>("Country");
+            PropertyValueFactory<DShieldIpInfo, String> destinationIpProperty = new PropertyValueFactory<>("IP");
+            PropertyValueFactory<DShieldIpInfo, String> destinationBlockedProperty = new PropertyValueFactory<>("Blocked");
+            PropertyValueFactory<DShieldIpInfo, String> destinationAttacksProperty = new PropertyValueFactory<>("Attacks");
+            PropertyValueFactory<DShieldIpInfo, String> destinationCountryProperty = new PropertyValueFactory<>("Country");
          
             destinationIpColumn.setCellValueFactory(destinationIpProperty);        
             destinationIpBlockedColumm.setCellValueFactory(destinationBlockedProperty);
