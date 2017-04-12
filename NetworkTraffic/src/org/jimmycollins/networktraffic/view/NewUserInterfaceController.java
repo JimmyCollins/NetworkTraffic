@@ -106,10 +106,11 @@ public class NewUserInterfaceController implements Initializable {
      * Tables on Security Analysis Dialog
      */
     
-    @FXML
-    private TableView sourceIpSecurityInfoTable;
+    // Source IP Table
     
-    private ObservableList<DShieldIpInfo> sourceIPSecurityInfoData = FXCollections.observableArrayList();
+    @FXML
+    private TableView sourceIpSecurityInfoTable;   
+    private final ObservableList<DShieldIpInfo> sourceIPSecurityInfoData = FXCollections.observableArrayList();
     
     @FXML
     private TableColumn sourceIpColumn;
@@ -119,6 +120,21 @@ public class NewUserInterfaceController implements Initializable {
     private TableColumn sourceIpAttacksColumn;
     @FXML
     private TableColumn sourceIpCountryColumn;
+    
+    // Destination IP Table
+    
+    @FXML
+    private TableView destinationIpSecurityInfoTable;
+    private final ObservableList<DShieldIpInfo> destinationIPSecurityInfoData = FXCollections.observableArrayList();
+    
+    @FXML
+    private TableColumn destinationIpColumn;
+    @FXML
+    private TableColumn destinationIpBlockedColumm;
+    @FXML
+    private TableColumn destinationIpAttacksColumn;
+    @FXML
+    private TableColumn destinationIpCountryColumn;
     
     // --------------------------------------------------- //
     
@@ -511,15 +527,15 @@ public class NewUserInterfaceController implements Initializable {
         Thread t = new Thread(() -> 
         {
             // Test the Top Source IP's against the DShield API and display in the UI      
-            PropertyValueFactory<DShieldIpInfo, String> ipProperty = new PropertyValueFactory<DShieldIpInfo, String>("IP");
-            PropertyValueFactory<DShieldIpInfo, String> blockedProperty = new PropertyValueFactory<DShieldIpInfo, String>("Blocked");
-            PropertyValueFactory<DShieldIpInfo, String> attacksProperty = new PropertyValueFactory<DShieldIpInfo, String>("Attacks");
-            PropertyValueFactory<DShieldIpInfo, String> countryProperty = new PropertyValueFactory<DShieldIpInfo, String>("Country");
+            PropertyValueFactory<DShieldIpInfo, String> sourceIpProperty = new PropertyValueFactory<DShieldIpInfo, String>("IP");
+            PropertyValueFactory<DShieldIpInfo, String> sourceBlockedProperty = new PropertyValueFactory<DShieldIpInfo, String>("Blocked");
+            PropertyValueFactory<DShieldIpInfo, String> sourceAttacksProperty = new PropertyValueFactory<DShieldIpInfo, String>("Attacks");
+            PropertyValueFactory<DShieldIpInfo, String> sourceCountryProperty = new PropertyValueFactory<DShieldIpInfo, String>("Country");
             
-            sourceIpColumn.setCellValueFactory(ipProperty);        
-            sourceIpBlockedColumm.setCellValueFactory(blockedProperty);
-            sourceIpAttacksColumn.setCellValueFactory(attacksProperty);
-            sourceIpCountryColumn.setCellValueFactory(countryProperty);
+            sourceIpColumn.setCellValueFactory(sourceIpProperty);        
+            sourceIpBlockedColumm.setCellValueFactory(sourceBlockedProperty);
+            sourceIpAttacksColumn.setCellValueFactory(sourceAttacksProperty);
+            sourceIpCountryColumn.setCellValueFactory(sourceCountryProperty);
             
             sourceIpSecurityInfoTable.setItems(sourceIPSecurityInfoData);
                 
@@ -529,15 +545,26 @@ public class NewUserInterfaceController implements Initializable {
                 sourceIPSecurityInfoData.add(info);
             });
             
-
+            // Test the Top Destination IP's against the DShield API
+            PropertyValueFactory<DShieldIpInfo, String> destinationIpProperty = new PropertyValueFactory<DShieldIpInfo, String>("IP");
+            PropertyValueFactory<DShieldIpInfo, String> destinationBlockedProperty = new PropertyValueFactory<DShieldIpInfo, String>("Blocked");
+            PropertyValueFactory<DShieldIpInfo, String> destinationAttacksProperty = new PropertyValueFactory<DShieldIpInfo, String>("Attacks");
+            PropertyValueFactory<DShieldIpInfo, String> destinationCountryProperty = new PropertyValueFactory<DShieldIpInfo, String>("Country");
+         
+            destinationIpColumn.setCellValueFactory(destinationIpProperty);        
+            destinationIpBlockedColumm.setCellValueFactory(destinationBlockedProperty);
+            destinationIpAttacksColumn.setCellValueFactory(destinationAttacksProperty);
+            destinationIpCountryColumn.setCellValueFactory(destinationCountryProperty);
             
-            /*// Test the Top Destination IP's against the DShield API        
+            destinationIpSecurityInfoTable.setItems(destinationIPSecurityInfoData);
+     
             destinationIpData.entrySet().stream().forEach((entry) ->
             {
                 DShieldIpInfo info = dshieldApi.Ip(entry.getKey());
+                destinationIPSecurityInfoData.add(info);
             });
             
-            // Test the Top Source Ports against the DShield API
+            /*// Test the Top Source Ports against the DShield API
             sourcePortData.entrySet().stream().forEach((entry) ->
             {
                 DShieldPortInfo sourcePortInfo = dshieldApi.Port(entry.getKey());

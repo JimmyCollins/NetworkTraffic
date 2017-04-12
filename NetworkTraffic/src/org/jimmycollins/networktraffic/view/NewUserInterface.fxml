@@ -100,14 +100,14 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="404.0" layoutY="7.0" text="THREAT LEVEL:">
+                                    <Label layoutX="367.0" layoutY="8.0" text="TODAY'S THREAT LEVEL:">
                                        <font>
-                                          <Font name="System Bold" size="14.0" />
+                                          <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="threatLevelLabel" layoutX="510.0" layoutY="7.0" text="UNDEFINED">
+                                    <Label fx:id="threatLevelLabel" layoutX="586.0" layoutY="8.0" text="UNDEFINED">
                                        <font>
-                                          <Font name="System Bold" size="14.0" />
+                                          <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
                                     <TableView fx:id="sourceIpSecurityInfoTable" layoutX="34.0" layoutY="75.0" prefHeight="284.0" prefWidth="340.0">
@@ -117,8 +117,31 @@
                                           <TableColumn fx:id="sourceIpAttacksColumn" editable="false" prefWidth="63.0" text="Attacks" />
                                           <TableColumn fx:id="sourceIpCountryColumn" editable="false" prefWidth="99.0" text="Country" />
                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
                                     </TableView>
-                                    <Label layoutX="34.0" layoutY="48.0" text="Source IP Information" />
+                                    <Label layoutX="36.0" layoutY="48.0" text="Source IP Information">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView fx:id="destinationIpSecurityInfoTable" layoutX="660.0" layoutY="75.0" prefHeight="284.0" prefWidth="340.0">
+                                       <columns>
+                                          <TableColumn fx:id="destinationIpColumn" editable="false" prefWidth="98.0" text="IP" />
+                                          <TableColumn fx:id="destinationIpBlockedColumm" editable="false" prefWidth="79.0" text="Blocked" />
+                                          <TableColumn fx:id="destinationIpAttacksColumn" editable="false" prefWidth="63.0" text="Attacks" />
+                                          <TableColumn fx:id="destinationIpCountryColumn" editable="false" prefWidth="99.0" text="Country" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                    <Label layoutX="662.0" layoutY="48.0" text="Destination IP Information">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                           </content>
