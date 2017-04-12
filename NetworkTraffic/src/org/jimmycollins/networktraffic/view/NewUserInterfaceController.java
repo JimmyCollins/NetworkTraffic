@@ -483,17 +483,32 @@ public class NewUserInterfaceController implements Initializable {
         
         // TODO: Calls to API may need to be done in a background thread - maybe kick this off when the user loads an analysis from a file or the DB
         
-        // Test the Top Source IP's against the DShield API
-        sourceIpData.entrySet().stream().forEach((entry) -> 
+        // Create new thread using Lamda expression (could use Anonymous Class here also)
+        Thread t = new Thread(() -> 
         {
-            DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
+            // Test the Top Source IP's against the DShield API
+            sourceIpData.entrySet().stream().forEach((entry) ->
+            {
+                DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
+            });
+            
+            // Test the Top Destination IP's against the DShield API
+            destinationIpData.entrySet().stream().forEach((entry) ->
+            {
+                DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
+            });
+            
+            // TODO - Update UI with this info
+            
+            // TODO - Include Port Data - e.g. https://www.dshield.org/api/portdate/80/
+            
         });
         
-        // Test the Top Destination IP's against the DShield API
-        destinationIpData.entrySet().stream().forEach((entry) -> 
-        {
-            DShieldIpInfo ipInfo = dshieldApi.Ip(entry.getKey());
-        });
+        t.setDaemon(true);
+        t.start();
+        
+        
+        
         
         
     }
