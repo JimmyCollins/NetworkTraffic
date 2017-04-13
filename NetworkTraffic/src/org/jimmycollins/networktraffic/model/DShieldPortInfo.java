@@ -1,60 +1,69 @@
 package org.jimmycollins.networktraffic.model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 public class DShieldPortInfo
 {
-    private String Port;
+    private SimpleStringProperty Port;
     
     // Total number of records on this port
-    private String Records;
+    private SimpleStringProperty Records;
     
     // Number of unique destination IP addresses
-    private String Targets;
+    private SimpleStringProperty Targets;
     
     // Number of unique attack-originating IPs
-    private String Sources;
+    private SimpleStringProperty Sources;
     
-    // The name of the service
-    private String ServiceName;   // TODO: Need to modify DShieldIpInfo in Remote.. to use XPATH to grab this
+    
+    public DShieldPortInfo(String port, String records, String targets, String sources)
+    {
+        this.Port = new SimpleStringProperty(port);
+        this.Records = new SimpleStringProperty(records);
+        this.Targets = new SimpleStringProperty(targets);
+        this.Sources = new SimpleStringProperty(sources);
+    }
+    
     
 
-    public String getPort() {
+    public SimpleStringProperty PortProperty() 
+    {
         return Port;
     }
 
-    public void setPort(String Port) {
+    public void setPort(SimpleStringProperty Port) 
+    {
         this.Port = Port;
     }
 
-    public String getRecords() {
+    public SimpleStringProperty RecordsProperty() 
+    {
         return Records;
     }
 
-    public void setRecords(String Records) {
+    public void setRecords(SimpleStringProperty Records) 
+    {
         this.Records = Records;
     }
 
-    public String getTargets() {
+    public SimpleStringProperty TargetsProperty() 
+    {
         return Targets;
     }
 
-    public void setTargets(String Targets) {
+    public void setTargets(SimpleStringProperty Targets) 
+    {
         this.Targets = Targets;
     }
 
-    public String getSources() {
+    public SimpleStringProperty SourcesProperty() 
+    {
         return Sources;
     }
 
-    public void setSources(String Sources) {
+    public void setSources(SimpleStringProperty Sources) 
+    {
         this.Sources = Sources;
-    }
-
-    public String getServiceName() {
-        return ServiceName;
-    }
-
-    public void setServiceName(String ServiceName) {
-        this.ServiceName = ServiceName;
     }
     
 }

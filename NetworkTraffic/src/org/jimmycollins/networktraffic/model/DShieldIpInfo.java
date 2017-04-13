@@ -18,7 +18,6 @@ public class DShieldIpInfo
         this.Blocked = new SimpleStringProperty(blocked);
         this.Attacks = new SimpleStringProperty(attacks);
         this.Country = new SimpleStringProperty(country);
-
     }
     
     public void SetIP(SimpleStringProperty IP) {

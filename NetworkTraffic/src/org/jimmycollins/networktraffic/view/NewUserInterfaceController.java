@@ -43,6 +43,7 @@ import org.jimmycollins.networktraffic.LineChartStrategy;
 import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.DShieldIpInfo;
+import org.jimmycollins.networktraffic.model.DShieldPortInfo;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
@@ -132,6 +133,36 @@ public class NewUserInterfaceController implements Initializable {
     private TableColumn destinationIpAttacksColumn;
     @FXML
     private TableColumn destinationIpCountryColumn;
+    
+    // Source Port Table
+    
+    @FXML
+    private TableView sourcePortSecurityInfoTable;
+    private final ObservableList<DShieldPortInfo> sourcePortSecurityInfoData = FXCollections.observableArrayList();
+    
+    @FXML
+    private TableColumn sourcePortColumn;
+    @FXML
+    private TableColumn sourcePortRecordsColumn;
+    @FXML
+    private TableColumn sourcePortTargetsColumn;
+    @FXML
+    private TableColumn sourcePortSourcesColumn;
+    
+    // Destination Port Table
+    
+    @FXML
+    private TableView destinationPortSecurityInfoTable;
+    private final ObservableList<DShieldPortInfo> destinationPortSecurityInfoData = FXCollections.observableArrayList();
+    
+    @FXML
+    private TableColumn destinationPortColumn;
+    @FXML
+    private TableColumn destinationPortRecordsColumn;
+    @FXML
+    private TableColumn destinationPortTargetsColumn;
+    @FXML
+    private TableColumn destinationPortSourcesColumn;
     
     // --------------------------------------------------- //
     
@@ -519,7 +550,7 @@ public class NewUserInterfaceController implements Initializable {
                 break;
         }
         
-        // Create new threads using Lamda expression (could use Anonymous Class here also)
+        // Create new threads using Lamda expressions to run security analysis (could use Anonymous Class here also)
         Thread sourceIpCheckingThread = new Thread(() -> 
         {
             // Test the Top Source IP's against the DShield API and display in the UI      
@@ -570,21 +601,55 @@ public class NewUserInterfaceController implements Initializable {
         destinationIpCheckingThread.setDaemon(true);
         destinationIpCheckingThread.start();
         
-        // TODO - Hook up port analysis data to the UI
+        Thread sourcePortCheckingThread = new Thread(() -> 
+        {        
+            // Test the Top Source Ports against the DShield API
+            PropertyValueFactory<DShieldIpInfo, String> sourcePortProperty = new PropertyValueFactory<>("Port");
+            PropertyValueFactory<DShieldIpInfo, String> sourceRecordsProperty = new PropertyValueFactory<>("Records");
+            PropertyValueFactory<DShieldIpInfo, String> sourceTargetsProperty = new PropertyValueFactory<>("Targets");
+            PropertyValueFactory<DShieldIpInfo, String> sourceSourcesProperty = new PropertyValueFactory<>("Sources");
+         
+            sourcePortColumn.setCellValueFactory(sourcePortProperty);        
+            sourcePortRecordsColumn.setCellValueFactory(sourceRecordsProperty);
+            sourcePortTargetsColumn.setCellValueFactory(sourceTargetsProperty);
+            sourcePortSourcesColumn.setCellValueFactory(sourceSourcesProperty);
             
-        /*// Test the Top Source Ports against the DShield API
-        sourcePortData.entrySet().stream().forEach((entry) ->
-        {
-            DShieldPortInfo sourcePortInfo = dshieldApi.Port(entry.getKey());
-
+            sourcePortSecurityInfoTable.setItems(sourcePortSecurityInfoData);
+     
+            sourcePortData.entrySet().stream().forEach((entry) ->
+            {
+                DShieldPortInfo info = dshieldApi.Port(entry.getKey());
+                sourcePortSecurityInfoData.add(info);
+            });
         });
-
-        // Test the Top Destination Ports against the DShield API
-        destinationPortData.entrySet().stream().forEach((entry) ->
-        {
-            DShieldPortInfo destinationPortInfo = dshieldApi.Port(entry.getKey());
-
-        });*/
+        
+        sourcePortCheckingThread.setDaemon(true);
+        sourcePortCheckingThread.start();
+        
+        Thread destinationPortCheckingThread = new Thread(() -> 
+        {        
+            // Test the Top Destination Ports against the DShield API
+            PropertyValueFactory<DShieldIpInfo, String> destinationPortProperty = new PropertyValueFactory<>("Port");
+            PropertyValueFactory<DShieldIpInfo, String> destinationRecordsProperty = new PropertyValueFactory<>("Records");
+            PropertyValueFactory<DShieldIpInfo, String> destinationTargetsProperty = new PropertyValueFactory<>("Targets");
+            PropertyValueFactory<DShieldIpInfo, String> destinationSourcesProperty = new PropertyValueFactory<>("Sources");
+         
+            destinationPortColumn.setCellValueFactory(destinationPortProperty);        
+            destinationPortRecordsColumn.setCellValueFactory(destinationRecordsProperty);
+            destinationPortTargetsColumn.setCellValueFactory(destinationTargetsProperty);
+            destinationPortSourcesColumn.setCellValueFactory(destinationSourcesProperty);
+            
+            destinationPortSecurityInfoTable.setItems(destinationPortSecurityInfoData);
+     
+            destinationPortData.entrySet().stream().forEach((entry) ->
+            {
+                DShieldPortInfo info = dshieldApi.Port(entry.getKey());
+                destinationPortSecurityInfoData.add(info);
+            });
+        });
+        
+        destinationPortCheckingThread.setDaemon(true);
+        destinationPortCheckingThread.start();
     }
     
     

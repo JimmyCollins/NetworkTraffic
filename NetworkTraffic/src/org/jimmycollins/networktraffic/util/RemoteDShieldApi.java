@@ -98,8 +98,6 @@ public class RemoteDShieldApi implements DShieldApi
                 // Blocked Packets from this IP
                 if("count".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
-                    System.out.println("IP Blocked Packet Count: " + nodes.item(i).getTextContent());
-                    
                     if(nodes.item(i).getTextContent().isEmpty())
                         blocked = "0";
                     else
@@ -109,8 +107,6 @@ public class RemoteDShieldApi implements DShieldApi
                 // Number of unique destination IP addresses for these packets
                 if("attacks".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
-                    System.out.println("Attacks: " + nodes.item(i).getTextContent());
-                    
                     if(nodes.item(i).getTextContent().isEmpty())
                         attacks = "0";
                     else
@@ -120,16 +116,15 @@ public class RemoteDShieldApi implements DShieldApi
                 // Country
                 if("ascountry".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
-                    System.out.println("Country: " + nodes.item(i).getTextContent());
-                    
                     if(nodes.item(i).getTextContent().isEmpty())
                         country = "Unknown";
                     else
                         country = nodes.item(i).getTextContent();
-                }
-                           
+                }                        
             }
+            
             DShieldIpInfo info = new DShieldIpInfo(ip, blocked, attacks, country);
+            
             return info;
         }
         catch(IOException | ParserConfigurationException | SAXException ex)
@@ -145,14 +140,14 @@ public class RemoteDShieldApi implements DShieldApi
     @Override
     public DShieldPortInfo Port(String port)
     {
-        DShieldPortInfo portInfo = new DShieldPortInfo();
-        portInfo.setPort(port);
-        
+        String records = "0";
+        String targets = "0";
+        String sources = "0";
+             
         try
         {          
             URL url = new URL(ApiBaseUrl + "port/" + port);
             URLConnection connection = url.openConnection();
-            System.out.println("Port: " + portInfo.getPort());
 
             InputStream responseStream = connection.getInputStream();
 
@@ -173,22 +168,23 @@ public class RemoteDShieldApi implements DShieldApi
             {
                 if("records".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
-                    System.out.println("Records: " + nodes.item(i).getTextContent());
-                    portInfo.setRecords(port);
+                    records = nodes.item(i).getTextContent();
                 }
                 
                 if("targets".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
-                    System.out.println("Targets: " + nodes.item(i).getTextContent());
-                    portInfo.setRecords(port);
+                    targets = nodes.item(i).getTextContent();
                 }
                 
                 if("sources".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
-                    System.out.println("Sources: " + nodes.item(i).getTextContent());
-                    portInfo.setRecords(port);
+                    sources = nodes.item(i).getTextContent();
                 }       
             }
+            
+            DShieldPortInfo portInfo = new DShieldPortInfo(port, records, targets, sources);
+            
+            return portInfo;
         }
         catch(IOException | ParserConfigurationException | SAXException ex)
         {
@@ -201,7 +197,7 @@ public class RemoteDShieldApi implements DShieldApi
             LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Port() Error - " + ex.getMessage());
         }
         
-        return portInfo;
+        return null; // FIXME: Review this
     }
     
 }
