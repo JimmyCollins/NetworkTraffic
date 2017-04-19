@@ -95,12 +95,12 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label layoutX="367.0" layoutY="8.0" text="ISC THREAT LEVEL:">
+                                    <Label layoutX="282.0" layoutY="13.0" text="INTERNET STORM CENTER THREAT LEVEL:">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="threatLevelLabel" layoutX="536.0" layoutY="8.0" text="UNDEFINED">
+                                    <Label fx:id="threatLevelLabel" layoutX="650.0" layoutY="13.0" text="UNDEFINED">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -115,6 +115,9 @@
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
+                                       <tooltip>
+                                          <Tooltip text="Analysis of Top Source IP Addresses against the Internet Storm Center API." />
+                                       </tooltip>
                                     </TableView>
                                     <Label layoutX="242.0" layoutY="62.0" text="Source IP Analysis">
                                        <font>
@@ -131,6 +134,9 @@
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
+                                       <tooltip>
+                                          <Tooltip text="Analysis of Top Destination IP Addresses against the Internet Storm Center API." />
+                                       </tooltip>
                                     </TableView>
                                     <Label layoutX="653.0" layoutY="62.0" text="Destination IP Analysis">
                                        <font>
@@ -147,6 +153,9 @@
                                           <TableColumn fx:id="sourcePortTargetsColumn" editable="false" prefWidth="63.0" text="Targets" />
                                           <TableColumn fx:id="sourcePortSourcesColumn" editable="false" prefWidth="83.0" text="Sources" />
                                        </columns>
+                                       <tooltip>
+                                          <Tooltip text="Analysis of Top Source Port Numbers against the Internet Storm Center API." />
+                                       </tooltip>
                                     </TableView>
                                     <Label layoutX="235.0" layoutY="442.0" text="Source Port Analysis">
                                        <font>
@@ -163,6 +172,9 @@
                                           <TableColumn fx:id="destinationPortTargetsColumn" editable="false" prefWidth="63.0" text="Targets" />
                                           <TableColumn fx:id="destinationPortSourcesColumn" editable="false" prefWidth="83.0" text="Sources" />
                                        </columns>
+                                       <tooltip>
+                                          <Tooltip text="Analysis of Top Destination Port Numbers against the Internet Storm Center API." />
+                                       </tooltip>
                                     </TableView>
                                     <Label layoutX="646.0" layoutY="442.0" text="Destination Port Analysis">
                                        <font>
