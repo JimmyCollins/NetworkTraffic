@@ -259,7 +259,7 @@ public class NewUserInterfaceController implements Initializable {
         try
         {
             String query = "select Date from savedanalyses";       
-            ResultSet rs = DatabaseUtil.ExecuteQuery(query);
+            ResultSet rs = DatabaseUtil.Query(query);
             
             List<String> savedAnalyses = new ArrayList<>();
             
@@ -288,7 +288,7 @@ public class NewUserInterfaceController implements Initializable {
             
             // First we need to get the ID of this saved analysis - this is used to grab the data from the other tables
             String savedAnalysisQuery = "select * from savedanalyses where Date='" + chosenDate + "'";         
-            ResultSet savedAnalysisResult = DatabaseUtil.ExecuteQuery(savedAnalysisQuery);
+            ResultSet savedAnalysisResult = DatabaseUtil.Query(savedAnalysisQuery);
             
             String savedAnalysisId = "";
             while (savedAnalysisResult.next())
@@ -307,55 +307,50 @@ public class NewUserInterfaceController implements Initializable {
             
             // Load the Source Port Data          
             String sourcePortDataQuery = "select * from topsourceports where AnalysisId=" + savedAnalysisId;  
-            ResultSet sourcePortResultSet = DatabaseUtil.ExecuteQuery(sourcePortDataQuery);
+            ResultSet sourcePortResultSet = DatabaseUtil.Query(sourcePortDataQuery);
             
             while(sourcePortResultSet.next())
             {
                 String port = sourcePortResultSet.getString("Port");
-                Integer count = sourcePortResultSet.getInt("Count");
-                
+                Integer count = sourcePortResultSet.getInt("Count");               
                 sourcePortData.put(port, count);
             }
             
             // Load the Destination Port Data
             String destinationPortDataQuery = "select * from topdestinationports where AnalysisId=" + savedAnalysisId;        
-            ResultSet destinationPortResultSet = DatabaseUtil.ExecuteQuery(destinationPortDataQuery);
+            ResultSet destinationPortResultSet = DatabaseUtil.Query(destinationPortDataQuery);
             
             while(destinationPortResultSet.next())
             {
                 String port = destinationPortResultSet.getString("Port");
-                Integer count = destinationPortResultSet.getInt("Count");
-                
+                Integer count = destinationPortResultSet.getInt("Count");            
                 destinationPortData.put(port, count);
             }
             
             // Load the Source IP Data
             String sourceIpDataQuery = "select * from topsourceips where AnalysisId=" + savedAnalysisId;
-            ResultSet sourceIpResultSet = DatabaseUtil.ExecuteQuery(sourceIpDataQuery);
+            ResultSet sourceIpResultSet = DatabaseUtil.Query(sourceIpDataQuery);
             
             while(sourceIpResultSet.next())
             {
                 String ip = sourceIpResultSet.getString("IP");
-                Integer count = sourceIpResultSet.getInt("Count");
-                
+                Integer count = sourceIpResultSet.getInt("Count");             
                 sourceIpData.put(ip, count);
             }
             
             // Load the Destination IP Data
             String destinationIpDataQuery = "select * from topdestinationips where AnalysisId=" + savedAnalysisId;
-            ResultSet destinationIpResultSet = DatabaseUtil.ExecuteQuery(destinationIpDataQuery);
+            ResultSet destinationIpResultSet = DatabaseUtil.Query(destinationIpDataQuery);
             
             while(destinationIpResultSet.next())
             {
                 String ip = destinationIpResultSet.getString("IP");
-                Integer count = destinationIpResultSet.getInt("Count");
-                
+                Integer count = destinationIpResultSet.getInt("Count");            
                 destinationIpData.put(ip, count);
             }
             
             // Redraw the charts on the UI
-            drawGeneralCharts(new PieChartStrategy());
-            
+            drawGeneralCharts(new PieChartStrategy());         
         }
         catch(SQLException ex)
         {
@@ -378,18 +373,21 @@ public class NewUserInterfaceController implements Initializable {
         }      
         
         // Get a connection to the database
-        Connection db = Database.GetInstance().GetConnection();
+        //Connection db = Database.GetInstance().GetConnection();
         
-        try
-        {
+        //try
+        //{
             // First we need to save a row in the savedanalysis table
             String timestamp = Utility.GenerateTimestamp();
             String savedAnalysesQuery = "insert into savedanalyses (AnalysisId, Date, ParsedFlowsCount, ParsingErrorsCount, TotalPacketsCount)"
                               + " values (NULL, '" + timestamp + "'," + parsedFlowsLabel.getText() + "," + parsingErrorsLabel.getText() + "," + totalPacketsLabel.getText() + ")";
             
-            int analysisId = 0; // The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved
+            // The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved
+            //int analysisId = 0; 
             
-            PreparedStatement savedAnalysesStatement = db.prepareStatement(savedAnalysesQuery, Statement.RETURN_GENERATED_KEYS);      
+            int analysisId = DatabaseUtil.PersistAnalysisRecord(savedAnalysesQuery);
+            
+            /*PreparedStatement savedAnalysesStatement = db.prepareStatement(savedAnalysesQuery, Statement.RETURN_GENERATED_KEYS);      
             savedAnalysesStatement.executeUpdate();
             
             ResultSet rs = savedAnalysesStatement.getGeneratedKeys();
@@ -397,10 +395,10 @@ public class NewUserInterfaceController implements Initializable {
             if (rs.next()) 
             {
                analysisId = rs.getInt(1);   
-            }
+            }*/
             
             // Save the Source Port Data            
-            for (Map.Entry<String, Integer> entry : sourcePortData.entrySet())
+            /*for (Map.Entry<String, Integer> entry : sourcePortData.entrySet())
             {
                 String port = entry.getKey();
                 Integer count = entry.getValue();
@@ -423,10 +421,12 @@ public class NewUserInterfaceController implements Initializable {
                 
                 PreparedStatement destinationPortStatement = db.prepareStatement(destinationPortQuery);      
                 destinationPortStatement.executeUpdate();
-            }
+            }*/
+            DatabaseUtil.PersistPortData(analysisId, "topsourceports", sourcePortData);
+            DatabaseUtil.PersistPortData(analysisId, "topdestinationports", destinationPortData);
             
             // Save the Source IP Data
-            for (Map.Entry<String, Integer> entry : sourceIpData.entrySet())
+            /*for (Map.Entry<String, Integer> entry : sourceIpData.entrySet())
             {
                 String ip = entry.getKey();
                 Integer count = entry.getValue();
@@ -449,15 +449,17 @@ public class NewUserInterfaceController implements Initializable {
                 
                 PreparedStatement destinationIpStatement = db.prepareStatement(destinationIpQuery);      
                 destinationIpStatement.executeUpdate();
-            }
+            }*/
+            DatabaseUtil.PersistIpData(analysisId, "topsourceips", sourceIpData);
+            DatabaseUtil.PersistIpData(analysisId, "topdestinationips", destinationIpData);
             
             LogUtil.Log(Alert.AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("currentanalysissaved") + " '" + timestamp + "'"
                     + resources.getString("howtoload"));
-        }
-        catch(SQLException ex)
-        {
-            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("error"), ex.toString());
-        }
+        //}
+        //catch(SQLException ex)
+        //{
+            //LogUtil.Log(Alert.AlertType.ERROR, resources.getString("error"), ex.toString());
+        //}
     }
     
     
