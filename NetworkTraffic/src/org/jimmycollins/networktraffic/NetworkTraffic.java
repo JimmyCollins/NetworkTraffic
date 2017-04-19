@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -30,6 +31,7 @@ public class NetworkTraffic extends Application {
         stage.setTitle(bundle.getString("maintitle"));
  
         stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("logo.png"));
         stage.setResizable(false);
         stage.show();
         
