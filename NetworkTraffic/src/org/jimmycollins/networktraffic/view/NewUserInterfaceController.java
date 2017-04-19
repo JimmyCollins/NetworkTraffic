@@ -371,95 +371,25 @@ public class NewUserInterfaceController implements Initializable {
         {
             return;
         }      
-        
-        // Get a connection to the database
-        //Connection db = Database.GetInstance().GetConnection();
-        
-        //try
-        //{
-            // First we need to save a row in the savedanalysis table
-            String timestamp = Utility.GenerateTimestamp();
-            String savedAnalysesQuery = "insert into savedanalyses (AnalysisId, Date, ParsedFlowsCount, ParsingErrorsCount, TotalPacketsCount)"
-                              + " values (NULL, '" + timestamp + "'," + parsedFlowsLabel.getText() + "," + parsingErrorsLabel.getText() + "," + totalPacketsLabel.getText() + ")";
             
-            // The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved
-            //int analysisId = 0; 
+        // First we need to save a row in the savedanalysis table
+        String timestamp = Utility.GenerateTimestamp();
+        String savedAnalysesQuery = "insert into savedanalyses (AnalysisId, Date, ParsedFlowsCount, ParsingErrorsCount, TotalPacketsCount)"
+                          + " values (NULL, '" + timestamp + "'," + parsedFlowsLabel.getText() + "," + parsingErrorsLabel.getText() + "," + totalPacketsLabel.getText() + ")";
             
-            int analysisId = DatabaseUtil.PersistAnalysisRecord(savedAnalysesQuery);
+        // The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved       
+        int analysisId = DatabaseUtil.PersistAnalysisRecord(savedAnalysesQuery);
             
-            /*PreparedStatement savedAnalysesStatement = db.prepareStatement(savedAnalysesQuery, Statement.RETURN_GENERATED_KEYS);      
-            savedAnalysesStatement.executeUpdate();
+        // Save the port data
+        DatabaseUtil.PersistPortData(analysisId, "topsourceports", sourcePortData);
+        DatabaseUtil.PersistPortData(analysisId, "topdestinationports", destinationPortData);
             
-            ResultSet rs = savedAnalysesStatement.getGeneratedKeys();
-            
-            if (rs.next()) 
-            {
-               analysisId = rs.getInt(1);   
-            }*/
-            
-            // Save the Source Port Data            
-            /*for (Map.Entry<String, Integer> entry : sourcePortData.entrySet())
-            {
-                String port = entry.getKey();
-                Integer count = entry.getValue();
-                
-                String sourcePortQuery = "insert into topsourceports (Id, AnalysisId, Port, Count)"
-                              + " values (NULL, " + analysisId + "," + port + "," + count + ")";
-                
-                PreparedStatement sourcePortStatement = db.prepareStatement(sourcePortQuery);      
-                sourcePortStatement.executeUpdate();
-            }
-            
-            // Save the Desination Port Data
-            for (Map.Entry<String, Integer> entry : destinationPortData.entrySet())
-            {
-                String port = entry.getKey();
-                Integer count = entry.getValue();
-                
-                String destinationPortQuery = "insert into topdestinationports (Id, AnalysisId, Port, Count)"
-                              + " values (NULL, " + analysisId + "," + port + "," + count + ")";
-                
-                PreparedStatement destinationPortStatement = db.prepareStatement(destinationPortQuery);      
-                destinationPortStatement.executeUpdate();
-            }*/
-            DatabaseUtil.PersistPortData(analysisId, "topsourceports", sourcePortData);
-            DatabaseUtil.PersistPortData(analysisId, "topdestinationports", destinationPortData);
-            
-            // Save the Source IP Data
-            /*for (Map.Entry<String, Integer> entry : sourceIpData.entrySet())
-            {
-                String ip = entry.getKey();
-                Integer count = entry.getValue();
-                
-                String sourceIpQuery = "insert into topsourceips (Id, AnalysisId, IP, Count)"
-                              + " values (NULL, " + analysisId + ",'" + ip + "'," + count + ")";
-                
-                PreparedStatement sourceIpStatement = db.prepareStatement(sourceIpQuery);      
-                sourceIpStatement.executeUpdate();
-            }
-            
-            // Save the Destination IP Data
-            for (Map.Entry<String, Integer> entry : destinationIpData.entrySet())
-            {
-                String ip = entry.getKey();
-                Integer count = entry.getValue();
-                
-                String destinationIpQuery = "insert into topdestinationips (Id, AnalysisId, IP, Count)"
-                              + " values (NULL, " + analysisId + ",'" + ip + "'," + count + ")";
-                
-                PreparedStatement destinationIpStatement = db.prepareStatement(destinationIpQuery);      
-                destinationIpStatement.executeUpdate();
-            }*/
-            DatabaseUtil.PersistIpData(analysisId, "topsourceips", sourceIpData);
-            DatabaseUtil.PersistIpData(analysisId, "topdestinationips", destinationIpData);
-            
-            LogUtil.Log(Alert.AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("currentanalysissaved") + " '" + timestamp + "'"
-                    + resources.getString("howtoload"));
-        //}
-        //catch(SQLException ex)
-        //{
-            //LogUtil.Log(Alert.AlertType.ERROR, resources.getString("error"), ex.toString());
-        //}
+        // Save the IP data
+        DatabaseUtil.PersistIpData(analysisId, "topsourceips", sourceIpData);
+        DatabaseUtil.PersistIpData(analysisId, "topdestinationips", destinationIpData);
+
+        LogUtil.Log(Alert.AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("currentanalysissaved") + " '" + timestamp + "'"
+                + resources.getString("howtoload"));
     }
     
     

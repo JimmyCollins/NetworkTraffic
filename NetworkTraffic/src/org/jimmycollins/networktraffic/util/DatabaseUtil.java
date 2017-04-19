@@ -39,8 +39,12 @@ public class DatabaseUtil
         }
     }
     
-    
-    // return // The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved
+
+    /**
+     * Persists the main record of an analysis to the database
+     * @param query The query to execute
+     * @return The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved
+     */
     public static int PersistAnalysisRecord(String query)
     {
         Connection db = Database.GetInstance().GetConnection();
@@ -49,7 +53,7 @@ public class DatabaseUtil
         
         try
         {
-        PreparedStatement savedAnalysesStatement = db.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);      
+        PreparedStatement savedAnalysesStatement = db.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
         savedAnalysesStatement.executeUpdate();
 
         ResultSet rs = savedAnalysesStatement.getGeneratedKeys();
@@ -69,6 +73,12 @@ public class DatabaseUtil
     }
     
     
+    /**
+     * Persists the port data from an analysis to the database
+     * @param analysisId The id of the analysis this relates to in the savedanalyses table
+     * @param table The table to save this data to
+     * @param data The data to save
+     */
     public static void PersistPortData(int analysisId, String table, Map<String,Integer> data)
     {
         Connection db = Database.GetInstance().GetConnection();
@@ -94,6 +104,12 @@ public class DatabaseUtil
     }
     
     
+    /**
+     * Persists the IP data from an analysis to the database
+     * @param analysisId The id of the analysis this relates to in the savedanalyses table
+     * @param table The table to save this data to
+     * @param data The data to save
+     */
     public static void PersistIpData(int analysisId, String table, Map<String,Integer> data)
     {
         Connection db = Database.GetInstance().GetConnection();
@@ -106,7 +122,7 @@ public class DatabaseUtil
                 Integer value = entry.getValue();
                 
                 String query = "insert into " + table + " (Id, AnalysisId, IP, Count)"
-                              + " values (NULL, " + analysisId + "," + key + "," + value + ")";
+                              + " values (NULL, " + analysisId + ",'" + key + "'," + value + ")";
                 
                 PreparedStatement sourcePortStatement = db.prepareStatement(query);      
                 sourcePortStatement.executeUpdate();
@@ -116,6 +132,5 @@ public class DatabaseUtil
         {
             LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
         }
-    }
-    
+    }  
 }

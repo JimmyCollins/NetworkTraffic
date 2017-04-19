@@ -28,7 +28,10 @@ public class Database
         return Database;
     }
     
-    
+    /**
+     * Get a connection to the database
+     * @return A connection to the database
+     */
     public Connection GetConnection()
     {
         if(DbConnection == null)
