@@ -41,6 +41,7 @@
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <Button fx:id="securityAnalysisButton" disable="true" layoutX="19.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleSecurityAnalysis" prefHeight="30.0" prefWidth="138.0" text="Security Analysis" />
+                                    <Button fx:id="exportAnalysisButton" disable="false" layoutX="18.0" layoutY="72" mnemonicParsing="false" onAction="#handleExportAnalysis" prefHeight="30.0" prefWidth="138.0" text="Export Analysis" />
                                  </children></AnchorPane>
                         </content>
                            <font>

@@ -44,14 +44,19 @@ import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.DShieldIpInfo;
 import org.jimmycollins.networktraffic.model.DShieldPortInfo;
+import org.jimmycollins.networktraffic.model.DataExport;
+import org.jimmycollins.networktraffic.model.ExportCommand;
 import org.jimmycollins.networktraffic.model.FlowFileStats;
 import org.jimmycollins.networktraffic.model.Observer;
 import org.jimmycollins.networktraffic.model.ParsableFile;
 import org.jimmycollins.networktraffic.model.TopData;
 import org.jimmycollins.networktraffic.util.BinetFile;
 import org.jimmycollins.networktraffic.util.DShieldApiProxy;
+import org.jimmycollins.networktraffic.util.DataExporter;
 import org.jimmycollins.networktraffic.util.Database;
 import org.jimmycollins.networktraffic.util.DatabaseUtil;
+import org.jimmycollins.networktraffic.util.ExportExcelCommand;
+import org.jimmycollins.networktraffic.util.ExportHtmlCommand;
 import org.jimmycollins.networktraffic.util.LogUtil;
 import org.jimmycollins.networktraffic.util.TopDestinationIpAddresses;
 import org.jimmycollins.networktraffic.util.TopDestinationPorts;
@@ -171,7 +176,6 @@ public class NewUserInterfaceController implements Initializable {
     Map<String,Integer> destinationPortData = new HashMap<>();
     Map<String,Integer> sourceIpData = new HashMap<>();
     Map<String,Integer> destinationIpData = new HashMap<>();
-    
     
     private final DisplayContext chartContext = new DisplayContext();
     
@@ -582,6 +586,45 @@ public class NewUserInterfaceController implements Initializable {
         
         destinationPortCheckingThread.setDaemon(true);
         destinationPortCheckingThread.start();
+    }
+    
+    
+
+    @FXML
+    private void handleExportAnalysis(ActionEvent event)
+    {
+        List<String> exportOptions = new ArrayList<>();
+        exportOptions.add("MS Excel");
+        exportOptions.add("HTML");
+        
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("", exportOptions);
+        dialog.setTitle(resources.getString("alertheader"));
+        dialog.setHeaderText(resources.getString("chooseexportoption"));
+        dialog.setContentText(resources.getString("choice"));
+        
+        Optional<String> choice = dialog.showAndWait();
+        if (!choice.isPresent())
+        {
+            return;
+        }
+
+        String format = choice.get().toLowerCase();
+        
+        DataExport dataToExport = new DataExport(sourcePortData, destinationPortData, sourceIpData, destinationIpData);
+        DataExporter de = new DataExporter();
+        
+        if("ms excel".equals(format))
+        {
+            ExportCommand excel = new ExportExcelCommand(dataToExport);
+            de.setCommand(excel);
+            de.export();
+        }
+        else if("html".equals(format))
+        {
+            ExportCommand html = new ExportHtmlCommand(dataToExport);
+            de.setCommand(html);
+            de.export();
+        }
     }
     
     
