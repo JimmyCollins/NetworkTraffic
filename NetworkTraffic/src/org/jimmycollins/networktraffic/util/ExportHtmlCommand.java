@@ -26,6 +26,7 @@ public class ExportHtmlCommand implements ExportCommand
     public void execute()
     {
         System.out.println("Exporting to HTML Command!!!");
+        
         String fileName = "NetflowAnalysisOutput_" + ".html"; // FIXME: Add timestamp to filename
         String outputFile = System.getProperty("user.home") + "\\Desktop" + "\\" + fileName;
         
