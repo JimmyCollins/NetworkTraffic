@@ -25,9 +25,7 @@ public class ExportHtmlCommand implements ExportCommand
     @Override
     public void execute()
     {
-        System.out.println("Exporting to HTML Command!!!");
-        
-        String fileName = "NetflowAnalysisOutput_" + ".html"; // FIXME: Add timestamp to filename
+        String fileName = "NetflowAnalysisOutput_" + Utility.GenerateDateStamp() + ".html";
         String outputFile = System.getProperty("user.home") + "\\Desktop" + "\\" + fileName;
         
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "utf-8"))) 

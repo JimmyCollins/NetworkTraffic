@@ -25,10 +25,10 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="parseNewFileBtn" defaultButton="true" layoutX="18.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleParseNewFile" prefHeight="27.0" prefWidth="138.0" text="Parse New File" />
-                                    <Button fx:id="loadExistingAnalysisButton" layoutX="19.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleLoadSession" prefHeight="27.0" prefWidth="137.0" text="Load Existing Analysis" />
-                                    <Button fx:id="saveCurrentAnalysisBtn" disable="true" layoutX="18.0" layoutY="131.0" mnemonicParsing="false" onAction="#handleSaveSession" prefHeight="27.0" prefWidth="138.0" text="Save Current Analysis" />
-                                    <Button fx:id="drawChartsBtn" disable="true" layoutX="18.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleDrawGeneralCharts" prefHeight="27.0" prefWidth="138.0" text="Draw Charts" />
+                                    <Button fx:id="parseNewFileBtn" defaultButton="true" layoutX="18.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleParseNewFile" prefHeight="30.0" prefWidth="151.0" text="Parse New File" />
+                                    <Button fx:id="loadExistingAnalysisButton" layoutX="19.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleLoadSession" prefHeight="30.0" prefWidth="151.0" text="Load Existing Analysis" />
+                                    <Button fx:id="saveCurrentAnalysisBtn" disable="true" layoutX="18.0" layoutY="131.0" mnemonicParsing="false" onAction="#handleSaveSession" prefHeight="30.0" prefWidth="151.0" text="Save Current Analysis" />
+                                    <Button fx:id="drawChartsBtn" disable="true" layoutX="18.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleDrawGeneralCharts" prefHeight="30.0" prefWidth="151.0" text="Draw Charts" />
                                  </children>
                               </AnchorPane>
                         </content>
@@ -40,20 +40,20 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="securityAnalysisButton" disable="true" layoutX="19.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleSecurityAnalysis" prefHeight="30.0" prefWidth="138.0" text="Security Analysis" />
-                                    <Button fx:id="exportAnalysisButton" disable="false" layoutX="18.0" layoutY="72" mnemonicParsing="false" onAction="#handleExportAnalysis" prefHeight="30.0" prefWidth="138.0" text="Export Analysis" />
+                                    <Button fx:id="securityAnalysisButton" disable="true" layoutX="19.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleSecurityAnalysis" prefHeight="30.0" prefWidth="151.0" text="Security Analysis" />
                                  </children></AnchorPane>
                         </content>
                            <font>
                               <Font size="14.0" />
                            </font>
                       </TitledPane>
-                      <TitledPane expanded="false" prefHeight="235.0" prefWidth="190.0" text="Settings">
+                      <TitledPane expanded="false" prefHeight="235.0" prefWidth="190.0" text="Options">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button layoutX="17.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleDrawBarCharts" prefHeight="27.0" prefWidth="151.0" text="Show Bar Charts" />
-                                    <Button layoutX="17.0" layoutY="63.0" mnemonicParsing="false" onAction="#handleDrawLineCharts" prefHeight="27.0" prefWidth="151.0" text="Show Line Charts" />
+                                    <Button layoutX="17.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleDrawBarCharts" prefHeight="30.0" prefWidth="151.0" text="Show Bar Charts" />
+                                    <Button layoutX="17.0" layoutY="63.0" mnemonicParsing="false" onAction="#handleDrawLineCharts" prefHeight="30.0" prefWidth="151.0" text="Show Line Charts" />
+                                    <Button fx:id="exportAnalysisButton" disable="false" layoutX="15.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleExportAnalysis" prefHeight="30.0" prefWidth="151.0" text="Export Analysis" />
                                  </children>
                               </AnchorPane>
                         </content>

@@ -26,9 +26,7 @@ public class ExportExcelCommand implements ExportCommand
     @Override
     public void execute()
     {
-        System.out.println("Exporting to Excel Command!!!");
-        
-        String fileName = "NetflowAnalysisOutput_" + ".xlsx"; // FIXME: Add timestamp to filename
+        String fileName = "NetflowAnalysisOutput_" + Utility.GenerateDateStamp() + ".xlsx";
         String outputFile = System.getProperty("user.home") + "\\Desktop" + "\\" + fileName;
         
         XSSFWorkbook workbook = new XSSFWorkbook();

@@ -4,12 +4,14 @@ package org.jimmycollins.networktraffic.util;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -151,6 +153,16 @@ public class Utility
     {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         return timestamp.toString();
+    }
+    
+    /**
+     * Generate a date stamp
+     * @return A date stamp as a string
+     */
+    public static String GenerateDateStamp()
+    {
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        return timeStamp;
     }
       
     /**
