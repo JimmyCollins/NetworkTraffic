@@ -121,7 +121,7 @@
                                           <Tooltip text="Analysis of Top Source IP Addresses against the Internet Storm Center API." />
                                        </tooltip>
                                     </TableView>
-                                    <Label layoutX="201.0" layoutY="442.0" text="Source IP Analysis">
+                                    <Label layoutX="191.0" layoutY="442.0" text="Source IP Analysis">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
@@ -141,7 +141,7 @@
                                           <Tooltip text="Analysis of Top Destination IP Addresses against the Internet Storm Center API." />
                                        </tooltip>
                                     </TableView>
-                                    <Label layoutX="715.0" layoutY="442.0" text="Destination IP Analysis">
+                                    <Label layoutX="716.0" layoutY="442.0" text="Destination IP Analysis">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
@@ -179,7 +179,7 @@
                                           <Tooltip text="Analysis of Top Destination Port Numbers against the Internet Storm Center API." />
                                        </tooltip>
                                     </TableView>
-                                    <Label layoutX="708.0" layoutY="78.0" text="Destination Port Analysis">
+                                    <Label layoutX="709.0" layoutY="78.0" text="Destination Port Analysis">
                                        <font>
                                           <Font name="System Bold" size="14.0" />
                                        </font>
