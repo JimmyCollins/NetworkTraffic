@@ -116,6 +116,8 @@ public class NewUserInterfaceController implements Initializable {
     @FXML
     private TableColumn sourceIpColumn;
     @FXML
+    private TableColumn sourceFqdnColumn;
+    @FXML
     private TableColumn sourceIpBlockedColumm;
     @FXML
     private TableColumn sourceIpAttacksColumn;
@@ -130,6 +132,8 @@ public class NewUserInterfaceController implements Initializable {
     
     @FXML
     private TableColumn destinationIpColumn;
+    @FXML
+    private TableColumn destinationFqdnColumn;
     @FXML
     private TableColumn destinationIpBlockedColumm;
     @FXML
@@ -487,13 +491,15 @@ public class NewUserInterfaceController implements Initializable {
         // Create new threads using Lamda expressions to run security analysis (could use Anonymous Class here also)
         Thread sourceIpCheckingThread = new Thread(() -> 
         {
-            // Test the Top Source IP's against the DShield API and display in the UI      
+            // Test the Top Source IP's against the DShield API and display in the UI
             PropertyValueFactory<DShieldIpInfo, String> sourceIpProperty = new PropertyValueFactory<>("IP");
+            PropertyValueFactory<DShieldIpInfo, String> sourceFqdnProperty = new PropertyValueFactory<>("FQDN");
             PropertyValueFactory<DShieldIpInfo, String> sourceBlockedProperty = new PropertyValueFactory<>("Blocked");
             PropertyValueFactory<DShieldIpInfo, String> sourceAttacksProperty = new PropertyValueFactory<>("Attacks");
             PropertyValueFactory<DShieldIpInfo, String> sourceCountryProperty = new PropertyValueFactory<>("Country");
             
-            sourceIpColumn.setCellValueFactory(sourceIpProperty);        
+            sourceIpColumn.setCellValueFactory(sourceIpProperty);
+            sourceFqdnColumn.setCellValueFactory(sourceFqdnProperty);
             sourceIpBlockedColumm.setCellValueFactory(sourceBlockedProperty);
             sourceIpAttacksColumn.setCellValueFactory(sourceAttacksProperty);
             sourceIpCountryColumn.setCellValueFactory(sourceCountryProperty);
@@ -514,11 +520,13 @@ public class NewUserInterfaceController implements Initializable {
         {        
             // Test the Top Destination IP's against the DShield API
             PropertyValueFactory<DShieldIpInfo, String> destinationIpProperty = new PropertyValueFactory<>("IP");
+            PropertyValueFactory<DShieldIpInfo, String> destinationFqdnProperty = new PropertyValueFactory<>("FQDN");
             PropertyValueFactory<DShieldIpInfo, String> destinationBlockedProperty = new PropertyValueFactory<>("Blocked");
             PropertyValueFactory<DShieldIpInfo, String> destinationAttacksProperty = new PropertyValueFactory<>("Attacks");
             PropertyValueFactory<DShieldIpInfo, String> destinationCountryProperty = new PropertyValueFactory<>("Country");
          
-            destinationIpColumn.setCellValueFactory(destinationIpProperty);        
+            destinationIpColumn.setCellValueFactory(destinationIpProperty);    
+            destinationFqdnColumn.setCellValueFactory(destinationFqdnProperty);
             destinationIpBlockedColumm.setCellValueFactory(destinationBlockedProperty);
             destinationIpAttacksColumn.setCellValueFactory(destinationAttacksProperty);
             destinationIpCountryColumn.setCellValueFactory(destinationCountryProperty);

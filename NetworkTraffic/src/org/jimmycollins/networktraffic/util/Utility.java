@@ -164,6 +164,24 @@ public class Utility
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         return timeStamp;
     }
+    
+    /**
+     * Get the Fully Qualified Domain Name of an IP Address
+     * @param ip The IP address as a string
+     * @return The FQDN of the IP if possible
+     */
+    public static String GetFqdn(String ip)
+    {
+        try
+        {
+            InetAddress addr = InetAddress.getByName(ip);
+            return addr.getCanonicalHostName();
+        }
+        catch(UnknownHostException ex)
+        {
+            return "Error";
+        }
+    }
       
     /**
      * Sorts a map by value (largest in ascending order)

@@ -123,7 +123,10 @@ public class RemoteDShieldApi implements DShieldApi
                 }                        
             }
             
-            DShieldIpInfo info = new DShieldIpInfo(ip, blocked, attacks, country);
+            // Get FQDN of IP
+            String fqdn = Utility.GetFqdn(ip);
+            
+            DShieldIpInfo info = new DShieldIpInfo(ip, fqdn, blocked, attacks, country);
             
             return info;
         }
