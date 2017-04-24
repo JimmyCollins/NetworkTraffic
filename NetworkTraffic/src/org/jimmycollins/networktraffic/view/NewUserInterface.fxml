@@ -191,7 +191,12 @@
                         </Tab>
                         <Tab text="Port Activity">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ComboBox fx:id="portCombo" layoutX="108.0" layoutY="41.0" prefWidth="150.0" />
+                                    <Label layoutX="31.0" layoutY="45.0" text="Select Port:" />
+                                    <Button layoutX="283.0" layoutY="41.0" mnemonicParsing="false" onAction="#performPortAnalysis" text="Run Analysis" />
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                     </tabs>

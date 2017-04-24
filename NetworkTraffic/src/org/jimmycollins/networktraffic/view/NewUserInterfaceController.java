@@ -25,6 +25,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -104,6 +105,8 @@ public class NewUserInterfaceController implements Initializable {
     @FXML 
     private Label threatLevelLabel;
     
+    @FXML
+    private ComboBox portCombo;
     
     
     /**
@@ -648,7 +651,45 @@ public class NewUserInterfaceController implements Initializable {
     @FXML
     private void handlePortAnalysis(ActionEvent event)
     {
-        mainTabPane.getSelectionModel().select(2);
+        // Populate and sort the dropdown with the ports in this analysis
+        // Made up of port numbers from source/destination port data
+        sourcePortData.entrySet().stream().forEach((entry) ->
+        {
+            portCombo.getItems().add(entry.getKey());
+        });
+        
+        destinationPortData.entrySet().stream().forEach((entry) ->
+        {
+            // Check port number wasn't already added when source ports were added
+            String port = entry.getKey();
+
+            if(!portCombo.getItems().contains(port))
+            {
+                portCombo.getItems().add(entry.getKey());
+            }
+        });
+        
+        // TODO: Sort Combo box elements
+        
+        mainTabPane.getSelectionModel().select(2);       
+    }
+    
+    @FXML
+    private void performPortAnalysis(ActionEvent event)
+    {
+        if(portCombo.getSelectionModel().isEmpty())
+        {
+            LogUtil.Log(Alert.AlertType.INFORMATION, "Network Traffic Analyzer", "You must select a port to analyze from the dropdown.");
+            return;
+        }
+            
+        String selectedPort = portCombo.getSelectionModel().getSelectedItem().toString();
+        
+        DShieldApiProxy dshieldApi = new DShieldApiProxy();
+        
+        // TODO - Use port history API to grab data and chart it
+        
+        
     }
     
     
