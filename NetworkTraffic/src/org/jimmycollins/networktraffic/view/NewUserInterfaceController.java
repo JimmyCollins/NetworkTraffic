@@ -96,6 +96,9 @@ public class NewUserInterfaceController implements Initializable {
     private Button securityAnalysisButton;
     
     @FXML
+    private Button portAnalysisButton;
+    
+    @FXML
     private TabPane mainTabPane;
     
     @FXML 
@@ -233,6 +236,7 @@ public class NewUserInterfaceController implements Initializable {
             
             drawChartsBtn.setDisable(false);
             securityAnalysisButton.setDisable(false);
+            portAnalysisButton.setDisable(false);
             
             //showBarChartsButton.setDisable(false);
             //showPieChartsButton.setDisable(false);
@@ -289,6 +293,7 @@ public class NewUserInterfaceController implements Initializable {
             String chosenDate = result.get();
             drawChartsBtn.setDisable(true);
             securityAnalysisButton.setDisable(false);
+            portAnalysisButton.setDisable(false);
             
             // Load data from the database
             
@@ -489,6 +494,7 @@ public class NewUserInterfaceController implements Initializable {
         }
         
         // Create new threads using Lamda expressions to run security analysis (could use Anonymous Class here also)
+        sourceIpSecurityInfoTable.getItems().clear();
         Thread sourceIpCheckingThread = new Thread(() -> 
         {
             // Test the Top Source IP's against the DShield API and display in the UI
@@ -516,6 +522,7 @@ public class NewUserInterfaceController implements Initializable {
         sourceIpCheckingThread.setDaemon(true);
         sourceIpCheckingThread.start();
         
+        destinationIpSecurityInfoTable.getItems().clear();
         Thread destinationIpCheckingThread = new Thread(() -> 
         {        
             // Test the Top Destination IP's against the DShield API
@@ -543,6 +550,7 @@ public class NewUserInterfaceController implements Initializable {
         destinationIpCheckingThread.setDaemon(true);
         destinationIpCheckingThread.start();
         
+        sourcePortSecurityInfoTable.getItems().clear();
         Thread sourcePortCheckingThread = new Thread(() -> 
         {        
             // Test the Top Source Ports against the DShield API
@@ -568,6 +576,7 @@ public class NewUserInterfaceController implements Initializable {
         sourcePortCheckingThread.setDaemon(true);
         sourcePortCheckingThread.start();
         
+        destinationPortSecurityInfoTable.getItems().clear();
         Thread destinationPortCheckingThread = new Thread(() -> 
         {        
             // Test the Top Destination Ports against the DShield API
@@ -631,6 +640,15 @@ public class NewUserInterfaceController implements Initializable {
             de.setCommand(html);
             de.export();
         }
+    }
+    
+    
+    
+    
+    @FXML
+    private void handlePortAnalysis(ActionEvent event)
+    {
+        mainTabPane.getSelectionModel().select(2);
     }
     
     
