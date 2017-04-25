@@ -57,7 +57,6 @@ public class RemoteDShieldApi implements DShieldApi
             {
                 if("status".equals(nodes.item(i).getNodeName().toLowerCase()))
                 {
-                    //System.out.println("Infocon: " + nodes.item(i).getTextContent());
                     status = nodes.item(i).getTextContent();
                 }
             }

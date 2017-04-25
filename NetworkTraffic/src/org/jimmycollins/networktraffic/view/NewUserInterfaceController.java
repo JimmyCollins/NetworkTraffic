@@ -31,6 +31,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -107,6 +108,12 @@ public class NewUserInterfaceController implements Initializable {
     
     @FXML
     private TabPane mainTabPane;
+    
+    @FXML 
+    private Tab securityAnalysisTab;
+    
+    @FXML 
+    private Tab portAnalysisTab;
     
     @FXML 
     private Label threatLevelLabel;
@@ -259,8 +266,6 @@ public class NewUserInterfaceController implements Initializable {
             LogUtil.Log(Alert.AlertType.ERROR, resources.getString("error"), resources.getString("parsingerror"));
         }
     }
-    
-    
     
     
     @FXML
@@ -479,6 +484,7 @@ public class NewUserInterfaceController implements Initializable {
     {
         DShieldApiProxy dshieldApi = new DShieldApiProxy();
         
+        securityAnalysisTab.setDisable(false);
         mainTabPane.getSelectionModel().select(1);
         
         // Load the threat level and display on the UI
@@ -613,8 +619,7 @@ public class NewUserInterfaceController implements Initializable {
         destinationPortCheckingThread.setDaemon(true);
         destinationPortCheckingThread.start();
     }
-    
-    
+       
 
     @FXML
     private void handleExportAnalysis(ActionEvent event)
@@ -652,9 +657,7 @@ public class NewUserInterfaceController implements Initializable {
             de.export();
         }
     }
-    
-    
-    
+      
     
     @FXML
     private void handlePortAnalysis(ActionEvent event)
@@ -679,6 +682,7 @@ public class NewUserInterfaceController implements Initializable {
         
         // TODO: Sort Combo box elements
         
+        portAnalysisTab.setDisable(false);
         mainTabPane.getSelectionModel().select(2);       
     }
     
@@ -702,13 +706,13 @@ public class NewUserInterfaceController implements Initializable {
         
         LineChart<String,Number> lineChart = new LineChart<>(xAxis, yAxis);
                 
-        lineChart.setTitle("Port Activity");
+        lineChart.setTitle("Port Activity - " + selectedPort);
                                 
         XYChart.Series sources = new XYChart.Series();
         XYChart.Series targets = new XYChart.Series();
         
-        sources.setName("Sources/Day");
-        targets.setName("Targets/Day");
+        sources.setName("Sources / Day");
+        targets.setName("Targets / Day");
         
         for(int i=0; i<portHistory.size(); i++)
         {
