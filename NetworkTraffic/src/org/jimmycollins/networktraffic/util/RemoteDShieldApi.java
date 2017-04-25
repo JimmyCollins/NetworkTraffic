@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -17,7 +18,9 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.jimmycollins.networktraffic.model.DShieldApi;
 import org.jimmycollins.networktraffic.model.DShieldIpInfo;
+import org.jimmycollins.networktraffic.model.DShieldPortHistoryInfo;
 import org.jimmycollins.networktraffic.model.DShieldPortInfo;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -201,6 +204,112 @@ public class RemoteDShieldApi implements DShieldApi
         }
         
         return null; // FIXME: Review this
+    }
+    
+    
+    @Override
+    public ArrayList<DShieldPortHistoryInfo> PortHistory(String port)
+    {
+        ArrayList<DShieldPortHistoryInfo> portInfo = new ArrayList<>();
+        
+        //String date = "";
+        //String records = "0";
+        //String targets = "0";
+        //String sources = "0";
+        
+        try
+        {  
+            URL url = new URL(ApiBaseUrl + "porthistory/" + port);
+            URLConnection connection = url.openConnection();
+
+            InputStream responseStream = connection.getInputStream();
+
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+
+            Document doc = db.parse(responseStream);
+            
+            XPathFactory xPathfactory = XPathFactory.newInstance();
+            XPath xpath = xPathfactory.newXPath();
+            XPathExpression expr = xpath.compile("porthistory/portinfo");
+            
+            NodeList portInfoNodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+            System.out.println("portinfo Nodes: " + portInfoNodes.getLength());
+            
+            for(int i=0; i < portInfoNodes.getLength(); i++)
+            {
+                String date, records, targets, sources;
+                date = records = targets = sources = "";
+                
+                NodeList childNodes = portInfoNodes.item(i).getChildNodes();
+                System.out.println("child Nodes: " + childNodes.getLength());
+                
+                for(int j=0; j < childNodes.getLength(); j++)
+                {
+                    if("date".equals(childNodes.item(i).getNodeName().toLowerCase()))
+                    {
+                        date = childNodes.item(i).getTextContent();
+                    }
+
+                    if("records".equals(childNodes.item(i).getNodeName().toLowerCase()))
+                    {
+                        records = childNodes.item(i).getTextContent();
+                    }
+
+                    if("targets".equals(childNodes.item(i).getNodeName().toLowerCase()))
+                    {
+                        targets = childNodes.item(i).getTextContent();
+                    }
+
+                    if("sources".equals(childNodes.item(i).getNodeName().toLowerCase()))
+                    {
+                        sources = childNodes.item(i).getTextContent();
+                    }                    
+                }
+                
+                DShieldPortHistoryInfo portData = new DShieldPortHistoryInfo(date, records, targets, sources);
+                portInfo.add(portData);
+            }
+            
+            /*Node dataNode = (Node)expr.evaluate(doc, XPathConstants.NODE);
+            
+            NodeList nodes = dataNode.getChildNodes();
+            
+            for(int i=0; i<nodes.getLength(); i++)
+            {
+                if("date".equals(nodes.item(i).getNodeName().toLowerCase()))
+                {
+                    date = nodes.item(i).getTextContent();
+                }
+                
+                if("records".equals(nodes.item(i).getNodeName().toLowerCase()))
+                {
+                    records = nodes.item(i).getTextContent();
+                }
+                
+                if("targets".equals(nodes.item(i).getNodeName().toLowerCase()))
+                {
+                    targets = nodes.item(i).getTextContent();
+                }
+                
+                if("sources".equals(nodes.item(i).getNodeName().toLowerCase()))
+                {
+                    sources = nodes.item(i).getTextContent();
+                }
+                
+                DShieldPortHistoryInfo portData = new DShieldPortHistoryInfo(date, records, targets, sources);
+                portInfo.add(portData);
+            }*/
+            
+            return portInfo;
+        }
+        catch(IOException | ParserConfigurationException | SAXException | XPathExpressionException | DOMException ex)
+        {
+            LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.toString());
+            LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "PortHistory() Error - " + ex.getMessage());
+        }
+        
+        return portInfo;
     }
     
 }

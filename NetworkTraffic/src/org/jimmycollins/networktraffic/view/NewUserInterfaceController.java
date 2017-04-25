@@ -42,6 +42,7 @@ import org.jimmycollins.networktraffic.LineChartStrategy;
 import org.jimmycollins.networktraffic.ParsingException;
 import org.jimmycollins.networktraffic.PieChartStrategy;
 import org.jimmycollins.networktraffic.model.DShieldIpInfo;
+import org.jimmycollins.networktraffic.model.DShieldPortHistoryInfo;
 import org.jimmycollins.networktraffic.model.DShieldPortInfo;
 import org.jimmycollins.networktraffic.model.DataExport;
 import org.jimmycollins.networktraffic.model.ExportCommand;
@@ -687,9 +688,10 @@ public class NewUserInterfaceController implements Initializable {
         
         DShieldApiProxy dshieldApi = new DShieldApiProxy();
         
-        // TODO - Use port history API to grab data and chart it
+        List<DShieldPortHistoryInfo> portHistory = dshieldApi.PortHistory(selectedPort);
         
-        
+        // TODO - Draw a line chart with two series as the chart above
+        int i=0;
     }
     
     

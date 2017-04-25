@@ -1,7 +1,9 @@
 package org.jimmycollins.networktraffic.util;
 
+import java.util.List;
 import org.jimmycollins.networktraffic.model.DShieldApi;
 import org.jimmycollins.networktraffic.model.DShieldIpInfo;
+import org.jimmycollins.networktraffic.model.DShieldPortHistoryInfo;
 import org.jimmycollins.networktraffic.model.DShieldPortInfo;
 
 // Remote Proxy Implementation - Proxy
@@ -31,5 +33,11 @@ public class DShieldApiProxy implements DShieldApi
     public DShieldPortInfo Port(String port)
     {
         return RemoteApi.Port(port);
+    }
+    
+    @Override
+    public List<DShieldPortHistoryInfo> PortHistory(String port)
+    {
+        return RemoteApi.PortHistory(port);
     }
 }
