@@ -19,7 +19,7 @@ public class DShieldPortHistoryInfo
         this.Sources = sources;
     }
 
-    /*public String getDate() {
+    public String getDate() {
         return Date;
     }
 
@@ -49,7 +49,7 @@ public class DShieldPortHistoryInfo
 
     public void setSources(String Sources) {
         this.Sources = Sources;
-    }*/
+    }
     
     
 }
