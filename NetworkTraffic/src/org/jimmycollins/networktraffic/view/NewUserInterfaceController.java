@@ -686,12 +686,11 @@ public class NewUserInterfaceController implements Initializable {
             
         String selectedPort = portCombo.getSelectionModel().getSelectedItem().toString();
         
-        DShieldApiProxy dshieldApi = new DShieldApiProxy();
-        
+        DShieldApiProxy dshieldApi = new DShieldApiProxy();      
         List<DShieldPortHistoryInfo> portHistory = dshieldApi.PortHistory(selectedPort);
         
         // TODO - Draw a line chart with two series as the chart above
-        int i=0;
+        
     }
     
     
