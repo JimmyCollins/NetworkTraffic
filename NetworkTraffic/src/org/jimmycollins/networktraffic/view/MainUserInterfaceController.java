@@ -71,7 +71,7 @@ import org.jimmycollins.networktraffic.util.TopSourcePorts;
 import org.jimmycollins.networktraffic.util.Utility;
 
 
-public class NewUserInterfaceController implements Initializable {
+public class MainUserInterfaceController implements Initializable {
     
     @FXML
     private Label parsedFlowsLabel;
@@ -741,7 +741,7 @@ public class NewUserInterfaceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        stats.attach(new NewUserInterfaceController.ParsingObserver(stats));   
+        stats.attach(new MainUserInterfaceController.ParsingObserver(stats));   
     }    
     
     

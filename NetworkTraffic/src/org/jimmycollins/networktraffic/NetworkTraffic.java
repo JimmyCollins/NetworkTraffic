@@ -26,7 +26,7 @@ public class NetworkTraffic extends Application {
     {
         Locale locale = new Locale("en", "US");
         ResourceBundle bundle = ResourceBundle.getBundle("ResourcesBundle", locale);
-        Parent root = FXMLLoader.load(getClass().getResource("view/NewUserInterface.fxml"), bundle);
+        Parent root = FXMLLoader.load(getClass().getResource("view/MainUserInterface.fxml"), bundle);
         
         stage.setTitle(bundle.getString("maintitle"));
  
