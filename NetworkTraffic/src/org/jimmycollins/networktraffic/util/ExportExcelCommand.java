@@ -12,17 +12,26 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-// Command Pattern Implementation - Concrete Command
-
+/**
+ * Command Pattern Implementation - Concrete Command
+ */
 public class ExportExcelCommand implements ExportCommand
 {
     DataExport Data;
 
+    /**
+     * Constructor
+     * @param theData The data to export
+     */
     public ExportExcelCommand(DataExport theData)
     {
         Data = theData;
     }
 
+    /**
+     * Logic to export to MS Excel
+     * Utilizes the Apache POI library
+     */
     @Override
     public void execute()
     {

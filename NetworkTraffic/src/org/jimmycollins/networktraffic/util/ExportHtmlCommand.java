@@ -11,17 +11,25 @@ import javafx.scene.control.Alert;
 import org.jimmycollins.networktraffic.model.DataExport;
 import org.jimmycollins.networktraffic.model.ExportCommand;
 
-// Command Pattern Implementation - Concrete Command
-
+/**
+ * Command Pattern Implementation - Concrete Command
+ */
 public class ExportHtmlCommand implements ExportCommand
 {
     DataExport Data;
 
+    /**
+     * Constructor
+     * @param theData The data to export
+     */
     public ExportHtmlCommand(DataExport theData)
     {
         Data = theData;
     }
 
+    /**
+     * Logic to export to HTML
+     */
     @Override
     public void execute()
     {

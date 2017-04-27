@@ -43,7 +43,7 @@ public class DatabaseUtil
     /**
      * Persists the main record of an analysis to the database
      * @param query The query to execute
-     * @return The auto-incremented primary key in the savedanalyses table - referenced when other metrics are saved
+     * @return The auto-incremented primary key in the 'savedanalyses' table - referenced when other metrics are saved
      */
     public static int PersistAnalysisRecord(String query)
     {
@@ -75,7 +75,7 @@ public class DatabaseUtil
     
     /**
      * Persists the port data from an analysis to the database
-     * @param analysisId The id of the analysis this relates to in the savedanalyses table
+     * @param analysisId The id of the analysis this relates to in the 'savedanalyses' table
      * @param table The table to save this data to
      * @param data The data to save
      */
@@ -106,7 +106,7 @@ public class DatabaseUtil
     
     /**
      * Persists the IP data from an analysis to the database
-     * @param analysisId The id of the analysis this relates to in the savedanalyses table
+     * @param analysisId The id of the analysis this relates to in the 'savedanalyses' table
      * @param table The table to save this data to
      * @param data The data to save
      */

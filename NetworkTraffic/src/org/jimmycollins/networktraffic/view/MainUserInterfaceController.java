@@ -71,8 +71,8 @@ import org.jimmycollins.networktraffic.util.TopSourcePorts;
 import org.jimmycollins.networktraffic.util.Utility;
 
 
-public class MainUserInterfaceController implements Initializable {
-    
+public class MainUserInterfaceController implements Initializable 
+{ 
     @FXML
     private Label parsedFlowsLabel;
     
@@ -192,26 +192,24 @@ public class MainUserInterfaceController implements Initializable {
     @FXML
     private TableColumn destinationPortSourcesColumn;
     
-    // --------------------------------------------------- //
-    
-    
-    Map<String,Integer> sourcePortData = new HashMap<>();
-    Map<String,Integer> destinationPortData = new HashMap<>();
-    Map<String,Integer> sourceIpData = new HashMap<>();
-    Map<String,Integer> destinationIpData = new HashMap<>();
+    private Map<String,Integer> sourcePortData = new HashMap<>();
+    private Map<String,Integer> destinationPortData = new HashMap<>();
+    private Map<String,Integer> sourceIpData = new HashMap<>();
+    private Map<String,Integer> destinationIpData = new HashMap<>();
     
     private final DisplayContext chartContext = new DisplayContext();
     
     private FlowFileStats stats = new FlowFileStats();
     
     private File file;
-    
-    
+     
     private final Locale locale = new Locale("en", "US");
     private final ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
     
     
-    
+    /**
+     * Handles the parsing of a netflow file
+     */
     @FXML
     private void handleParseNewFile(ActionEvent event)
     {  
@@ -228,24 +226,6 @@ public class MainUserInterfaceController implements Initializable {
                 LogUtil.Log(Alert.AlertType.WARNING, resources.getString("alertheader"), resources.getString("nofileselectederror"));
                 return;
             }
-            
-            /*long fileSize = file.length();
-            long fileSizeAsMb = Utility.BytesToMb(fileSize);
-            
-            if(fileSizeAsMb < 1)
-            {
-                fileSizeLabel.setText("< 1MB");
-            }
-            else
-            {
-                fileSizeLabel.setText("" + fileSizeAsMb + "MB");
-            }
-            
-            // Alert the user that parsing may take a while for large files         
-            if(fileSize >= 100000000)
-            {
-                LogUtil.Log(Alert.AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("bigfilewarning"));
-            }*/
                  
             // Parse the traffic file     
             // Example of Dynamic Binding here
@@ -255,10 +235,6 @@ public class MainUserInterfaceController implements Initializable {
             drawChartsBtn.setDisable(false);
             securityAnalysisButton.setDisable(false);
             portAnalysisButton.setDisable(false);
-            
-            //showBarChartsButton.setDisable(false);
-            //showPieChartsButton.setDisable(false);
-            //showLineChartsButton.setDisable(false);
         }
         catch(ParsingException ex)
         {
@@ -268,6 +244,9 @@ public class MainUserInterfaceController implements Initializable {
     }
     
     
+    /**
+     * Handles drawing the 'General' charts on the main UI
+     */
     @FXML
     private void handleDrawGeneralCharts(ActionEvent event)
     {
@@ -276,6 +255,10 @@ public class MainUserInterfaceController implements Initializable {
         saveCurrentAnalysisBtn.setDisable(false);
     }
       
+    /**
+     * Handles loading a saved session from the database
+     * @throws IOException if any issue with database connection
+     */
     @FXML
     private void handleLoadSession(ActionEvent event) throws IOException
     {
@@ -385,6 +368,10 @@ public class MainUserInterfaceController implements Initializable {
         }
     }
     
+    
+    /**
+     * Handles saving a session to the database
+     */
     @FXML
     private void handleSaveSession(ActionEvent event)
     {
@@ -420,6 +407,9 @@ public class MainUserInterfaceController implements Initializable {
     }
     
     
+    /**
+     * Handles drawing Bar Charts
+     */
     @FXML
     private void handleDrawBarCharts(ActionEvent event)
     {
@@ -427,6 +417,9 @@ public class MainUserInterfaceController implements Initializable {
     }
     
     
+    /**
+     * Handles drawing Line Charts
+     */
     @FXML
     private void handleDrawLineCharts(ActionEvent event)
     {
@@ -434,6 +427,10 @@ public class MainUserInterfaceController implements Initializable {
     }
     
     
+    /**
+     * Draws the charts on the UI after a user loads them
+     * @param strategy The display strategy to use for the charts
+     */
     private void drawChartsInitial(DisplayStrategy strategy)
     {
         TopData sourcePorts = new TopSourcePorts();
@@ -452,6 +449,10 @@ public class MainUserInterfaceController implements Initializable {
     }
     
     
+    /**
+     * Handles drawing the 'General' charts on the main UI
+     * @param strategy The display strategy to use
+     */
     private void drawGeneralCharts(DisplayStrategy strategy)
     {
         chartContext.setChartStrategy(strategy);
@@ -479,6 +480,9 @@ public class MainUserInterfaceController implements Initializable {
     }
      
     
+    /**
+     * Handles executing the Security Analysis
+     */
     @FXML
     private void handleSecurityAnalysis(ActionEvent event)
     {
@@ -621,6 +625,9 @@ public class MainUserInterfaceController implements Initializable {
     }
        
 
+    /**
+     * Handles asking the user which form of export they want
+     */
     @FXML
     private void handleExportAnalysis(ActionEvent event)
     {
@@ -659,6 +666,9 @@ public class MainUserInterfaceController implements Initializable {
     }
       
     
+    /**
+     * Handles the Port Analysis UI
+     */
     @FXML
     private void handlePortAnalysis(ActionEvent event)
     {
@@ -686,6 +696,11 @@ public class MainUserInterfaceController implements Initializable {
         mainTabPane.getSelectionModel().select(2);       
     }
     
+    
+    /**
+     * Handles doing the actual Port Analysis
+     * @param event 
+     */
     @FXML
     private void performPortAnalysis(ActionEvent event)
     {
@@ -745,7 +760,9 @@ public class MainUserInterfaceController implements Initializable {
     }    
     
     
-    // Nested Class used to update the statistics panel on the UI as parsing progresses
+    /**
+     * Nested Class used to update the statistics panel on the UI as parsing progresses
+     */
     private class ParsingObserver extends Observer {
         
         ParsingObserver(FlowFileStats stats) {
@@ -768,5 +785,4 @@ public class MainUserInterfaceController implements Initializable {
         }
     
     }
-    
 }

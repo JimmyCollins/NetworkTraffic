@@ -179,6 +179,7 @@ public class Utility
         }
         catch(UnknownHostException ex)
         {
+            //FIXME: Log error
             return "Error";
         }
     }
@@ -208,5 +209,3 @@ public class Utility
         return sortedMap;
     }
 }
-
-

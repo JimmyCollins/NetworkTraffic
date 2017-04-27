@@ -25,13 +25,18 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-// Remote Proxy Implementation - Real Subject
 
+/**
+ * Remote Proxy Implementation - Real Subject
+ */
 public class RemoteDShieldApi implements DShieldApi
 {
     private final String ApiBaseUrl = "https://www.dshield.org/api/";
     
-
+    /**
+     * Gets the current ISC Threat Level
+     * @return The current ISC Threat Level
+     */
     @Override
     public String Infocon()
     {
@@ -70,7 +75,11 @@ public class RemoteDShieldApi implements DShieldApi
         return status;  
     }
 
-    
+    /**
+     * Gets information about the specified IP from the DShield API
+     * @param ip The IP to query
+     * @return Information about the specified IP 
+     */
     @Override
     public DShieldIpInfo Ip(String ip)
     {
@@ -141,7 +150,11 @@ public class RemoteDShieldApi implements DShieldApi
         return null; // FIXME: Review this
     }
     
-    
+    /**
+     * Gets information about the specified port from the DShield API
+     * @param port The port to query
+     * @return Information about the specified port 
+     */
     @Override
     public DShieldPortInfo Port(String port)
     {
@@ -205,7 +218,11 @@ public class RemoteDShieldApi implements DShieldApi
         return null; // FIXME: Review this
     }
     
-    
+    /**
+     * Gets historical information about the specified port from the DShield API
+     * @param port The port to query
+     * @return Information about the specified port (last 30 days if available)
+     */
     @Override
     public ArrayList<DShieldPortHistoryInfo> PortHistory(String port)
     {

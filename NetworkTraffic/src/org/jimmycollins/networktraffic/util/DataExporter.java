@@ -3,8 +3,9 @@ package org.jimmycollins.networktraffic.util;
 
 import org.jimmycollins.networktraffic.model.ExportCommand;
 
-// Command Pattern Implementation - Receiver
-
+/**
+ * Command Pattern Implementation - Receiver
+ */
 public class DataExporter 
 {
   private ExportCommand command;

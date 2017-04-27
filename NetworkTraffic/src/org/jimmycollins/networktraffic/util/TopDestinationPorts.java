@@ -5,6 +5,9 @@ import java.util.Map;
 import org.jimmycollins.networktraffic.model.Flow;
 import org.jimmycollins.networktraffic.model.TopData;
 
+/**
+ * Part of Template Pattern Implementation
+ */
 public class TopDestinationPorts extends TopData
 {
     private ArrayList DestinationPorts;

@@ -1,10 +1,11 @@
-package org.jimmycollins.networktraffic.model;
 
-// Remote Proxy Implementation - Subject
+package org.jimmycollins.networktraffic.model;
 
 import java.util.List;
 
-
+/**
+ * Remote Proxy Implementation - Subject
+ */
 public interface DShieldApi 
 {
     public String Infocon();

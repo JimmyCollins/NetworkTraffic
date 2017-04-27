@@ -1,3 +1,4 @@
+
 package org.jimmycollins.networktraffic.util;
 
 import java.sql.Connection;
@@ -6,8 +7,7 @@ import java.sql.SQLException;
 import javafx.scene.control.Alert;
 
 /**
- * Database connection class
- * Utilizes the Singleton Pattern
+ * Database connection class - implements the Singleton Pattern
  */
 public class Database 
 {
@@ -52,5 +52,4 @@ public class Database
 
         return DbConnection;
     }
-    
 }

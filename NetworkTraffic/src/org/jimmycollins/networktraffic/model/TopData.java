@@ -3,6 +3,9 @@ package org.jimmycollins.networktraffic.model;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Part of Template Pattern Implementation
+ */
 public abstract class TopData
 {
     public abstract void Initialize();
