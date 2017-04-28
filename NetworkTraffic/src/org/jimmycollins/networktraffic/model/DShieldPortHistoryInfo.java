@@ -2,8 +2,7 @@
 package org.jimmycollins.networktraffic.model;
 
 /**
- * Defines a class that represents the history
- * of a Port within the DShield API
+ * Defines a class that represents the history of a Port within the DShield API
  */
 public class DShieldPortHistoryInfo 
 {

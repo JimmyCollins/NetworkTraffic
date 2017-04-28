@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 
 /**
@@ -16,6 +18,9 @@ import javafx.scene.control.Alert;
 
 public class DatabaseUtil 
 {
+    private static final Locale locale = new Locale("en", "US");
+    private static final ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
+    
     /**
      * Execute a query against the database
      * @param query The query to execute
@@ -34,7 +39,7 @@ public class DatabaseUtil
         }
         catch(SQLException ex)
         {
-            LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("dberror") + ex.getMessage());
             return null;
         }
     }
@@ -65,7 +70,7 @@ public class DatabaseUtil
         }
         catch(SQLException ex)
         {
-            LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("dberror") + ex.getMessage());
             return analysisId;
         }
         
@@ -99,7 +104,7 @@ public class DatabaseUtil
         }
         catch(SQLException ex)
         {
-            LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("dberror") + ex.getMessage());
         }
     }
     
@@ -130,7 +135,7 @@ public class DatabaseUtil
         }
         catch(SQLException ex)
         {
-            LogUtil.Log(Alert.AlertType.ERROR, "Error", ex.toString());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("dberror") + ex.getMessage());
         }
     }  
 }

@@ -3,8 +3,7 @@ package org.jimmycollins.networktraffic.model;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Defines a class that represents Port data
- * returned from the DShield API
+ * Defines a class that represents Port data returned from the DShield API
  */
 public class DShieldPortInfo
 {

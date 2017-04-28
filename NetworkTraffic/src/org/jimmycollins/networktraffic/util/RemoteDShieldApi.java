@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -32,6 +34,9 @@ import org.xml.sax.SAXException;
 public class RemoteDShieldApi implements DShieldApi
 {
     private final String ApiBaseUrl = "https://www.dshield.org/api/";
+    
+    private final Locale locale = new Locale("en", "US");
+    private final ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
     
     /**
      * Gets the current ISC Threat Level
@@ -69,7 +74,7 @@ public class RemoteDShieldApi implements DShieldApi
         catch(IOException | ParserConfigurationException | SAXException ex)
         {
             LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.toString());
-            LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Infocon() Error - " + ex.getMessage());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("apierror") + ex.getMessage());
         }
         
         return status;  
@@ -144,10 +149,9 @@ public class RemoteDShieldApi implements DShieldApi
         catch(IOException | ParserConfigurationException | SAXException ex)
         {
             LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.toString());
-            LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Infocon() Error - " + ex.getMessage());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("apierror") + ex.getMessage());
+            return null;
         }
-        
-        return null; // FIXME: Review this
     }
     
     /**
@@ -204,18 +208,12 @@ public class RemoteDShieldApi implements DShieldApi
             
             return portInfo;
         }
-        catch(IOException | ParserConfigurationException | SAXException ex)
+        catch(IOException | ParserConfigurationException | XPathExpressionException | SAXException ex)
         {
             LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.toString());
-            LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Port() Error - " + ex.getMessage());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("apierror") + ex.getMessage());
+            return null;
         }
-        catch (XPathExpressionException ex) 
-        {
-            //Logger.getLogger(RemoteDShieldApi.class.getName()).log(Level.SEVERE, null, ex);
-            LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Port() Error - " + ex.getMessage());
-        }
-        
-        return null; // FIXME: Review this
     }
     
     /**
@@ -285,7 +283,7 @@ public class RemoteDShieldApi implements DShieldApi
         catch(IOException | ParserConfigurationException | SAXException | XPathExpressionException | DOMException ex)
         {
             LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.toString());
-            LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "PortHistory() Error - " + ex.getMessage());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("apierror") + ex.getMessage());
         }
         
         return portInfo;

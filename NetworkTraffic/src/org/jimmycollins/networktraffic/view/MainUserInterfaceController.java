@@ -73,6 +73,9 @@ import org.jimmycollins.networktraffic.util.Utility;
 
 public class MainUserInterfaceController implements Initializable 
 { 
+    /**
+     * General Statistics Labels
+     */
     @FXML
     private Label parsedFlowsLabel;
     
@@ -82,6 +85,9 @@ public class MainUserInterfaceController implements Initializable
     @FXML
     private Label totalPacketsLabel;
     
+    /**
+     * Top X panes on the main UI
+     */
     @FXML
     private Pane topSourcePortsPane;
     
@@ -94,6 +100,9 @@ public class MainUserInterfaceController implements Initializable
     @FXML
     private Pane topDestinationIPsPane;
     
+    /**
+     * Main UI Buttons
+     */
     @FXML
     private Button saveCurrentAnalysisBtn;
     
@@ -105,6 +114,10 @@ public class MainUserInterfaceController implements Initializable
     
     @FXML
     private Button portAnalysisButton;
+    
+    /**
+     * Tabs
+     */
     
     @FXML
     private TabPane mainTabPane;
@@ -128,7 +141,7 @@ public class MainUserInterfaceController implements Initializable
      * Tables on Security Analysis Dialog
      */
     
-    // Source IP Table
+    // Source IP Table & Data
     
     @FXML
     private TableView sourceIpSecurityInfoTable;   
@@ -145,7 +158,7 @@ public class MainUserInterfaceController implements Initializable
     @FXML
     private TableColumn sourceIpCountryColumn;
     
-    // Destination IP Table
+    // Destination IP Table & Data
     
     @FXML
     private TableView destinationIpSecurityInfoTable;
@@ -162,7 +175,7 @@ public class MainUserInterfaceController implements Initializable
     @FXML
     private TableColumn destinationIpCountryColumn;
     
-    // Source Port Table
+    // Source Port Table & Data
     
     @FXML
     private TableView sourcePortSecurityInfoTable;
@@ -177,7 +190,7 @@ public class MainUserInterfaceController implements Initializable
     @FXML
     private TableColumn sourcePortSourcesColumn;
     
-    // Destination Port Table
+    // Destination Port Table & Data
     
     @FXML
     private TableView destinationPortSecurityInfoTable;
@@ -255,6 +268,7 @@ public class MainUserInterfaceController implements Initializable
         saveCurrentAnalysisBtn.setDisable(false);
     }
       
+    
     /**
      * Handles loading a saved session from the database
      * @throws IOException if any issue with database connection
@@ -632,8 +646,8 @@ public class MainUserInterfaceController implements Initializable
     private void handleExportAnalysis(ActionEvent event)
     {
         List<String> exportOptions = new ArrayList<>();
-        exportOptions.add("MS Excel");
-        exportOptions.add("HTML");
+        exportOptions.add(resources.getString("msexcel"));
+        exportOptions.add(resources.getString("html"));
         
         ChoiceDialog<String> dialog = new ChoiceDialog<>("", exportOptions);
         dialog.setTitle(resources.getString("alertheader"));
@@ -690,8 +704,6 @@ public class MainUserInterfaceController implements Initializable
             }
         });
         
-        // TODO: Sort Combo box elements
-        
         portAnalysisTab.setDisable(false);
         mainTabPane.getSelectionModel().select(2);       
     }
@@ -706,7 +718,7 @@ public class MainUserInterfaceController implements Initializable
     {
         if(portCombo.getSelectionModel().isEmpty())
         {
-            LogUtil.Log(Alert.AlertType.INFORMATION, "Network Traffic Analyzer", "You must select a port to analyze from the dropdown.");
+            LogUtil.Log(Alert.AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("noportselected"));
             return;
         }
             
@@ -717,17 +729,17 @@ public class MainUserInterfaceController implements Initializable
         
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Day");       
+        xAxis.setLabel(resources.getString("day"));    
         
         LineChart<String,Number> lineChart = new LineChart<>(xAxis, yAxis);
                 
-        lineChart.setTitle("Port Activity - " + selectedPort);
+        lineChart.setTitle(resources.getString("portactivity") + selectedPort);
                                 
         XYChart.Series sources = new XYChart.Series();
         XYChart.Series targets = new XYChart.Series();
         
-        sources.setName("Sources / Day");
-        targets.setName("Targets / Day");
+        sources.setName(resources.getString("sourcesday"));
+        targets.setName(resources.getString("targetsday"));
         
         for(int i=0; i<portHistory.size(); i++)
         {

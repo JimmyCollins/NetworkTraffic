@@ -3,7 +3,9 @@ package org.jimmycollins.networktraffic.util;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import org.jimmycollins.networktraffic.model.DataExport;
 import org.jimmycollins.networktraffic.model.ExportCommand;
@@ -18,6 +20,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExportExcelCommand implements ExportCommand
 {
     DataExport Data;
+    
+    private final Locale locale = new Locale("en", "US");
+    private final ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
 
     /**
      * Constructor
@@ -127,11 +132,11 @@ public class ExportExcelCommand implements ExportCommand
             workbook.write(outputStream);
             workbook.close();
             
-            LogUtil.Log(Alert.AlertType.INFORMATION, "Export Complete", "Data was exported to\n '" + outputFile + "'");
+            LogUtil.Log(Alert.AlertType.INFORMATION, resources.getString("alertheader"), resources.getString("exportcomplete") + "'" + outputFile + "'");
         }
         catch (IOException ex)
         {
-            LogUtil.Log(Alert.AlertType.ERROR, "Export Error", ex.getMessage());
+            LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("exporterror") + ex.getMessage());
         }
     }
 }

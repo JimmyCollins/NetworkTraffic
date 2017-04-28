@@ -12,12 +12,20 @@ public class TopDestinationPorts extends TopData
 {
     private ArrayList DestinationPorts;
 
+    /**
+     * Initialize the data
+     */
     @Override
     public void Initialize()
     {
         DestinationPorts = new ArrayList<>();
     }
 
+    /**
+     * Get the top 10 data
+     * @param Flows The flow data to analyze
+     * @return The top 10 destination ports in the data
+     */
     @Override
     public Map<String,Integer> GetData(ArrayList<Flow> Flows)
     {

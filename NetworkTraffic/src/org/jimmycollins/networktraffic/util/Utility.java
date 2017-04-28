@@ -111,7 +111,7 @@ public class Utility
         
         for(int i = 0; i < list.size(); i++)
         {            
-            Integer count = map.get(list.get(i)); // Autoboxing
+            Integer count = map.get(list.get(i));
             map.put(list.get(i), count == null ? 1 : count + 1);   
         }
         
@@ -179,8 +179,8 @@ public class Utility
         }
         catch(UnknownHostException ex)
         {
-            //FIXME: Log error
-            return "Error";
+            LogUtil.Log(LogUtil.LogLevel.INFO, "Error getting FQDN for IP '" + ip + "': " + ex.getMessage());
+            return "Unknown";
         }
     }
       

@@ -4,15 +4,20 @@ package org.jimmycollins.networktraffic.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 
 /**
- * Database connection class - implements the Singleton Pattern
+ * Database connection class - implements a Singleton Pattern
  */
 public class Database 
 {
     private static Database Database;
     private static Connection DbConnection;
+    
+    private final Locale locale = new Locale("en", "US");
+    private final ResourceBundle resources = ResourceBundle.getBundle("ResourcesBundle", locale);
 
     /**
      * Get an instance of the database connection
@@ -46,7 +51,7 @@ public class Database
             catch (SQLException ex) 
             {
                 LogUtil.Log(LogUtil.LogLevel.SEVERE, ex.toString());
-                LogUtil.Log(Alert.AlertType.ERROR, "Network Traffic Analyzer", "Could not connect to database: \n" + ex.getMessage());
+                LogUtil.Log(Alert.AlertType.ERROR, resources.getString("alertheader"), resources.getString("dbconnectionerror") + ex.getMessage());
             }
         }
 
