@@ -1,5 +1,5 @@
 ## Advanced Object Technology Assignment
-### Part of my MSc. Software Engineering Course
+This application formed part of the requirements of my MSc. Software Engineering degree.
 
 #### Objective
 
